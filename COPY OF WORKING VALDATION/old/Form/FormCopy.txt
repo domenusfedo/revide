@@ -1,0 +1,67 @@
+import React from 'react';
+
+import {FormWrapper, FormInput, FormDirect, FormDetailAction, ShadowText,LockIcon, FormButton,FormInputHolder, FormHolder, UserIcon, MailIcon, FormAction} from './Form.elements';
+
+interface InputData {
+    ref: React.RefObject<HTMLDivElement>,
+    value: string,
+    shadowText: string,
+    iconName: string,
+    type: string,
+    error: string
+}
+
+interface IProps {
+    inputs: InputData[];
+    data: {
+        link: string,
+        buttonLabel: string,
+        directLabel: string,
+        directLink: string,
+        extra: boolean
+    },
+    changeHandler: (value: string, idx: number, name: string) => void
+}
+
+const focusHanlder = (ref: React.RefObject<HTMLDivElement>) => {
+    ref.current!.classList.add('active');
+    ref.current!.children[1].children[0].classList.add('active');
+    ref.current!.children[0].classList.add('active');
+}
+
+const blurHanlder = (value: string, ref: React.RefObject<HTMLDivElement>) => {
+    if(value !== '') return;
+    ref.current!.classList.remove('active');
+    ref.current!.children[1].children[0].classList.remove('active')
+    ref.current!.children[0].classList.remove('active');
+}
+
+const Form: React.FC<IProps> = ({inputs, data, changeHandler}) => {
+    return (
+        <FormWrapper>
+            {inputs.map((i, idx) => {
+                return (
+                    <FormHolder key={i.iconName} onFocus={e => focusHanlder(i.ref)} onBlur={e => blurHanlder(i.value, i.ref)} ref={i.ref}> 
+                        {i.iconName === 'username' ? <UserIcon /> : null}
+                        {(i.iconName === 'password' || i.iconName === 'confirmPassword') ? <LockIcon /> : null}
+                        {i.iconName === 'mail' ? <MailIcon /> : null}
+                        <FormInputHolder>
+                            <ShadowText>{(i.error.length > 1 && i.value !== '')  ? i.error : i.shadowText}</ShadowText>
+                            <FormInput type={i.type} value={i.value} onChange={(e) => {
+                                changeHandler(e.target.value.trim().toString(), idx, i.iconName)
+                            }}></FormInput>
+                        </FormInputHolder>
+                    </FormHolder>
+                )
+            })}
+            {data.extra && <FormAction>Forgot Password?</FormAction>}
+            <FormButton>{data.buttonLabel}</FormButton>
+            <FormDirect to={data.link}>
+                {data.directLabel}
+                <FormDetailAction>{data.directLink}</FormDetailAction> 
+            </FormDirect>
+        </FormWrapper>
+    );
+};
+
+export default Form;

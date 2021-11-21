@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState, useRef } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
-function App() {
+import { RootState } from './app/store';
+
+import {Board, SignIn, SignUp, Home} from './components/index';
+
+import { useLocation } from 'react-router-dom';
+import {TransitionGroup, CSSTransition} from 'react-transition-group';
+
+import {AppHolder} from './App.elements'
+
+const App = () => {
+  let location = useLocation();
+  const appRef = useRef(null)
+
+  const authData = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
+
+  const [isAuth, isAuthSet] = useState<boolean>(false)
+  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <AppHolder>
+      <TransitionGroup component={null}>
+        <CSSTransition
+          timeout={300}
+          classNames="page"
+          key={location.key}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Routes location={location}>
+            <Route path='/' element={<Home />}/>
+            <Route path='signin' element={<SignIn />}/>
+            <Route path='signup' element={<SignUp />}/>
+            <Route path='/board' element={isAuth ? <Board/> : <Navigate to='/'/>}/>
+            <Route path='/*' element={<Navigate to='/'/>}/>
+          </Routes>
+        </CSSTransition>
+      </TransitionGroup>
+    </AppHolder>
   );
 }
 
 export default App;
+

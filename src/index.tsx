@@ -1,17 +1,23 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+
+import { HashRouter } from 'react-router-dom';
+
+import {Provider} from 'react-redux';
+import {store} from './app/store';
+
+import { ThemeProvider } from 'styled-components';
+import {GlobalStyle} from './theme/globalStyle';
+import {Theme} from './theme/theme'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <HashRouter basename='/'>
+    <Provider store={store}>
+      <ThemeProvider theme={Theme}>
+        <GlobalStyle></GlobalStyle>
+        <App />
+      </ThemeProvider>
+    </Provider>
+  </HashRouter>,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
