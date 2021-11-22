@@ -17,25 +17,22 @@ import {
 } from './Form.elements';
 
 import {
-    LoginType,
-    SigninType,
-    Input,
     StructureData,
-    InputData
+    Data
 } from './types'
 
 interface IProps {
     header: string,
-    data: InputData,
-    dataSet: React.Dispatch<React.SetStateAction<LoginType>> | React.Dispatch<React.SetStateAction<SigninType>>,
-    inputs: Input[],
+    initialData: Data[],
+    // dataSet: React.Dispatch<React.SetStateAction<Data[]>>,
     structureData: StructureData
 }
 
 
-const Form: React.FC<IProps> = ({header, data, dataSet, inputs, structureData}) => {
+const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
     const [isValid, isValidSet] = useState<boolean>(false);
-    
+    const [data, dataSet] = useState<Data[]>(initialData);
+
     const modifyClass = (ref: React.RefObject<HTMLDivElement>, className: string, action: string) => {
         if(action === 'add') {
             ref.current!.classList.add(className);
@@ -65,7 +62,18 @@ const Form: React.FC<IProps> = ({header, data, dataSet, inputs, structureData}) 
         modifyClass(ref, 'active', 'remove')
     }
 
-    const checkLength = (element: any, name: string, length: number) => {
+    const checkValidation = (actualData: Data[]) => {
+        let status = true;
+        actualData.map(e => {
+            if (!e.isValid) {
+                status = false;
+                return;
+            }
+        })
+        isValidSet(status)
+    }
+
+    const checkLength = (element: any, length: number) => {
         let message = ''
         if(element.config.lengthCheck.min && length < element.config.lengthCheck.min) {
             message = ' too short'
@@ -82,7 +90,7 @@ const Form: React.FC<IProps> = ({header, data, dataSet, inputs, structureData}) 
     const checkAlphanumeric = (value: string) => {
         let message = ''
         if( /[^a-zA-Z0-9]/.test( value ) ) {
-        message = ' and invalid'
+        message = ' is invalid'
         } else {
         message = ''
         }
@@ -100,92 +108,90 @@ const Form: React.FC<IProps> = ({header, data, dataSet, inputs, structureData}) 
         return message
     }
 
-    const checkValidation = () => {
-
+    const checkEqual = (provided: number, confirm: string) => {
+        let value = false;
+        if (data[provided].value === confirm) {
+            value = true;
+        }
+        return value
     }
-
-    const changeHanlder = (value: string, name: string) => {
-        const element = data[name as keyof typeof data];
-        let error = `${name}`;
+    
+    const changeHanlder = (value: string, elementPointer: Data, idx: number) => {
+        const element = data[idx];
+        let error = `${elementPointer.name}`;
         let validationValue = false;
 
-        if(data[name as keyof typeof data].config.hasOwnProperty('lengthCheck')) {
-            error = error + checkLength(element, name, value.trim().toString().length)
+        let isEqual = false
+
+
+        if(element.config.hasOwnProperty('lengthCheck')) {
+            error = error + checkLength(element, value.trim().toString().length)
         }
 
-        if(data[name as keyof typeof data].config.hasOwnProperty('isAlphaNumeric')) {
+        if(element.config.hasOwnProperty('isAlphaNumeric')) {
             error = error + checkAlphanumeric(value);
         }
 
-        if(data[name as keyof typeof data].config.hasOwnProperty('isMail')) {
+        if(element.config.hasOwnProperty('isMail')) {
             error = error + checkMail(value);
         }
 
-        
-        if(name.trim() === error.trim()) {
-            validationValue = true;
+        if(element.config.hasOwnProperty('isEqual')) {
+            if(!elementPointer.mirror) return
+            isEqual = checkEqual(elementPointer.mirror, value)
         }
 
-        
-        dataSet((prev: any) => ({
-            ...prev,
-            [name as keyof typeof data]: {
-                ...prev[name as keyof typeof data],
-                isValid: validationValue,
-                error: error,
-                value: value
+        if(element.config.isEqual) {
+            if(isEqual) {
+                validationValue = true;
             }
-        }))
+        } else {
+            if(elementPointer.name.trim() === error.trim()) {
+                validationValue = true;
+            }
+        }
 
-        checkValidation();
-    }
+        const updatedState = data;
+        const updatedObject = data[idx];
+        updatedObject.isValid = validationValue;
+        updatedObject.error = error;
+        updatedObject.value = value;
 
-    const submitHandler = (e: React.FormEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        if(!isValid) return
-        console.log('Redirect valid')
+        updatedState[idx] = updatedObject;
+
+        dataSet((prev: any) => ([
+            ...prev
+        ]))
     }
 
     useEffect(() => {
-        //console.log(data)
+        checkValidation(data);
     }, [data])
 
     return (
         <>
             <FormHeader>{header}</FormHeader>
             <FormWrapper>
-                {inputs.map(i => {
-                    if(i.error !== '') {
-                        invalidHandler(i.ref)
-                    }
-                    if(i.error.trim().toString() === i.shadowText) {
-                        defaultHandler(i.ref)
-                    }
-    
-                    if((i.mirror) && (i.ref !== null) && (i.value !== i.mirror)) {
-                        invalidHandler(i.ref)
-                    }
+                {initialData.map((element, idx) => {
+                    if(!data[idx].isValid && data[idx].value !== '') invalidHandler(element.ref)
+                    if(data[idx].isValid && data[idx].value !== '') defaultHandler(element.ref)
+                    if(element.mirror && (data[idx].value !== data[element.mirror].value) && data[idx].value !== '') invalidHandler(element.ref)
 
-                    //console.log(i.iconName, 'is', data[i.iconName as keyof typeof data].isValid)
-                    // if(!data[i.iconName as keyof typeof data].isValid) {
-                    //     checkValidation()
-                    // }
-                   
                     return (
-                        <FormHolder key={i.iconName} onFocus={e => focusHanlder(i.ref)} onBlur={e => blurHanlder(i.value, i.ref)} ref={i.ref}>
-                            {i.iconName === 'username' ? <UserIcon /> : null}
-                            {(i.iconName === 'password' || i.iconName === 'confirm') ? <LockIcon /> : null}
-                            {i.iconName === 'mail' ? <MailIcon /> : null}
+                        <FormHolder key={element.name} onFocus={e => focusHanlder(element.ref)} onBlur={e => blurHanlder(data[idx].value, element.ref)} ref={element.ref}>
+                            {element.name === 'username' ? <UserIcon /> : null}
+                            {(element.name === 'password' || element.name === 'confirm') ? <LockIcon /> : null}
+                            {element.name === 'mail' ? <MailIcon /> : null}
                             <FormInputHolder>
-                            {!i.mirror ? (
-                            <ShadowText>{(i.error.length > 1 && i.value !== '')  ? i.error : i.shadowText}</ShadowText>
-                            ) : <ShadowText>{i.value !== '' ? `${i.value === i.mirror ? 'password confimred' : 'password not confirmed'}` : i.shadowText}</ShadowText>}
+                                {!element.mirror ? (
+                                    <ShadowText>{(data[idx].error.length > 1 && data[idx].value !== '')  ? data[idx].error : element.name}</ShadowText>
+                                ) : <ShadowText>{data[idx].value !== '' ? `${data[idx].value === data[element.mirror].value ? 'password confimred' : 'password not confirmed'}` : element.name}</ShadowText>}
                             
                             <FormInput
-                                type={i.type}
-                                value={i.value}
+                                type={element.type}
+                                value={data[idx].value}
                                 onChange={e => {
-                                    changeHanlder(e.target.value.trim().toString(),i.shadowText)
+                                    changeHanlder(e.target.value.trim().toString(),element, idx)
                                 }}
                             ></FormInput>
                             </FormInputHolder>
@@ -193,12 +199,12 @@ const Form: React.FC<IProps> = ({header, data, dataSet, inputs, structureData}) 
                     )
                 })}
 
-            {structureData.extra && <FormAction>Forgot Password?</FormAction>}
-            <FormButton onClick={e => submitHandler(e)} isValid={isValid}>{structureData.buttonLabel}</FormButton>
-            <FormDirect to={structureData.link}>
-                {structureData.directLabel}
-                <FormDetailAction>{structureData.directLink}</FormDetailAction> 
-            </FormDirect>
+                {structureData.extra && <FormAction>Forgot Password?</FormAction>}
+                <FormButton  isValid={isValid}>{structureData.buttonLabel}</FormButton>
+                <FormDirect to={structureData.link}>
+                    {structureData.directLabel}
+                    <FormDetailAction>{structureData.directLink}</FormDetailAction> 
+                </FormDirect>
             </FormWrapper>
         </>
     );

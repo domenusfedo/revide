@@ -5,17 +5,21 @@ import  Form  from './Form/Form';
 
 import {PageBlueprint} from '../theme/globalStyle';
 
-import {LoginType, Input, StructureData} from './Form/types'
+import {Data, StructureData} from './Form/types'
 
 const SignIn = () => {
-    const userRef = useRef<HTMLDivElement>(null);
+    const usernameRef = useRef<HTMLDivElement>(null);
     const passwordRef = useRef<HTMLDivElement>(null);
 
-    const [userSignInData, userSignInDataSet] = useState<LoginType>({
-        username: {
+    const userSignInData: Data[] = [
+        {
+            ref: usernameRef,
+            name: 'username',
             value: '',
+            type: 'text',
             error: '',
             isValid: false,
+            mirror: false,
             config: {
                 lengthCheck: {
                     min: 3,
@@ -24,36 +28,21 @@ const SignIn = () => {
                 isAlphaNumeric: true
             }
         },
-        password: {
+        {
+            ref: passwordRef,
+            name: 'password',
             value: '',
+            type: 'password',
             error: '',
             isValid: false,
+            mirror: false,
             config: {
                 lengthCheck: {
                     min: 6,
                     max: 9
                 },
-                isAlphaNumeric: true,
+                isAlphaNumeric: true
             }
-        }
-    });
-
-    const inputs: Input[] = [
-        {
-            ref: userRef,
-            value: userSignInData.username.value,
-            shadowText: 'username',
-            iconName: 'username',
-            type: 'text',
-            error: userSignInData.username.error
-        },
-        {
-            ref: passwordRef,
-            value: userSignInData.password.value,
-            shadowText: 'password',
-            iconName: 'password',
-            type: 'password',
-            error: userSignInData.password.error
         }
     ];
 
@@ -70,9 +59,7 @@ const SignIn = () => {
             <Holder>
                 <Form
                     header='Welcome back!'
-                    data={userSignInData}
-                    dataSet={userSignInDataSet}
-                    inputs={inputs}
+                    initialData={userSignInData}
                     structureData={structureData}
                 />
             </Holder>

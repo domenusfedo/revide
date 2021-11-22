@@ -34,7 +34,8 @@ const Home = () => {
             <Holder>
             <NameHolder>
                 <Logo/>
-                <Header>revide.</Header>
+                <Header>re.portage</Header>
+                {/* revide. */}
             </NameHolder>
             <NavLinkElement onClick={() => fakeLocate()}>
                 {!loading ?

@@ -6,20 +6,15 @@ export interface StructureData {
     extra: boolean
 }
 
-export interface Input {
-    ref: React.RefObject<HTMLDivElement>,
-    value: string,
-    shadowText: string,
-    iconName: string,
-    type: string,
-    error: string,
-    mirror?: string
-}
 
-export interface SingleData {
+export interface Data {
+    ref: React.RefObject<HTMLDivElement>,
+    name: string
     value: string,
     error: string,
+    type: string,
     isValid: boolean,
+    mirror: number | false,
     config: {
         lengthCheck?: {
             min: number,
@@ -30,17 +25,3 @@ export interface SingleData {
         isMail?: boolean,
     }
 }
-
-export interface LoginType {
-    username: SingleData,
-    password: SingleData,
-}
-
-export interface SigninType {
-    username: SingleData,
-    password: SingleData,
-    confirm: SingleData,
-    mail: SingleData,
-}
-
-export type InputData = SigninType | LoginType;

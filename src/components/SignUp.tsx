@@ -5,19 +5,24 @@ import  Form  from './Form/Form';
 
 import {PageBlueprint} from '../theme/globalStyle';
 
-import {SigninType, Input, StructureData} from './Form/types'
+import {Data, StructureData} from './Form/types'
 
 const SignUp = () => {
-    const userRef = useRef<HTMLDivElement>(null);
+    const usernameRef = useRef<HTMLDivElement>(null);
     const passwordRef = useRef<HTMLDivElement>(null);
-    const passwordConfirmRef = useRef<HTMLDivElement>(null);
+    const confirmRef = useRef<HTMLDivElement>(null);
     const mailRef = useRef<HTMLDivElement>(null);
+   
 
-    const [userSignUpData, userSignUpDataSet] = useState<SigninType>({
-        username: {
+    const userSignUpData: Data[] = [
+        {
+            ref: usernameRef,
+            name: 'username',
             value: '',
+            type: 'text',
             error: '',
             isValid: false,
+            mirror: false,
             config: {
                 lengthCheck: {
                     min: 3,
@@ -26,69 +31,45 @@ const SignUp = () => {
                 isAlphaNumeric: true
             }
         },
-        password: {
+        {
+            ref: passwordRef,
+            name: 'password',
             value: '',
+            type: 'password',
             error: '',
             isValid: false,
+            mirror: false,
             config: {
                 lengthCheck: {
                     min: 6,
                     max: 9
                 },
-                isAlphaNumeric: true,
+                isAlphaNumeric: true
             }
         },
-        confirm: {
+        {
+            ref: confirmRef,
+            name: 'confirm',
             value: '',
+            type: 'password',
             error: '',
+            mirror: 1,
             isValid: false,
             config: {
-
+                isEqual: true
             }
-        },
-        mail: {
-            value: '',
-            error: '',
-            isValid: false,
-            config: {
-                isMail: true
-            }
-        }
-    });
-
-    const inputs: Input[] = [
-        {
-            ref: userRef,
-            value: userSignUpData.username.value,
-            shadowText: 'username',
-            iconName: 'username',
-            type: 'text',
-            error: userSignUpData.username.error,
-        },
-        {
-            ref: passwordRef,
-            value: userSignUpData.password.value,
-            shadowText: 'password',
-            iconName: 'password',
-            type: 'password',
-            error: userSignUpData.password.error,
-        },
-        {
-            ref: passwordConfirmRef,
-            value: userSignUpData.confirm.value,
-            shadowText: 'confirm',
-            iconName: 'confirm',
-            type: 'password',
-            error: userSignUpData.confirm.error,
-            mirror: userSignUpData.password.value,
         },
         {
             ref: mailRef,
-            value: userSignUpData.mail.value,
-            shadowText: 'mail',
-            iconName: 'mail',
+            name: 'mail',
+            value: '',
             type: 'mail',
-            error: userSignUpData.mail.error,
+            error: '',
+            isValid: false,
+            mirror: false,
+            config: {
+                isMail: true
+            }
         }
     ];
 
@@ -104,10 +85,8 @@ const SignUp = () => {
         <PageBlueprint>
             <Holder>
                 <Form
-                    header='Welcome back!'
-                    data={userSignUpData}
-                    dataSet={userSignUpDataSet}
-                    inputs={inputs}
+                    header='Nice to meet You!'
+                    initialData={userSignUpData}
                     structureData={structureData}
                 />
             </Holder>

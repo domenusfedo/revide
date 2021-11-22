@@ -78,7 +78,7 @@ export const ShadowText = styled.span`
     color: ${({ theme }) => theme.colors.blackVar};
 
     &.active {
-        top: 9%;
+        top: 16%;
     }
 `;
 
