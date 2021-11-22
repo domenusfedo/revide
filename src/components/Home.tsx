@@ -1,12 +1,16 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Alerts, Holder, Header, Logo, NameHolder, BackText, Spinner, Terms, NavLinkElement} from './Home.elements';
 
 import { PageBlueprint } from '../theme/globalStyle';
 
 import { useNavigate } from "react-router-dom";
+import { RootState } from '../app/store';
+import { useSelector } from 'react-redux';
 
 const Home = () => {
+    const authData = useSelector((state: RootState) => state.auth);
     const navigate = useNavigate();
+
     const [loading, loadingSet] = useState<boolean>(false)
     const [alerts, alertsSet] = useState<boolean>(true)
     const [locate, locateSet] = useState<boolean>(false)
@@ -29,13 +33,17 @@ const Home = () => {
         }, 1000)
     }
 
+    useEffect(() => {
+        isAuthSet(authData.isAuth)
+    }, [])
+
     return (
         <PageBlueprint>
             <Holder>
             <NameHolder>
                 <Logo/>
-                <Header>re.portage</Header>
-                {/* revide. */}
+                <Header>revide.</Header>
+                {/* re.portage */}
             </NameHolder>
             <NavLinkElement onClick={() => fakeLocate()}>
                 {!loading ?

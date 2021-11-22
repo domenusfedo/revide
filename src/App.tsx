@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, {useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -13,12 +13,15 @@ import {AppHolder} from './App.elements'
 
 const App = () => {
   let location = useLocation();
-  const appRef = useRef(null)
 
   const authData = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
 
   const [isAuth, isAuthSet] = useState<boolean>(false)
+
+  useEffect(() => {
+    isAuthSet(authData.isAuth)
+  }, [])
   
 
   return (

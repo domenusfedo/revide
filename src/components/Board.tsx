@@ -1,7 +1,7 @@
 import React, {useRef, useEffect, useState} from 'react';
 
 import {PageBlueprint} from '../theme/globalStyle';
-import {FakeSpot, RightSpot, BoardHolder, Header, Holder, ReportButton,CategoryHolder, ElementsHolder, NavHolder } from './Board.elements'
+import {BoardHolder, Header, Holder, ReportButton,CategoryHolder,} from './Board.elements'
 
 import Category from './Category/Category';
 import PostElement from './PostElement/PostElement';
@@ -52,7 +52,6 @@ const Board = () => {
     return (
         <PageBlueprint>
             <BoardHolder>
-                {/* <NavHolder> */}
                     <Holder>
                         <Header>Revide.</Header>
                         <ReportButton/>
@@ -63,11 +62,7 @@ const Board = () => {
                         <Category name='Events' id='1' focusedElementSet={focusedElementSet}/>
                         <Category name='Near me' id='2' focusedElementSet={focusedElementSet}/>
                     </CategoryHolder>
-                {/* </NavHolder> */}
-                {/* <ElementsHolder> */}
-                    {/* <FakeSpot></FakeSpot>
-                    <RightSpot> */}
-                {fousedElement === 1 && (
+                    {fousedElement === 1 && (
                         elements.map((e, idx)=> (
                             <PostElement
                                 title={e.title}
@@ -82,8 +77,6 @@ const Board = () => {
                     {fousedElement === 2 && (
                         <span/>
                     )}
-                    {/* </RightSpot> */}
-                {/* </ElementsHolder> */}
             </BoardHolder>
         </PageBlueprint>
     );

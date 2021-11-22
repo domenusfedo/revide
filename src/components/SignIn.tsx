@@ -1,15 +1,30 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useRef} from 'react';
 
-import {Holder, Header} from './SignIn.elements';
+import {Holder} from './SignIn.elements';
 import  Form  from './Form/Form';
 
 import {PageBlueprint} from '../theme/globalStyle';
 
 import {Data, StructureData} from './Form/types'
+import { useDispatch } from 'react-redux';
+import { RootState } from '../app/store';
 
 const SignIn = () => {
+    const dispatch = useDispatch();
+    
     const usernameRef = useRef<HTMLDivElement>(null);
     const passwordRef = useRef<HTMLDivElement>(null);
+
+    const onSubmit = (userData: { value: string, type: string }[]) => {
+        console.log(userData)
+        //if userData !== null
+
+        //Connect with API (axios)
+
+        //Fetch & store Token (redux)
+
+        //Redirect to /board
+    }
 
     const userSignInData: Data[] = [
         {
@@ -51,7 +66,8 @@ const SignIn = () => {
         buttonLabel: 'SIGN IN',
         directLabel: "Don't have an account?",
         directLink: 'Signup',
-        extra: true
+        extra: true,
+        submitAction: onSubmit
     }
     
     return (

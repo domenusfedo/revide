@@ -1,6 +1,6 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useRef} from 'react';
 
-import {Holder, Header} from './SignIn.elements';
+import {Holder} from './SignIn.elements';
 import  Form  from './Form/Form';
 
 import {PageBlueprint} from '../theme/globalStyle';
@@ -12,6 +12,18 @@ const SignUp = () => {
     const passwordRef = useRef<HTMLDivElement>(null);
     const confirmRef = useRef<HTMLDivElement>(null);
     const mailRef = useRef<HTMLDivElement>(null);
+
+    const onSubmit = (userData: { value: string, type: string }[]) => {
+        console.log(userData)
+
+        //if userData !== null
+
+        //Connect with API (axios)
+
+        //Fetch & store Token (redux)
+
+        //Redirect to /board
+    }
    
 
     const userSignUpData: Data[] = [
@@ -78,7 +90,8 @@ const SignUp = () => {
         buttonLabel: 'SIGN UP',
         directLabel: "Already have an account?",
         directLink: 'Signin',
-        extra: false
+        extra: false,
+        submitAction: onSubmit
     }
 
     return (

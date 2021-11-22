@@ -1,4 +1,4 @@
-import React, {useState, useEffect, isValidElement} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {
     FormWrapper,
@@ -24,7 +24,6 @@ import {
 interface IProps {
     header: string,
     initialData: Data[],
-    // dataSet: React.Dispatch<React.SetStateAction<Data[]>>,
     structureData: StructureData
 }
 
@@ -67,10 +66,11 @@ const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
         actualData.map(e => {
             if (!e.isValid) {
                 status = false;
-                return;
+                return null;
             }
+            return null;
         })
-        isValidSet(status)
+        isValidSet(status);
     }
 
     const checkLength = (element: any, length: number) => {
@@ -90,9 +90,9 @@ const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
     const checkAlphanumeric = (value: string) => {
         let message = ''
         if( /[^a-zA-Z0-9]/.test( value ) ) {
-        message = ' is invalid'
+            message = ' is invalid'
         } else {
-        message = ''
+            message = ''
         }
         return message
     }
@@ -113,14 +113,14 @@ const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
         if (data[provided].value === confirm) {
             value = true;
         }
-        return value
+        return value;
     }
     
     const changeHanlder = (value: string, elementPointer: Data, idx: number) => {
         const element = data[idx];
+
         let error = `${elementPointer.name}`;
         let validationValue = false;
-
         let isEqual = false
 
 
@@ -153,6 +153,7 @@ const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
 
         const updatedState = data;
         const updatedObject = data[idx];
+        
         updatedObject.isValid = validationValue;
         updatedObject.error = error;
         updatedObject.value = value;
@@ -162,6 +163,23 @@ const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
         dataSet((prev: any) => ([
             ...prev
         ]))
+    }
+
+    const submitHanlder = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
+        if(!isValid) return;
+        
+        let dataArray: { value: string, type: string }[] = []; //[name: string]
+
+        Object.keys(data).map((idx: any) => {
+            dataArray.push({
+                //[data[idx].name]: data[idx].value,
+                value: data[idx].value,
+                type: data[idx].name
+            })
+            return null;
+        })
+        structureData.submitAction(dataArray)
     }
 
     useEffect(() => {
@@ -200,7 +218,7 @@ const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
                 })}
 
                 {structureData.extra && <FormAction>Forgot Password?</FormAction>}
-                <FormButton  isValid={isValid}>{structureData.buttonLabel}</FormButton>
+                <FormButton  isValid={isValid} onClick={e => submitHanlder(e)}>{structureData.buttonLabel}</FormButton>
                 <FormDirect to={structureData.link}>
                     {structureData.directLabel}
                     <FormDetailAction>{structureData.directLink}</FormDetailAction> 

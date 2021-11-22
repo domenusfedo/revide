@@ -3,8 +3,10 @@ export interface StructureData {
     buttonLabel: string,
     directLabel: string,
     directLink: string,
-    extra: boolean
+    extra: boolean,
+    submitAction: (userData: { value: string, type: string }[]) => void
 }
+
 
 
 export interface Data {
