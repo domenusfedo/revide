@@ -21,6 +21,7 @@ export const slideInLeft = keyframes`
     -webkit-transform: translate3d(-100%, 0, 0);
     transform: translate3d(-100%, 0, 0);
     visibility: visible;
+    opacity: 0;
   }
 
   to {
@@ -35,6 +36,7 @@ export const slideOutLeft = keyframes`
   from {
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
+    opacity: 1;
   }
 
   to {
@@ -53,9 +55,9 @@ export const PageBlueprint = styled.div`
     align-items: center;
 
     &.page-enter-active {
-    animation: ${slideInLeft} 0.2s forwards;
+      animation: ${slideInLeft} 0.3s forwards;
     }
     &.page-exit-active {
-        animation: ${slideOutLeft} 0.2s forwards;
+        animation: ${slideOutLeft} 0.3s forwards;
     }
 `;

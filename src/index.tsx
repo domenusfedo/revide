@@ -10,6 +10,8 @@ import { ThemeProvider } from 'styled-components';
 import {GlobalStyle} from './theme/globalStyle';
 import {Theme} from './theme/theme'
 
+require('dotenv').config();
+
 ReactDOM.render(
   <HashRouter basename='/'>
     <Provider store={store}>

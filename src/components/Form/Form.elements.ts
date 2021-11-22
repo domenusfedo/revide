@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 import { NavLink } from 'react-router-dom';
 import { FaUser, FaLock } from 'react-icons/fa'
 import { IoMdMailOpen } from 'react-icons/io'
@@ -119,12 +119,27 @@ export const FormAction = styled.span`
     }
 `;
 type Valid = {
-    isValid: boolean
+    isValid: boolean,
 }
+
+const shake = keyframes`
+ 0% {transform: translate(0)}
+  1% {transform: translate(-3px)}
+  2% {transform: translate(5px)}
+  3% {transform: translate(-8px)}
+  4% {transform: translate(8px)}
+  5% {transform: translate(-5px)}
+  6% {transform: translate(3px)}
+  7% {transform: translate(0)}
+`
+
 export const FormButton = styled.button<Valid>`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: ${({ theme }) => theme.colors.primary};
     color: ${({ theme }) => theme.colors.white};
-    width: 100%;
+    width: 90%;
     font-family: inherit;
     font-weight: 600;
     border-radius: 25px;
@@ -133,11 +148,16 @@ export const FormButton = styled.button<Valid>`
     font-size: 1.1rem;
     cursor: pointer;
     translate: all 5s;
+    height: 5rem;
     background-color: ${({ theme, isValid }) => (isValid ? theme.colors.primaryVar : theme.colors.blackVar)};
 
     @media screen and (max-width: 430px) {
         width: 90%;
         padding: 1.5rem 1rem;
+    }
+
+    &.shake {
+        animation: ${shake} 8s;
     }
 `;
 
@@ -177,6 +197,29 @@ export const MailIcon = styled(AiFillMail)`
     &.invalid {
         color: ${({ theme }) => theme.colors.red};
     }
+`;
+
+const spin = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`
+
+export const Spinner = styled.div`
+    border: 5px solid ${({ theme }) => theme.colors.priamry};
+    border-top: 5px solid ${({ theme }) => theme.colors.primary};
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    animation: ${spin} 1s linear infinite;
+`;
+
+export const FormError = styled.h3`
+   color: ${({ theme }) => theme.colors.red};
+   text-align: center;
 `;
 
 //Dynamic styled icons

@@ -1,13 +1,17 @@
+export interface ProvidedData {
+    [key: string]: string
+}
+
 export interface StructureData {
     link: string,
     buttonLabel: string,
     directLabel: string,
     directLink: string,
     extra: boolean,
-    submitAction: (userData: { value: string, type: string }[]) => void
+    loading: boolean,
+    error: string | undefined,
+    submitAction: (userData: ProvidedData) => void
 }
-
-
 
 export interface Data {
     ref: React.RefObject<HTMLDivElement>,

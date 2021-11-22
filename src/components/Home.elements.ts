@@ -20,7 +20,6 @@ export const NameHolder = styled.div`
     align-items: center;
     flex-direction: row;
     margin-bottom: 2rem;
-    width: 100%;
 `;
 
 export const Logo = styled(LogoIcon)`

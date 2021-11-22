@@ -14,15 +14,8 @@ import {AppHolder} from './App.elements'
 const App = () => {
   let location = useLocation();
 
-  const authData = useSelector((state: RootState) => state.auth);
+  const {isAuth} = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
-
-  const [isAuth, isAuthSet] = useState<boolean>(false)
-
-  useEffect(() => {
-    isAuthSet(authData.isAuth)
-  }, [])
-  
 
   return (
     <AppHolder>

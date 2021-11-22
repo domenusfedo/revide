@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 
 import {
     FormWrapper,
@@ -13,12 +13,15 @@ import {
     FormButton,
     FormDirect,
     FormDetailAction,
-    FormAction
+    FormAction,
+    Spinner,
+    FormError
 } from './Form.elements';
 
 import {
     StructureData,
-    Data
+    Data,
+    ProvidedData
 } from './types'
 
 interface IProps {
@@ -32,10 +35,12 @@ const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
     const [isValid, isValidSet] = useState<boolean>(false);
     const [data, dataSet] = useState<Data[]>(initialData);
 
+    const buttonRef = useRef<HTMLButtonElement>(null);
+
     const modifyClass = (ref: React.RefObject<HTMLDivElement>, className: string, action: string) => {
         if(action === 'add') {
             ref.current!.classList.add(className);
-            ref.current!.children[1].children[0].classList.add(className);
+            ref.current!.children[1].children[0].classList[action](className);
             ref.current!.children[0].classList.add(className);
         } else {
             ref.current!.classList.remove(className);
@@ -167,19 +172,33 @@ const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
 
     const submitHanlder = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-        if(!isValid) return;
+        if(!isValid) {
+            buttonRef.current?.classList.add('shake')
+
+            setTimeout((e) => {
+                buttonRef.current?.classList.remove('shake');
+            }, 1000)
+            
+            return;
+        }
+        if(structureData.error) {
+            buttonRef.current?.classList.add('shake')
+
+            setTimeout((e) => {
+                buttonRef.current?.classList.remove('shake');
+            }, 1000)
+        }
         
-        let dataArray: { value: string, type: string }[] = []; //[name: string]
+        let dataObject: ProvidedData; //
 
         Object.keys(data).map((idx: any) => {
-            dataArray.push({
-                //[data[idx].name]: data[idx].value,
-                value: data[idx].value,
-                type: data[idx].name
-            })
+            dataObject = {
+                ...dataObject,
+                [data[idx].name]: data[idx].value,
+            }
+            structureData.submitAction(dataObject)
             return null;
         })
-        structureData.submitAction(dataArray)
     }
 
     useEffect(() => {
@@ -218,11 +237,16 @@ const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
                 })}
 
                 {structureData.extra && <FormAction>Forgot Password?</FormAction>}
-                <FormButton  isValid={isValid} onClick={e => submitHanlder(e)}>{structureData.buttonLabel}</FormButton>
+                <FormButton ref={buttonRef} isValid={isValid} onClick={e => submitHanlder(e)} >
+                    {!structureData.loading ? 
+                    structureData.buttonLabel 
+                    : <Spinner/>}
+                </FormButton>
                 <FormDirect to={structureData.link}>
                     {structureData.directLabel}
                     <FormDetailAction>{structureData.directLink}</FormDetailAction> 
                 </FormDirect>
+                {/* <FormError>{structureData.error}</FormError> */}
             </FormWrapper>
         </>
     );

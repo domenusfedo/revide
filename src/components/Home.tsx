@@ -8,13 +8,12 @@ import { RootState } from '../app/store';
 import { useSelector } from 'react-redux';
 
 const Home = () => {
-    const authData = useSelector((state: RootState) => state.auth);
+    const {isAuth} = useSelector((state: RootState) => state.auth);
     const navigate = useNavigate();
 
-    const [loading, loadingSet] = useState<boolean>(false)
-    const [alerts, alertsSet] = useState<boolean>(true)
-    const [locate, locateSet] = useState<boolean>(false)
-    const [isAuth, isAuthSet] = useState<boolean>(false);
+    const [loading, loadingSet] = useState<boolean>(false);
+    const [alerts, alertsSet] = useState<boolean>(true);
+    const [locate, locateSet] = useState<boolean>(false);
 
     const fakeLocate = () => {
         if(locate) {
@@ -33,9 +32,6 @@ const Home = () => {
         }, 1000)
     }
 
-    useEffect(() => {
-        isAuthSet(authData.isAuth)
-    }, [])
 
     return (
         <PageBlueprint>
@@ -52,8 +48,8 @@ const Home = () => {
                     <Spinner/>
                 }
             </NavLinkElement>
-            <Alerts>{(alerts && locate) ? <>
-                <span style={{fontWeight: 400}}>or</span> <span style={{fontStyle: 'italic', cursor: 'pointer', fontWeight: 800}}>see 2 alerts</span>
+            <Alerts>{(locate) ? <>
+                <span style={{fontWeight: 400}}>or</span> <span style={{fontStyle: 'italic', cursor: 'pointer', fontWeight: 800}}>go to board</span>
             </> : ''}</Alerts>
         </Holder>
         <Terms>Terms & Conditions</Terms>

@@ -1,31 +1,41 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {Holder} from './SignIn.elements';
 import  Form  from './Form/Form';
 
 import {PageBlueprint} from '../theme/globalStyle';
 
-import {Data, StructureData} from './Form/types'
+import {Data, ProvidedData, StructureData} from './Form/types'
+import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../app/store';
+
+import { clearError, signUpHandler } from '../features/authSlice';
 
 const SignUp = () => {
+    const navigate = useNavigate();
+
+    const dispatch = useDispatch();
+    const {isLoading, isAuth, error} = useSelector((state: RootState) => state.auth);
+
     const usernameRef = useRef<HTMLDivElement>(null);
     const passwordRef = useRef<HTMLDivElement>(null);
     const confirmRef = useRef<HTMLDivElement>(null);
     const mailRef = useRef<HTMLDivElement>(null);
 
-    const onSubmit = (userData: { value: string, type: string }[]) => {
-        console.log(userData)
+    const onSubmit = (userData: ProvidedData) => {
 
-        //if userData !== null
+       dispatch(signUpHandler({
+           type: 'auth/signUp',
+           payload: {
+               mail: userData.mail,
+               password: userData.password,
+               username: userData.username
+           }
+       }))
 
-        //Connect with API (axios)
-
-        //Fetch & store Token (redux)
-
-        //Redirect to /board
     }
    
-
     const userSignUpData: Data[] = [
         {
             ref: usernameRef,
@@ -91,8 +101,14 @@ const SignUp = () => {
         directLabel: "Already have an account?",
         directLink: 'Signin',
         extra: false,
+        loading: isLoading,
+        error: error,
         submitAction: onSubmit
     }
+
+    useEffect(() => {
+        dispatch(clearError())
+    }, [])
 
     return (
         <PageBlueprint>

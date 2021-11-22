@@ -1,46 +1,63 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {Holder} from './SignIn.elements';
 import  Form  from './Form/Form';
 
 import {PageBlueprint} from '../theme/globalStyle';
 
-import {Data, StructureData} from './Form/types'
-import { useDispatch } from 'react-redux';
+import {Data, ProvidedData, StructureData} from './Form/types'
+
+import { useDispatch, useSelector } from 'react-redux';
+import { signInHandler,clearError } from '../features/authSlice';
+
 import { RootState } from '../app/store';
+import { useNavigate } from 'react-router';
 
 const SignIn = () => {
+    const navigate = useNavigate();
+    
+    const {isLoading, isAuth, error} = useSelector((state: RootState) => state.auth);
     const dispatch = useDispatch();
     
-    const usernameRef = useRef<HTMLDivElement>(null);
+    const mailRef = useRef<HTMLDivElement>(null);
     const passwordRef = useRef<HTMLDivElement>(null);
 
-    const onSubmit = (userData: { value: string, type: string }[]) => {
-        console.log(userData)
-        //if userData !== null
+    const onSubmit = async (userData: ProvidedData) => {
+        const {
+            mail,
+            password
+        } = userData;
 
-        //Connect with API (axios)
-
-        //Fetch & store Token (redux)
-
-        //Redirect to /board
+        dispatch(signInHandler({
+            type: 'auth/sigIn',
+            payload: {
+                mail: mail,
+                password: password
+            }
+        }))
     }
+
+    useEffect(() => {
+        if(isAuth) {
+            navigate('/board')
+        }
+    }, [isAuth])
+
+    useEffect(() => {
+        dispatch(clearError())
+    }, [])
 
     const userSignInData: Data[] = [
         {
-            ref: usernameRef,
-            name: 'username',
+            ref: mailRef,
+            name: 'mail',
             value: '',
-            type: 'text',
+            type: 'mail',
             error: '',
             isValid: false,
             mirror: false,
             config: {
-                lengthCheck: {
-                    min: 3,
-                    max: 9
-                },
-                isAlphaNumeric: true
+                isMail: true
             }
         },
         {
@@ -67,6 +84,8 @@ const SignIn = () => {
         directLabel: "Don't have an account?",
         directLink: 'Signup',
         extra: true,
+        loading: isLoading,
+        error: error,
         submitAction: onSubmit
     }
     
