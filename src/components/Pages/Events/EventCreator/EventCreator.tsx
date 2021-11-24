@@ -13,17 +13,18 @@ import {
 interface IProps {
     event: Event,
     type: 'small' | 'medium' | 'high',
-    position: 'high' | 'medium' | 'small1' | 'small2', 
-    bgImage: string
+    position: 'high' | 'medium' | 'small1' | 'small2' | 'another1' | 'another2', 
+    bgImage: string,
+    toggle?: boolean
 }
 
 const clickAnimation = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     
 }
 
-const EventCreator: React.FC<IProps> = ({event, type, bgImage, position}) => {
+const EventCreator: React.FC<IProps> = ({event, type, bgImage, position, toggle= false}) => {
     return (
-        <EventCreatorHolderSize postion={position} onClick={e => clickAnimation(e)}>
+        <EventCreatorHolderSize toggle={toggle} postion={position} onClick={e => clickAnimation(e)}>
             <EventCreatorHolder bgTexture={bgImage} type={type} postion={position}>
                 <Header type={type}>{event.title}</Header>
                 <SubHeader type={type}>{event.location}</SubHeader>

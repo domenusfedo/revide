@@ -12,78 +12,86 @@ export interface Event {
     participants: number,
 }
 
-interface DashboardEvents {
-    high: Event,
-    medium: Event,
-    small: Event[]
-}
-
 interface EventsState {
     events: Event[],
     saved: Event[],
-    dashboard: DashboardEvents
+    dashboard: {
+        highlightedEvent: Event,
+        dashboardEvents: Event[]
+    }
 }
 
-//Dummy data
-const dashboardEvents: DashboardEvents = {
-    high: {
+//Highlighted @FelsonInteligent
+const highlightedEvent: Event = {
+    createdAt: new Date(),
+    editedAt: new Date(),
+    location: 'Warsaw, Krakowskie przedmiescie',
+    title: 'Fruit Party',
+    author: {
+        id: '1231235672',
+        username: 'Testnazwy' //Can be anyone
+    },
+    participants: 69,
+}
+
+//Pagination @FelsonInteligent Api should response with array of 5 elements: Event
+const dashboardEvents: Event[] = [
+    {
         createdAt: new Date(),
         editedAt: new Date(),
-        location: 'Warsaw, Krakowskie przedmiescie',
-        title: 'Fruit Party',
+        location: 'Warsaw, Sadowa',
+        title: 'Pac pac',
         author: {
-            id: '1231235672',
-            username: 'Testnazwy' //Can be anyone
+            id: '312312312',
+            username: 'testNazwy'
         },
         participants: 69,
-    },
-    medium: {
+    }, {
         createdAt: new Date(),
         editedAt: new Date(),
         location: 'Warsaw, Sadowa',
         title: "Kill 'em all",
         author: {
-            id: '1231235672',
-            username: 'Testnazwy' //only logged user
+            id: '312312312',
+            username: 'testNazwy'
         },
-        participants: 12,
-    },
-    small: [
-        {
-            createdAt: new Date(),
-            editedAt: new Date(),
-            location: 'Warsaw, Sadowa',
-            title: "Walky doggy",
-            author: {
-                id: '1231235672',
-                username: 'Testnazwy' //only logged user
-            },
-            participants: 3,
+        participants: 69,
+    }, {
+        createdAt: new Date(),
+        editedAt: new Date(),
+        location: 'Warsaw, Sadowa',
+        title: "Walky doggy",
+        author: {
+            id: '312312312',
+            username: 'testNazwy'
         },
-        {
-            createdAt: new Date(),
-            editedAt: new Date(),
-            location: 'Warsaw, Sadowa',
-            title: "Simple walk",
-            author: {
-                id: '1231235672',
-                username: 'Testnazwy' //only logged user
-            },
-            participants: 7,
-        }
-    ]
-}
-//Dummy data
-
-export const fetchDashboardEvents = createAsyncThunk(
-    'fetch/dashboardEvents',
-    async () => {
-        //fetch dashboard events data
-        //part of state.dashboard
+        participants: 69,
+    }, {
+        createdAt: new Date(),
+        editedAt: new Date(),
+        location: 'Warsaw, Sadowa',
+        title: "Simple Walk",
+        author: {
+            id: '312312312',
+            username: 'testNazwy'
+        },
+        participants: 69,
+    }, {
+        createdAt: new Date(),
+        editedAt: new Date(),
+        location: 'Warsaw, Sadowa',
+        title: "No Walk",
+        author: {
+            id: '312312312',
+            username: 'testNazwy'
+        },
+        participants: 69,
     }
-);
+]
+//Pagination
 
-export const fetchAllEvents = createAsyncThunk(
+//Fetch 5 events based on actual page in payload
+export const fetchFiveEvents = createAsyncThunk(
     'fetch/allEvents',
     async () => {
         //fetch all events data
@@ -106,7 +114,10 @@ const initialState: EventsState = {
         }
     ],
     saved: [],
-    dashboard: dashboardEvents
+    dashboard: {
+        highlightedEvent,
+        dashboardEvents //This should be always array of 5 elements
+    }
 }
 
 const eventsSlice = createSlice({

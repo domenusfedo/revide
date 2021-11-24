@@ -3,13 +3,14 @@ import styled, { keyframes } from "styled-components";
 interface EventCreatorHolderType {
     type: string,
     bgTexture: string;
-    postion: string
+    postion: string,
 }
 interface Type {
     type: string,
 }
 interface Position {
-    postion: string
+    postion: string,
+    toggle: boolean
 }
 
 export const EventCreatorHolderSize = styled.div<Position>`
@@ -18,6 +19,9 @@ export const EventCreatorHolderSize = styled.div<Position>`
     padding: 0.5rem;
     position: relative;
     grid-area: ${({ postion }) => postion};
+    //display: ${({ toggle }) => (!toggle ? 'block' : 'none')};
+    opacity: ${({ toggle }) => (toggle ? 0 : 1)};
+    transition: all .5s;
 `;
 
 const infinityBg = keyframes`
