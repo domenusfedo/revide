@@ -8,6 +8,7 @@ export const Theme = {
         whiteVar: '#DEDEDE',
         black: '#5b5b5b',
         blackVar: '#929292',
-        red: '#a6384c'
+        red: '#a6384c',
+        turx: '#00C8EE'
     }
 }

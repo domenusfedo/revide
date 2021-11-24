@@ -9,6 +9,10 @@ export const CategoryName = styled.span`
     color: ${({ theme }) => theme.colors.blackVar};
     font-size: 1rem;
     font-weight: 600;
+
+    @media screen and (max-width: 360px) {
+        font-size: .8rem;
+    }
 `
 
 export const CategoryExtension = styled.div`
@@ -39,6 +43,10 @@ export const CategoryHolder = styled.div`
     &.active ${CategoryExtension} {
         transform: translateY(0);
         opacity: 1;
+    }
+
+    @media screen and (max-width: 360px) {
+        margin: 0 .5rem;
     }
 `
 

@@ -38,7 +38,7 @@ const Home = () => {
             <Holder>
             <NameHolder>
                 <Logo/>
-                <Header>revide.</Header>
+                <Header>Revide.</Header>
                 {/* re.portage */}
             </NameHolder>
             <NavLinkElement onClick={() => fakeLocate()}>

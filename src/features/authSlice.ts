@@ -25,7 +25,7 @@ interface SignUpType {
 }
 
 const initialState: AuthState = {
-    isAuth: false,
+    isAuth: true,
     token: undefined,
     uid: undefined,
     error: '',
@@ -49,6 +49,10 @@ export const signInHandler = createAsyncThunk(
             const token = await user?.getIdToken();
             const uid = user?.uid;
             const username = user?.displayName;
+
+            console.log(username)
+
+
 
             return {
                 isAuth: true,
@@ -89,13 +93,6 @@ export const signUpHandler = createAsyncThunk(
                 .catch((err: firebase.FirebaseError) => {
                     throw new Error(err.message)
                 })
-
-            // const user = res.user;
-            // const token = await user?.getIdToken();
-            // const uid = user?.uid;
-            // const username = user?.displayName;
-
-            //console.log(res)
 
             return {
                 isAuth: false,
@@ -145,6 +142,7 @@ const authSlice = createSlice({
             state.isAuth = action.payload?.isAuth;
             state.error = action.payload.error;
             state.token = action.payload.token;
+            state.user = action.payload.user as string;
             state.uid = action.payload.uid;
         })
 
@@ -160,6 +158,7 @@ const authSlice = createSlice({
             state.isAuth = action.payload?.isAuth;
             state.error = action.payload.error;
             state.token = action.payload.token;
+            state.user = action.payload.user;
             state.uid = action.payload.uid;
         })
     }
@@ -169,39 +168,3 @@ export const {
     clearError
 } = authSlice.actions
 export default authSlice.reducer
-
-
- //     try {
-
-        //         const res = await auth.createUserWithEmailAndPassword(action.payload.mail, action.payload.password)
-        //             .then(data => {
-        //                 data.user?.updateProfile({
-        //                     displayName: action.payload.username
-        //                 })
-        //             })
-        //             .catch((err: firebase.FirebaseError) => {
-        //                 throw new Error(err.message)
-        //             })
-
-        //         return {
-        //             isAuth: false,
-        //             token: undefined,
-        //             uid: undefined,
-        //             error: undefined,
-        //             user: undefined,
-        //             isLoading: false,
-        //             shouldRedirect: false
-        //         }
-        //     } catch (err) {
-        //         const error = err as firebase.FirebaseError;
-
-        //         return {
-        //             isAuth: false,
-        //             token: undefined,
-        //             uid: undefined,
-        //             error: error.message,
-        //             user: undefined,
-        //             isLoading: false,
-        //             shouldRedirect: false
-        //         }
-        //     }

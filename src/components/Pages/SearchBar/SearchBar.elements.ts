@@ -30,12 +30,20 @@ export const SearchBarIcon = styled(FaSearch)`
 export const SearchBarInput = styled.input`
     background-color: transparent;
     color: ${({ theme }) => theme.colors.blackVar};
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-family: inherit;
     outline: none;
 
+    @media screen and (max-width: 350px) {
+        font-size: .9rem;
+    }
+
     &::placeholder {
         color: ${({ theme }) => theme.colors.blackVar};
-        font-size: 1.5rem;
+        font-size: 1rem;
+
+        @media screen and (max-width: 350px) {
+        font-size: .9rem;
+    }
     }
 `;

@@ -47,6 +47,10 @@ export const CategoryHolder = styled.div`
     flex-direction: row;
     padding: 2rem 1rem;
     grid-area: category;
+
+    @media screen and (max-width: 360px) {
+        padding: 0 .5rem;
+    }
 `
 
 

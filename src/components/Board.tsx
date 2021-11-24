@@ -9,6 +9,7 @@ import PostElement from './PostElement/PostElement';
 import {    
     Events
 } from './index'
+import Profile from './Pages/Profile/Profile';
  
 
 const Board = () => {
@@ -37,6 +38,7 @@ const Board = () => {
 
                     <AppContent>
                         {focusedElement === 0 && <Events />}
+                        {focusedElement === 2 && <Profile />}
                     </AppContent>
 
                     <CategoryHolder ref={categoryRef}>
