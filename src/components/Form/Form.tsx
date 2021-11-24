@@ -1,4 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 
 import {
     FormWrapper,
@@ -36,6 +38,8 @@ const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
     const [data, dataSet] = useState<Data[]>(initialData);
 
     const buttonRef = useRef<HTMLButtonElement>(null);
+
+    console.log(structureData.loading)
 
     const modifyClass = (ref: React.RefObject<HTMLDivElement>, className: string, action: string) => {
         if(action === 'add') {
@@ -181,13 +185,6 @@ const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
             
             return;
         }
-        if(structureData.error) {
-            buttonRef.current?.classList.add('shake')
-
-            setTimeout((e) => {
-                buttonRef.current?.classList.remove('shake');
-            }, 1000)
-        }
         
         let dataObject: ProvidedData; //
 
@@ -204,6 +201,16 @@ const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
     useEffect(() => {
         checkValidation(data);
     }, [data])
+
+    useEffect(() => {  
+        if(structureData.error !== undefined) {
+            buttonRef.current?.classList.add('shake')
+
+            setTimeout((e) => {
+                buttonRef.current?.classList.remove('shake');
+            }, 1000)
+        }
+    }, [structureData.loading, structureData.error])
 
     return (
         <>
@@ -246,7 +253,7 @@ const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
                     {structureData.directLabel}
                     <FormDetailAction>{structureData.directLink}</FormDetailAction> 
                 </FormDirect>
-                {/* <FormError>{structureData.error}</FormError> */}
+                <FormError>{structureData.error}</FormError>
             </FormWrapper>
         </>
     );

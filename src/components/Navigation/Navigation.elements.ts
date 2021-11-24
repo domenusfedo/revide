@@ -3,7 +3,7 @@ import { MdEditCalendar, MdOpacity, MdQuestionAnswer } from 'react-icons/md'
 
 export const NavigationHolder = styled.div`
     width: 100%;
-    height: 5rem;
+    height: 100%;
     position: fixed;
     bottom: 0;
     left: 0;

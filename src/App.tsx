@@ -26,11 +26,11 @@ const App = () => {
           key={location.key}
         >
           <Routes location={location}>
-            <Route path='/' element={<Home />}/>
             <Route path='signin' element={<SignIn />}/>
             <Route path='signup' element={<SignUp />}/>
-            <Route path='/board' element={isAuth ? <Board/> : <Navigate to='/'/>}/>
-            <Route path='/*' element={<Navigate to='/'/>}/>
+            {isAuth && <Route path='/board' element={<Board/>}/>}
+            {/* <Route path='/*' element={<Navigate replace to='/'/>}/> */}
+            <Route path='/*' element={<Home />}/>
           </Routes>
         </CSSTransition>
       </TransitionGroup>

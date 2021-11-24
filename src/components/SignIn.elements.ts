@@ -21,3 +21,14 @@ export const Header = styled.h1`
     font-size: 2rem;
     text-align: center;
 `;
+
+export const ConfirmationHolder = styled.div`
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: ${({ theme }) => theme.colors.primary};
+    z-index: 500;
+`;

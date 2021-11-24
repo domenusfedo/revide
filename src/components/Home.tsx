@@ -49,7 +49,7 @@ const Home = () => {
                 }
             </NavLinkElement>
             <Alerts>{(locate) ? <>
-                <span style={{fontWeight: 400}}>or</span> <span style={{fontStyle: 'italic', cursor: 'pointer', fontWeight: 800}}>go to board</span>
+                <span style={{fontWeight: 400}}>or</span> <span style={{fontStyle: 'italic', cursor: 'pointer', fontWeight: 800}}>go to events</span>
             </> : ''}</Alerts>
         </Holder>
         <Terms>Terms & Conditions</Terms>

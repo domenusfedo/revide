@@ -1,14 +1,16 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { auth } from '../firebase';
+import firebase from 'firebase/app';
+import { app } from '../firebase';
 
 interface AuthState {
     isAuth: boolean,
     token: string | undefined,
     uid: string | undefined,
-    error: string | undefined,
+    error: string | undefined
     user: string | undefined,
-    isLoading: boolean
+    isLoading: boolean,
+    shouldRedirect: boolean
 }
 
 interface SignInType {
@@ -28,36 +30,44 @@ const initialState: AuthState = {
     uid: undefined,
     error: '',
     user: undefined,
-    isLoading: false
+    isLoading: false,
+    shouldRedirect: false
 }
 
 export const signInHandler = createAsyncThunk(
     'auth/signIn',
     async (action: PayloadAction<SignInType>) => {
-        try {
-            const res = await auth.signInWithEmailAndPassword(action.payload.mail, action.payload.password)
+        if (!action.payload.password || !action.payload.mail) return;
 
-            const userData = await res.user
-            const token = await userData?.getIdToken();
-            const uid = await userData?.uid;
-            const username = userData?.displayName;
+        try {
+            const res = await app.auth().signInWithEmailAndPassword(action.payload.mail, action.payload.password)
+                .catch((err: firebase.FirebaseError) => {
+                    throw new Error(err.message)
+                })
+
+            const user = res.user;
+            const token = await user?.getIdToken();
+            const uid = user?.uid;
+            const username = user?.displayName;
 
             return {
-                isLoading: false,
                 isAuth: true,
-                token: token,
+                token: token!.toString(),
                 uid: uid,
-                username: username,
-                error: undefined
+                error: undefined,
+                user: username,
+                shouldRedirect: true
             }
         } catch (err) {
+            const error = err as Error;
+
             return {
-                isLoading: false,
                 isAuth: false,
                 token: undefined,
                 uid: undefined,
-                username: undefined,
-                error: `Err: ${err}`
+                error: error.message,
+                user: undefined,
+                shouldRedirect: false
             }
         }
     }
@@ -66,29 +76,47 @@ export const signInHandler = createAsyncThunk(
 export const signUpHandler = createAsyncThunk(
     'auth/signUp',
     async (action: PayloadAction<SignUpType>) => {
+        if (!action.payload.username || !action.payload.password || !action.payload.mail) return
+
         try {
-            const res = await auth.createUserWithEmailAndPassword(action.payload.mail, action.payload.password)
-            res.user?.updateProfile({
-                displayName: action.payload.username
-            })
+            const res = await app.auth().createUserWithEmailAndPassword(action.payload.mail, action.payload.password)
+                .then(data => {
+                    data.user?.updateProfile({
+                        displayName: action.payload.username
+                    })
+                    return data;
+                })
+                .catch((err: firebase.FirebaseError) => {
+                    throw new Error(err.message)
+                })
 
-            const token = res.user?.getIdToken().toString();
-            const user = res.user?.displayName?.toString();
+            // const user = res.user;
+            // const token = await user?.getIdToken();
+            // const uid = user?.uid;
+            // const username = user?.displayName;
+
+            //console.log(res)
 
             return {
-                isLoading: false,
-                isAuth: true,
-                user: user,
-                token: token,
-                error: undefined
-            }
-        } catch (err) {
-            return {
-                isLoading: false,
                 isAuth: false,
                 token: undefined,
+                uid: undefined,
+                error: undefined,
+                user: action.payload.username,
+                shouldRedirect: true
+            }
+        } catch (err) {
+            const error = err as Error;
+
+            //console.log('ERROR')
+
+            return {
+                isAuth: false,
+                token: undefined,
+                uid: undefined,
+                error: error.message,
                 user: undefined,
-                error: `Err: ${err}`
+                shouldRedirect: false
             }
         }
     }
@@ -99,7 +127,8 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         clearError: (state) => {
-            state.error = undefined
+            state.error = undefined;
+            state.shouldRedirect = false;
         }
     },
     extraReducers: builder => {
@@ -108,8 +137,11 @@ const authSlice = createSlice({
             state.isLoading = true;
         });
         builder.addCase(signInHandler.fulfilled, (state, action) => {
-            console.log(action.payload)
-            state.isLoading = action.payload?.isLoading;
+            state.isLoading = false;
+            if (action.payload === undefined) return;
+
+            state.isLoading = false;
+            state.shouldRedirect = action.payload?.shouldRedirect;
             state.isAuth = action.payload?.isAuth;
             state.error = action.payload.error;
             state.token = action.payload.token;
@@ -121,11 +153,14 @@ const authSlice = createSlice({
             state.isLoading = true;
         });
         builder.addCase(signUpHandler.fulfilled, (state, action) => {
-            console.log(action.payload)
-            state.isLoading = action.payload?.isLoading;
-            state.token = action.payload?.token;
-            state.user = action.payload?.user;
-            state.error = action.payload?.error;
+            state.isLoading = false;
+            if (action.payload === undefined) return;
+
+            state.shouldRedirect = action.payload?.shouldRedirect;
+            state.isAuth = action.payload?.isAuth;
+            state.error = action.payload.error;
+            state.token = action.payload.token;
+            state.uid = action.payload.uid;
         })
     }
 });
@@ -134,3 +169,39 @@ export const {
     clearError
 } = authSlice.actions
 export default authSlice.reducer
+
+
+ //     try {
+
+        //         const res = await auth.createUserWithEmailAndPassword(action.payload.mail, action.payload.password)
+        //             .then(data => {
+        //                 data.user?.updateProfile({
+        //                     displayName: action.payload.username
+        //                 })
+        //             })
+        //             .catch((err: firebase.FirebaseError) => {
+        //                 throw new Error(err.message)
+        //             })
+
+        //         return {
+        //             isAuth: false,
+        //             token: undefined,
+        //             uid: undefined,
+        //             error: undefined,
+        //             user: undefined,
+        //             isLoading: false,
+        //             shouldRedirect: false
+        //         }
+        //     } catch (err) {
+        //         const error = err as firebase.FirebaseError;
+
+        //         return {
+        //             isAuth: false,
+        //             token: undefined,
+        //             uid: undefined,
+        //             error: error.message,
+        //             user: undefined,
+        //             isLoading: false,
+        //             shouldRedirect: false
+        //         }
+        //     }

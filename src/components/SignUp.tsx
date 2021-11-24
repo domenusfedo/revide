@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 
-import {Holder} from './SignIn.elements';
+import {Holder, ConfirmationHolder} from './SignIn.elements';
 import  Form  from './Form/Form';
 
 import {PageBlueprint} from '../theme/globalStyle';
@@ -16,7 +16,7 @@ const SignUp = () => {
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
-    const {isLoading, isAuth, error} = useSelector((state: RootState) => state.auth);
+    const {isLoading, isAuth, error, shouldRedirect} = useSelector((state: RootState) => state.auth);
 
     const usernameRef = useRef<HTMLDivElement>(null);
     const passwordRef = useRef<HTMLDivElement>(null);
@@ -24,6 +24,8 @@ const SignUp = () => {
     const mailRef = useRef<HTMLDivElement>(null);
 
     const onSubmit = (userData: ProvidedData) => {
+
+        dispatch(clearError());
 
        dispatch(signUpHandler({
            type: 'auth/signUp',
@@ -107,7 +109,15 @@ const SignUp = () => {
     }
 
     useEffect(() => {
-        dispatch(clearError())
+        if(shouldRedirect) {
+            navigate('/signin')
+        }
+    }, [shouldRedirect])
+
+    useEffect(() => {
+        return () => {
+            dispatch(clearError())
+        }
     }, [])
 
     return (
