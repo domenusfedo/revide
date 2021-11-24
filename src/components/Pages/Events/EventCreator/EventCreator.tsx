@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import { Event } from '../../../../features/eventsSlice';
 
@@ -18,14 +18,16 @@ interface IProps {
     toggle?: boolean
 }
 
-const clickAnimation = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    
-}
-
 const EventCreator: React.FC<IProps> = ({event, type, bgImage, position, toggle= false}) => {
+    const elementRef = useRef<HTMLDivElement>(null)
+
+    const clickAnimation = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        elementRef.current?.classList.toggle('active');
+    }
+
     return (
-        <EventCreatorHolderSize toggle={toggle} postion={position} onClick={e => clickAnimation(e)}>
-            <EventCreatorHolder bgTexture={bgImage} type={type} postion={position}>
+        <EventCreatorHolderSize ref={elementRef} toggle={toggle} postion={position} onClick={e => clickAnimation(e)}>
+            <EventCreatorHolder bgTexture={bgImage} type={type} postion={position} toggle={toggle}>
                 <Header type={type}>{event.title}</Header>
                 <SubHeader type={type}>{event.location}</SubHeader>
                 <Button type={type}>More Details...</Button>

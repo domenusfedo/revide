@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "copy/Events copy"  ]
 }
