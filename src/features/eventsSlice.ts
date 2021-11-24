@@ -85,6 +85,16 @@ const dashboardEvents: Event[] = [
             username: 'testNazwy'
         },
         participants: 69,
+    }, {
+        createdAt: new Date(),
+        editedAt: new Date(),
+        location: 'Warsaw, Sadowa',
+        title: "TyTy Laura",
+        author: {
+            id: '312312312',
+            username: 'testNazwy'
+        },
+        participants: 69,
     }
 ]
 //Pagination

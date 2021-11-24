@@ -25,7 +25,7 @@ interface SignUpType {
 }
 
 const initialState: AuthState = {
-    isAuth: false,
+    isAuth: true,
     token: undefined,
     uid: undefined,
     error: '',

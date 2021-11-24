@@ -12,24 +12,20 @@ import {
 
 interface IProps {
     event: Event,
-    type: 'small' | 'medium' | 'high',
-    position: 'high' | 'medium' | 'small1' | 'small2' | 'another1' | 'another2', 
+    type: 'small' | 'medium' | 'high'
     bgImage: string,
-    toggle?: boolean
+    toggle?: boolean,
+    shouldBeBlack?: boolean,
 }
 
-const EventCreator: React.FC<IProps> = ({event, type, bgImage, position, toggle= false}) => {
+const EventCreator: React.FC<IProps> = ({event, type, bgImage, toggle = false, shouldBeBlack = false}) => {
     const elementRef = useRef<HTMLDivElement>(null)
 
-    const clickAnimation = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        elementRef.current?.classList.toggle('active');
-    }
-
     return (
-        <EventCreatorHolderSize ref={elementRef} toggle={toggle} postion={position} onClick={e => clickAnimation(e)}>
-            <EventCreatorHolder bgTexture={bgImage} type={type} postion={position} toggle={toggle}>
-                <Header type={type}>{event.title}</Header>
-                <SubHeader type={type}>{event.location}</SubHeader>
+        <EventCreatorHolderSize ref={elementRef} toggle={toggle}>
+            <EventCreatorHolder shouldBeBlack={shouldBeBlack} bgTexture={bgImage} toggle={toggle}>
+                <Header >{event.title}</Header>
+                <SubHeader >{event.location}</SubHeader>
                 <Button type={type}>More Details...</Button>
             </EventCreatorHolder>
         </EventCreatorHolderSize>

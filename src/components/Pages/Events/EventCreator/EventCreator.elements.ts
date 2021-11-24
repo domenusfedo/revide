@@ -1,17 +1,16 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
 interface EventCreatorHolderType {
-    type: string,
     bgTexture: string;
-    postion: string,
-    toggle: boolean
-}
-interface Type {
-    type: string,
+    toggle: boolean,
+    shouldBeBlack: boolean
 }
 interface Position {
-    postion: string,
     toggle: boolean
+}
+
+interface Type {
+    type: string
 }
 
 export const EventCreatorHolderSize = styled.div<Position>`
@@ -39,7 +38,7 @@ export const EventCreatorHolder = styled.div<EventCreatorHolderType>`
 
     padding: 0;
     background-color: ${({ theme }) => theme.colors.secondary};
-    color: ${({ theme, type }) => (type !== 'medium' ? theme.colors.white : theme.colors.black)};
+    color: ${({ theme, shouldBeBlack }) => (shouldBeBlack ? theme.colors.black : theme.colors.white)};
     border-radius: 25px;
     padding: 1.5rem 1rem;
     position: relative;
@@ -57,10 +56,10 @@ export const EventCreatorHolder = styled.div<EventCreatorHolderType>`
     transition: all .5s;
 `;
 
-export const Header = styled.div<Type>`
+export const Header = styled.div`
     z-index: 500;
     font-weight: 900;
-    font-size: ${({ type }) => (type !== 'small' ? '1.8rem' : '1.2rem')};
+    font-size: 1.2rem;
 
     @media screen and (max-width: 390px) {
         width: 90%;
@@ -72,7 +71,7 @@ export const Header = styled.div<Type>`
     transition: all .5s;
 `;
 
-export const SubHeader = styled.div<Type>`
+export const SubHeader = styled.div`
     z-index: 500;
     font-style: italic;
     font-weight: 400;

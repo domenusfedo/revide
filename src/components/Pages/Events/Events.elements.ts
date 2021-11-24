@@ -36,10 +36,9 @@ export const EventsField = styled.div<Toggle>`
 `;
 
 export const HighlightField = styled.div<Toggle>`
-    height: 100%;
     display: flex;
-    flex-grow: ${({ toggle }) => (toggle ? 0 : 2)};
-    height: ${({ toggle }) => (!toggle ? '100%' : '0%')};
+    flex-grow: 0;
+    height: ${({ toggle }) => (!toggle ? '70%' : '0%')};
     transition: all .5s linear;
 `;
 
@@ -85,6 +84,7 @@ export const RestField = styled.div<Toggle>`
     flex-grow: ${({ toggle }) => (toggle ? 4 : 3)};
     flex-direction: column;
     transition: all .5s;
+    overflow-y: scroll;
 `;
 const ColumnField = styled.div<Toggle>`
     display: flex;
@@ -107,6 +107,9 @@ export const RowOne = styled(RowField) <Toggle>`
     height: ${({ toggle }) => (toggle ? '100%' : '0%')};
     flex-grow: 4;
 
+    @media screen and (max-width: 370px) {
+        flex-direction: column;
+    }
 `
 
 export const RowTwo = styled(RowField) <Toggle>`
@@ -115,18 +118,24 @@ export const RowTwo = styled(RowField) <Toggle>`
 `
 
 export const RowThree = styled(RowField) <Toggle>`
-    
     flex-grow: 3;
 `
 export const RowFour = styled(RowField) <Toggle>`
     flex-grow: 1;
-    height: ${({ toggle }) => (toggle ? '100%' : '0%')};
+    height: ${({ toggle }) => (toggle ? '50%' : '0%')};
+    @media screen and (max-width: 370px) {
+        height: ${({ toggle }) => (toggle ? '100%' : '0%')};
+    }
 `
 export const RowFive = styled(RowField) <Toggle>`
     flex-grow: 1;
 `
 export const RowSix = styled(RowField) <Toggle>`
     flex-grow: 1;
+`
+export const RowSeven = styled(RowField) <Toggle>`
+    flex-grow: ${({ toggle }) => (toggle ? 1 : 0)};
+    height: ${({ toggle }) => (toggle ? '100%' : '0%')};
 `
 
 export const ColumnOne = styled(ColumnField) <Toggle>`
