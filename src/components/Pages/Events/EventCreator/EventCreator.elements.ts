@@ -15,11 +15,12 @@ interface Type {
 
 export const EventCreatorHolderSize = styled.div<Position>`
     position: absolute;
-    width: 100%;
     height: 100%;
+    width: 100%;
     padding: 0.3rem;
     position: relative;
-    opacity: ${({ toggle }) => (toggle ? 0 : 1)};
+    opacity: ${({ toggle }) => (!toggle ? 0 : 1)};
+    //height: ${({ toggle }) => (!toggle ? '100%' : 0)};
     transition: all .5s;
 `;
 

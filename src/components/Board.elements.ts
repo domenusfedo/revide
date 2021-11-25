@@ -51,15 +51,4 @@ export const CategoryHolder = styled.div`
     @media screen and (max-width: 360px) {
         padding: 0 .5rem;
     }
-`
-
-
-
-
-// export const ProfileButton = styled.div`
-//     background-color: ${({ theme }) => theme.colors.blackVar};
-//     width: 3rem;
-//     height: 3rem;
-//     border-radius: 50%;
-//     font-size: 2rem;
-// `
+`;

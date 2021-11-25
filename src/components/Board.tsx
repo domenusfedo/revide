@@ -4,7 +4,6 @@ import {PageBlueprint} from '../theme/globalStyle';
 import {BoardHolder, Header, Holder, AppContent, CategoryHolder,LogoHolder} from './Board.elements'
 
 import Category from './Category/Category';
-import PostElement from './PostElement/PostElement';
 
 import {    
     Events

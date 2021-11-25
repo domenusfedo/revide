@@ -7,7 +7,7 @@ export const SearchBarHolder = styled.div`
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 1rem 0;
+    padding: .5rem 0;
     color: ${({ theme }) => theme.colors.black};
 `;
 

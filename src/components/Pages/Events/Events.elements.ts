@@ -14,8 +14,14 @@ export const EventsHolder = styled.div`
     align-items: flex-start;
     flex-direction: column;
     transition: all .5s linear;
+    &::-webkit-scrollbar {display:none;}
 `;
-
+export const Loading = styled.div`
+    width: 100%;
+    min-height: 1.5rem;
+    text-align: center;
+    font-style: italic;
+`;
 export const SearchField = styled.div`
     width: 100%;
     height: 10%;
@@ -29,17 +35,28 @@ export const SearchField = styled.div`
 
 export const EventsField = styled.div<Toggle>`
     width: 100%;
-    height: 90%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     transition: all .5s linear;
+    overflow: hidden;
+    &::-webkit-scrollbar {display:none;}
 `;
 
 export const HighlightField = styled.div<Toggle>`
     display: flex;
-    flex-grow: 0;
+    flex-grow: 3;
     height: ${({ toggle }) => (!toggle ? '70%' : '0%')};
+    opacity: ${({ toggle }) => (toggle ? 0 : 1)};
+    cursor: ${({ toggle }) => (toggle ? 'pointer' : 'default')};
     transition: all .5s linear;
+    margin-top: ${({ toggle }) => (!toggle ? '1rem' : 0)};
+
+
+    & div div div{
+        display: ${({ toggle }) => (toggle ? 'none' : 'block')};
+        padding: ${({ toggle }) => (toggle && '0 0')};
+    }
 `;
 
 //Mark
@@ -81,11 +98,16 @@ export const MarkOption = styled.div`
 export const RestField = styled.div<Toggle>`
     height: 100%;
     display: flex;
+    flex-grow: 4;
     flex-grow: ${({ toggle }) => (toggle ? 4 : 3)};
     flex-direction: column;
     transition: all .5s;
-    overflow-y: scroll;
+    overflow-y: ${({ toggle }) => (toggle ? 'scroll' : 'hidden')};
+
+    &::-webkit-scrollbar {display:none;}
 `;
+
+
 const ColumnField = styled.div<Toggle>`
     display: flex;
     flex-grow: 1;
@@ -106,15 +128,23 @@ const RowField = styled.div<Toggle>`
 export const RowOne = styled(RowField) <Toggle>`
     height: ${({ toggle }) => (toggle ? '100%' : '0%')};
     flex-grow: 4;
+    min-height: 101%;
+    //overflow: auto;
+    padding: 1rem 0;
+    overflow: ${({ toggle }) => (toggle ? 'auto' : 'hidden')};
 
     @media screen and (max-width: 370px) {
         flex-direction: column;
     }
 `
 
-export const RowTwo = styled(RowField) <Toggle>`
-    flex-grow: ${({ toggle }) => (toggle ? 1 : 0)};
-    height: ${({ toggle }) => (toggle ? '10%' : '0%')};
+export const FakeRow = styled.div`
+    display: flex;
+    flex-grow: 4;
+    flex-direction: row;
+    transition: all .5s;
+    min-height: 100%;
+    width:100%;
 `
 
 export const RowThree = styled(RowField) <Toggle>`
@@ -140,9 +170,12 @@ export const RowSeven = styled(RowField) <Toggle>`
 
 export const ColumnOne = styled(ColumnField) <Toggle>`
     flex-grow: 1;
+    order: 2;
+
 `
 export const ColumnTwo = styled(ColumnField) <Toggle>`
     flex-grow: 1;
+    order: 1;
 `
 //Rest
 
