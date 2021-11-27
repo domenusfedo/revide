@@ -4,9 +4,13 @@ import {
     SearchBarHolder, SearchBarIcon, SearchBarInput, SearchBarInputHolder
 } from './SearchBar.elements';
 
-const SearchBar = () => {
+interface IProps {
+    onFocusHandler: any
+}
+
+const SearchBar: React.FC<IProps> = ({onFocusHandler}) => {
     return (
-        <SearchBarHolder>
+        <SearchBarHolder onFocus={() => onFocusHandler(true)} onBlur={() => onFocusHandler(false)}>
             <SearchBarInputHolder>
                 <SearchBarIcon/>
                 <SearchBarInput placeholder='Search...'/>

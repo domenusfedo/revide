@@ -28,6 +28,7 @@ export const SearchBarIcon = styled(FaSearch)`
 `;
 
 export const SearchBarInput = styled.input`
+    width: 100%;
     background-color: transparent;
     color: ${({ theme }) => theme.colors.blackVar};
     font-size: 1rem;

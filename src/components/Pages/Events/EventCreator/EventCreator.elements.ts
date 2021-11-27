@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { BsBookmarkHeart } from 'react-icons/bs';
 
 interface EventCreatorHolderType {
     bgTexture: string;
@@ -27,11 +28,7 @@ export const EventCreatorHolderSize = styled.div<Position>`
 export const EventCreatorHolder = styled.div<EventCreatorHolderType>`
     width: 100%;
     height: 100%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
+    
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -41,7 +38,7 @@ export const EventCreatorHolder = styled.div<EventCreatorHolderType>`
     background-color: ${({ theme }) => theme.colors.secondary};
     color: ${({ theme, shouldBeBlack }) => (shouldBeBlack ? theme.colors.black : theme.colors.white)};
     border-radius: 25px;
-    padding: 1.5rem 1rem;
+    
     position: relative;
 
     
@@ -52,63 +49,80 @@ export const EventCreatorHolder = styled.div<EventCreatorHolderType>`
     
     &:hover {
         cursor: pointer;
-        background-position: 100% 100%;
+        background-position: 100% 10%;
     }
     transition: all .5s;
+    transition: background-position 5s;
 `;
 
-export const Header = styled.div`
+export const Header = styled.div<Type>`
     z-index: 500;
     font-weight: 900;
     font-size: 1.2rem;
+    padding: 1rem 1rem;
+    padding-bottom: .7rem;
+    pointer-events: none;
+
+    font-size: ${({ theme, type }) => (type === 'high' ? '3rem' : '1.5rem')};
 
     @media screen and (max-width: 390px) {
         width: 90%;
     }
 
     @media screen and (max-width: 350px) {
-        font-size: 1.2rem;
+        font-size: ${({ theme, type }) => (type === 'high' ? '2rem' : '1.2rem')};
     }
     transition: all .5s;
 `;
 
-export const SubHeader = styled.div`
+export const SubHeader = styled.div<Type>`
+    padding: .1rem 1rem;
+    pointer-events: none;
     z-index: 500;
     font-style: italic;
     font-weight: 400;
     font-size: 1rem;
+
+    font-size: 1rem;
+
     @media screen and (max-width: 250px) {
         display: none;
     }
     transition: all .5s;
 `;
 
-export const Button = styled.div<Type>`
-    display: ${({ type }) => (type !== 'high' ? 'none' : 'block')};
-    width: ${({ type }) => (type !== 'high' ? '90%' : '60%')};
-    z-index: 500;
+interface Status {
+    status: boolean
+}
+export const SubStatus = styled.div<Status>`
     position: absolute;
-    left: 5%;
-    bottom: 10%;
-    text-align: center;
+    bottom: 0;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    z-index: 500;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1rem;
+    opacity: ${({ status }) => (status ? .8 : 0)};
 
-    padding: 1rem 1rem;
-    border-radius: 10px;
+    padding: 1rem 2rem;
 
-    font-weight: 600;
-    font-family: inherit;
+    color: ${({ theme }) => theme.colors.white};
 
-    cursor: pointer;
+    transition: all 1s;
+    background-color: ${({ theme }) => theme.colors.black};
+    width: 100%;
+    z-index: 90000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`
 
-    color: ${({ theme }) => theme.colors.black};
-
-    background-color: ${({ theme }) => theme.colors.white};
-
-    @media screen and (max-width: 390px) {
-        width: 90%;
-        font-size: .8rem;
-        text-align: center;
-        padding: 1rem 0;
-    }
-    transition: all .5s;
-`;
+export const StatusText = styled.span`
+    margin-right: 1rem;
+    width: 90%;
+`
+export const StatusIcon = styled(BsBookmarkHeart)`
+font-size: 2rem;
+width: 10%;
+`

@@ -1,6 +1,6 @@
-import React, {useState, useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import { RootState } from './app/store';
 
@@ -15,7 +15,6 @@ const App = () => {
   let location = useLocation();
 
   const {isAuth} = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch();
 
   return (
     <AppHolder>

@@ -1,33 +1,56 @@
-import React, { useRef } from 'react';
-
-import { Event } from '../../../../features/eventsSlice';
+import React, { useEffect, useRef, useState } from 'react';
 
 import {
     EventCreatorHolderSize,
     EventCreatorHolder,
     Header,
-    Button,
-    SubHeader
+    SubHeader,
+    SubStatus,
+    StatusText
 } from './EventCreator.elements'
 
 interface IProps {
     event: any,
-    type: 'small' | 'medium' | 'high'
+    type?: 'high'
     bgImage: string,
     toggle?: boolean,
     shouldBeBlack?: boolean,
+    showDetails: any
+    applyClass: () => void
 }
 
-const EventCreator: React.FC<IProps> = ({event, type, bgImage, toggle = true, shouldBeBlack = false}) => {
-    const elementRef = useRef<HTMLDivElement>(null)
+
+const EventCreator: React.FC<IProps> = ({showDetails, event, type = 'another', bgImage, toggle = true, shouldBeBlack = false, applyClass}) => {
+    const elementRef = useRef<HTMLDivElement>(null);
+    const [status, statusSet] = useState<boolean>(false)
+
+    const detailRevealHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        showDetails(e, bgImage, shouldBeBlack);
+    }
+
+    const handleOn = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        if(status) {
+            applyClass();
+        }
+        detailRevealHandler(e)
+        statusSet(true)
+    }
+
+    const handleOff = () => {
+        statusSet(false)
+    }
 
     return (
-        <EventCreatorHolderSize ref={elementRef} toggle={toggle}>
+        <EventCreatorHolderSize id='main' ref={elementRef} toggle={toggle} onClick={(e) => handleOn(e)} onMouseLeave={() => handleOff()}>
+
             <EventCreatorHolder shouldBeBlack={shouldBeBlack} bgTexture={bgImage} toggle={toggle}>
-                <Header >{event.location.city}</Header>
-                <SubHeader >{event.location.street.name}</SubHeader>
-                <Button type={type}>More Details...</Button>
+                <Header type={type}>{event.location.city}</Header>
+                <SubHeader type={type}>{event.location.street.name}</SubHeader>
+                <SubStatus status={status}>
+                    <StatusText>View</StatusText>
+                </SubStatus>
             </EventCreatorHolder>
+
         </EventCreatorHolderSize>
     );
 };
