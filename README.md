@@ -22,9 +22,11 @@ Project is created with:
 ### In Progress (dummy version)
 ```  
 To do:
-- add component (to enable creating own events)
-- profile component (to view own profile, to view own events)
-- search component
+- Add component (to enable creating own events)
+- Profile component (to view own profile, to view own events)
+- Search component
+- add to fav/participate logic
+- behance presentation
 - tests
 ```  
 
