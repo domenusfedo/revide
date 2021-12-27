@@ -21,7 +21,8 @@ import {
     RightSide,
     UserAction,
     ParticipateField,
-    IntrestedField
+    IntrestedField,
+    LogoSVGHolder
 } from './Board.elements'
 
 import Category from './Category/Category';
@@ -100,7 +101,9 @@ const Board = () => {
         <PageBlueprint>
             <BoardHolder>
                     <Holder>
-                        <LogoHolder />
+                        <LogoHolder>
+                            <LogoSVGHolder/>
+                        </LogoHolder>
                         <Header>Revide.</Header>
                     </Holder>
                    {focusedElement === 0 && <DetailsExpand active={detailToggle} bgImage={detailsElement.position.bgImage} top={detailsElement.position.top} left={detailsElement.position.left} width={detailsElement.position.width} height={detailsElement.position.height} ref={detailsRef}>
@@ -112,7 +115,8 @@ const Board = () => {
                             <HeaderHeader>{detailsElement.information.city}</HeaderHeader>
                             <HeaderSubTitle>{detailsElement.information.street}</HeaderSubTitle>
                             
-                            <HighlightedText>
+                            {/* ADD active={detailToggle} && opacity*/}
+                            <HighlightedText> 
                                 <LeftSide>Participants:</LeftSide>
                                 <RightSide>{detailsElement.information.paricipantAmount}</RightSide>
                             </HighlightedText>

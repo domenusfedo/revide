@@ -1,0 +1,25 @@
+ <RowOne toggle={shouldToggle} key={idx}>
+                                 <ColumnOne toggle={shouldToggle}>
+                                     <RowThree toggle={shouldToggle}>
+                                         {/* <EventCreator pointer={{page: idx, element: 0}} shouldBeBlack={e[0].shouldBeBlack} applyClass={applyClass} showDetails={showDetails} event={e[0]} bgImage={e[0].background}/> */}
+                                     </RowThree>
+                                     <RowFour toggle={extraElements}>
+                                         {/* <EventCreator pointer={{page: idx, element: 1}} shouldBeBlack={e[1].shouldBeBlack} applyClass={applyClass} showDetails={showDetails} toggle={shouldToggle} event={e[1]} bgImage={e[1].background}/> */}
+                                     </RowFour>
+                                     <RowFour toggle={extraElements}>
+                                         {/* <EventCreator pointer={{page: idx, element: 4}} shouldBeBlack={e[4].shouldBeBlack} applyClass={applyClass} showDetails={showDetails} toggle={shouldToggle} event={e[4]}  bgImage={e[4].background}/> */}
+                                     </RowFour>
+                                 </ColumnOne>
+   
+                                 <ColumnTwo toggle={shouldToggle}>
+                                     <RowFive toggle={shouldToggle}>
+                                         {/* <EventCreator pointer={{page: idx, element: 3}} shouldBeBlack={e[3].shouldBeBlack} applyClass={applyClass} showDetails={showDetails} event={e[3]} bgImage={e[3].background}/> */}
+                                     </RowFive>
+                                     <RowSix toggle={shouldToggle}>
+                                         {/* <EventCreator pointer={{page: idx, element: 2}} shouldBeBlack={e[2].shouldBeBlack} applyClass={applyClass} showDetails={showDetails} event={e[2]}  bgImage={e[2].background}/> */}
+                                     </RowSix>
+                                     <RowSeven toggle={extraElements}>
+                                         {/* <EventCreator pointer={{page: idx, element: 5}} shouldBeBlack={e[5].shouldBeBlack} applyClass={applyClass} showDetails={showDetails} toggle={shouldToggle} event={e[5]} bgImage={e[5].background}/> */}
+                                     </RowSeven>
+                                 </ColumnTwo>
+                             </RowOne>

@@ -63,7 +63,6 @@ const EventCreator: React.FC<IProps> = ({showDetails, event, type = 'another', b
         </EventCreatorHolderSize>
     )
 
-
     return (
         <>
             {element}

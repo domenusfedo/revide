@@ -98,9 +98,8 @@ export const MarkOption = styled.div`
 //Rest
 export const RestField = styled.div<Toggle>`
     height: 100%;
-    max-width:100vw;
+    width:100%;
     display: flex;
-    flex-grow: 4;
     flex-grow: ${({ toggle }) => (toggle ? 4 : 3)};
     flex-direction: column;
     transition: all .5s;
@@ -110,116 +109,87 @@ export const RestField = styled.div<Toggle>`
     transition: opacity 1s;
 `;
 
-
+//Rest Structure
 const ColumnField = styled.div<Toggle>`
     display: flex;
     flex-grow: 1;
     flex-direction: column;
     transition: all .5s;
     height: 100%;
-    width:100%;
-    max-width:100vw;
 `;
 const RowField = styled.div<Toggle>`
     display: flex;
-    flex-grow: 1;
+    flex-grow: 2;
     flex-direction: row;
     transition: all .5s;
-    height: 100%;
-    width:100%;
-    max-width:100vw;
 `;
 
 export const RowOne = styled(RowField) <Toggle>`
-    height: ${({ toggle }) => (toggle ? '100%' : '0%')};
-    flex-grow: 4;
-    min-height: 100.5%;
-    max-width:100vw;
-    padding: .2rem 0;
-    overflow: ${({ toggle }) => (toggle ? 'auto' : 'hidden')};
-    @media screen and (max-width: 370px) {
-        flex-direction: ${({ toggle }) => (!toggle ? 'row' : 'column')}
-    }
-`
-
-export const FakeRow = styled.div`
-    display: flex;
-    flex-grow: 4;
-    flex-direction: row;
-    transition: all .5s;
-    min-height: 100%;
+    min-height: ${({ toggle }) => (toggle ? '101%' : '0%')};
     width:100%;
-`
-
-export const RowThree = styled(RowField) <Toggle>`
-    flex-grow: 3;
-    max-width:100vw;
-`
-export const RowFour = styled(RowField) <Toggle>`
-    flex-grow: 1;
-    max-width:100vw;
-    height: ${({ toggle }) => (toggle ? '50%' : '0%')};
-    @media screen and (max-width: 370px) {
-        height: ${({ toggle }) => (toggle ? '100%' : '0%')};
+    padding: .2rem 0;
+    @media screen and (max-width: 470px) {
+        flex-direction: ${({ toggle }) => (!toggle ? 'row' : 'column')};
     }
 `
-export const RowFive = styled(RowField) <Toggle>`
-    flex-grow: 1;
-    max-width:100vw;
-`
-export const RowSix = styled(RowField) <Toggle>`
-    flex-grow: 1;
-    max-width:100vw;
-`
-export const RowSeven = styled(RowField) <Toggle>`
-    flex-grow: ${({ toggle }) => (toggle ? 1 : 0)};
-    height: ${({ toggle }) => (toggle ? '100%' : '0%')};
-`
-
 export const ColumnOne = styled(ColumnField) <Toggle>`
     flex-grow: 1;
-    max-width:100vw;
-    order: 2;
+    order: 1;
+    width: 100%;
+
+    @media screen and (max-width: 470px) {
+        height: ${({ toggle }) => (!toggle ? '33%' : '50%')}
+    }
 `
 export const ColumnTwo = styled(ColumnField) <Toggle>`
     flex-grow: 1;
-    max-width:100vw;
-    order: 1;
-`
-//Rest
-
-export const Pagination = styled.div<Toggle>`
+    order: 2;
     width: 100%;
-    max-width:100vw;
-    opacity: ${({ toggle }) => (!toggle ? 0 : 1)};
-    grid-area: pag;
-    display: flex;
-    justify-content: center;
+
+    @media screen and (max-width: 470px) {
+        flex-grow: 2;
+        height: ${({ toggle }) => (!toggle ? '66%' : '50%')}
+    }
+`
+//Rest Structure
+//Left Rest
+export const RowThree = styled(RowField) <Toggle>`
+        flex-grow: 1;
+        height: ${({ toggle }) => (toggle ? '100%' : '0%')};
+    `
+export const RowFour = styled(RowField) <Toggle>`
+        flex-grow: ${({ toggle }) => (toggle ? 1 : 0)};
+        height: ${({ toggle }) => (toggle ? '100%' : '0%')};
+    `
+export const RowFive = styled(RowField) <Toggle>`
+        flex-grow: ${({ toggle }) => (toggle ? 1 : 0)};
+        height: ${({ toggle }) => (toggle ? '100%' : '0%')};
+
+        //Must be Better solution (based on windows size we should decrease amount of fetching elements)
+        @media screen and (max-width: 470px) {
+            display: none;
+        }
+`
+//Left Rest
+//Right Rest
+export const RowSix = styled(RowField) <Toggle>`
     flex-grow: 1;
-    align-items: center;
-`;
+    height: ${({ toggle }) => (toggle ? '100%' : '0%')};
+`
+export const RowSeven = styled(RowField) <Toggle>`
+    flex-grow: 1;
+    height: ${({ toggle }) => (toggle ? '100%' : '0%')};
+`
+export const RowEight = styled(RowField) <Toggle>`
+    flex-grow: ${({ toggle }) => (toggle ? 1 : 0)};
+    height: ${({ toggle }) => (toggle ? '100%' : '0%')};
 
-interface Status {
-    type: 'left' | 'right'
-}
-export const PaginationItem = styled(BsFillArrowRightCircleFill) <Status>`
-    color: ${({ theme }) => theme.colors.black};
-    transform: ${({ type }) => (type === 'left' ? 'rotateZ(-180deg)' : 'rotateZ(0)')};
-    font-size: 1.8rem;
-    font-weight: 600;
-    max-width:100vw;
-`;
-
-export const PaginationJump = styled.input`
-    color: ${({ theme }) => theme.colors.black};
-    font-family: inherit;
-    text-align: center;
-    background: transparent;
-    font-size: 1.5rem;
-    width: 30%;
-    max-width:100vw;
-    font-weight: 600;
-`;
+    @media screen and (max-width: 470px) {
+        display: none;
+    }
+`
+//Right rest
+//Rest
 
 export const Loading = styled.div`
     width: 100%;
@@ -256,6 +226,14 @@ export const Spinner = styled.div<LoadingStatus>`
     animation: ${spin} 1s linear infinite;
     transition: opacity .5s;
     max-width:100vw;
+
+    @media screen and (max-height: 630px) {
+        border: 1.5px solid ${({ theme }) => theme.colors.black};
+        border-top: 1.5px solid ${({ theme }) => theme.colors.white};
+        width: 10px;
+        height: 10px;
+        padding: .1rem;
+    }
 `;
 
 interface TestType {

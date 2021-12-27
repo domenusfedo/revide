@@ -15,6 +15,10 @@ export const BoardHolder = styled.div`
                         "content"
                         "category";
     position: relative;
+
+    @media screen and (max-height: 630px) {
+        grid-template-rows: 7% 83% 10%;
+    }
 `
 
 export const Holder = styled.div`
@@ -31,21 +35,35 @@ export const Holder = styled.div`
         font-size: 1rem;
     }
 `
-export const LogoHolder = styled(LogoIcon)`
-    height: 5px;
-    width: 5px;
+export const LogoSVGHolder = styled(LogoIcon)`
+   width: 100%;
+   height: 100%;
+`
+export const LogoHolder = styled.div`
+    height: 50px;
+    width: 50px;
+
+    @media screen and (max-height: 630px) {
+        height: 25px;
+        width: 25px;
+    }
 `
 
 export const Header = styled.h1`
     color: ${({ theme }) => theme.colors.black};
     font-weight: 900;
     margin-left: 0.5rem;
+
+    @media screen and (max-height: 630px) {
+        font-size: 1rem;
+    }
 `
 
 export const AppContent = styled.div`
     grid-area: content;
     max-width: 100vw;
     height: 100%;
+    max-width: 600px;
 `;
 
 export const CategoryHolder = styled.div`
