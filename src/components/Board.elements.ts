@@ -72,7 +72,7 @@ justify-content: flex-start;
 align-items: center;
 font-size: 1rem;
 transition: all .1s;
-padding: .5rem 0;
+padding: 1rem .3rem;
 `
 
 interface HeaderType {
@@ -124,9 +124,11 @@ export const OptionsIcon = styled(BsArrowLeftShort)`
 ;
 `
 export const OptionsText = styled.span`
+    font-weight: 600;
+    font-style: italic;
 `
 
-export const ParticipantsAmount = styled.div`
+export const HighlightedText = styled.div`
     width: 100%;
     display: flex;
     justify-content: flex-start;
@@ -134,11 +136,11 @@ export const ParticipantsAmount = styled.div`
     padding: 0 1rem;
     display: none;
 `
-export const ParticipantsText = styled.h3`
+export const LeftSide = styled.h3`
     margin-right: .5rem;
 
 `
-export const Amount = styled.span`
+export const RightSide = styled.span`
     font-style: italic;
 `
 export const UserAction = styled.div`
@@ -200,6 +202,9 @@ export const DetailsExpand = styled.div<ExpandType>`
         opacity: 1;
         cursor: default;
         border-radius: 0;
+        @media screen and (min-width: 760px) {
+            border-radius: 25px;
+        }
     }
     &.active ${HeaderOptions} {
         display: flex;
@@ -207,7 +212,7 @@ export const DetailsExpand = styled.div<ExpandType>`
     &.active ${HeaderDesc} {
         display: flex;
     }
-    &.active ${ParticipantsAmount} {
+    &.active ${HighlightedText} {
         display: flex;
     }
 `

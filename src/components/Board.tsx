@@ -16,9 +16,9 @@ import {
     OptionsIcon, 
     OptionsText,
     HeaderDesc,
-    ParticipantsAmount,
-    Amount,
-    ParticipantsText,
+    HighlightedText,
+    LeftSide,
+    RightSide,
     UserAction,
     ParticipateField,
     IntrestedField
@@ -29,14 +29,25 @@ import Category from './Category/Category';
 import {    
     Events,
 } from './index'
+import Near from './Pages/Near/Near';
 import Profile from './Pages/Profile/Profile';
 
-interface Position {
-    top: number,
-    left: number,
-    width: number,
-    height: number,
-    bgImage: string
+export interface Details {
+    position: {
+        top: number,
+        left: number,
+        width: number,
+        height: number,
+        bgImage: string
+    },
+    information: {
+        city: string,
+        street: string,
+        description: string,
+        shouldBeBlack: boolean,
+        paricipantAmount: number,
+        creator: string
+    }
 }
  
 
@@ -47,7 +58,7 @@ const Board = () => {
     const categoryRef = useRef<HTMLDivElement>(null);
     const detailsRef = useRef<HTMLDivElement>(null);
 
-    const [detailsElement, detailsElementSet] = useState<any>({
+    const [detailsElement, detailsElementSet] = useState<Details>({
         position: {
             top: 0,
             left: 0,
@@ -56,10 +67,12 @@ const Board = () => {
             bgImage: ''
         },
         information: {
-            title: '',
+            city: '',
             street: '',
-            desc: '',
-            shouldBeBlack: false
+            description: '',
+            paricipantAmount: 0,
+            shouldBeBlack: false,
+            creator: ''
         }
     });
 
@@ -68,7 +81,7 @@ const Board = () => {
             categoryRef.current!.children[0].classList.remove('active');
             categoryRef.current!.children[1].classList.remove('active');
             categoryRef.current!.children[2].classList.remove('active');
-            categoryRef.current!.children[3].classList.remove('active');
+           // categoryRef.current!.children[3].classList.remove('active');
 
             categoryRef.current!.children[focusedElement].classList.add('active');
         }
@@ -83,10 +96,6 @@ const Board = () => {
         detailsRef.current?.classList.toggle('active');
     }
 
-    useEffect(() => {
-        
-    }, [])
-
     return (
         <PageBlueprint>
             <BoardHolder>
@@ -94,43 +103,47 @@ const Board = () => {
                         <LogoHolder />
                         <Header>Revide.</Header>
                     </Holder>
-                    {/* //{detailToggle &&  */}
-                    <DetailsExpand active={detailToggle} bgImage={detailsElement.position.bgImage} top={detailsElement.position.top} left={detailsElement.position.left} width={detailsElement.position.width} height={detailsElement.position.height} ref={detailsRef}>
+                   {focusedElement === 0 && <DetailsExpand active={detailToggle} bgImage={detailsElement.position.bgImage} top={detailsElement.position.top} left={detailsElement.position.left} width={detailsElement.position.width} height={detailsElement.position.height} ref={detailsRef}>
                         <DetailsHeader shouldBeBlack={detailsElement.information.shouldBeBlack} active={detailToggle}>
                             <HeaderOptions onClick={() => hideDetails()}>
                                 <OptionsIcon></OptionsIcon>
                                 <OptionsText>events</OptionsText>
                             </HeaderOptions>
-                            <HeaderHeader>{detailsElement.information.title}</HeaderHeader>
+                            <HeaderHeader>{detailsElement.information.city}</HeaderHeader>
                             <HeaderSubTitle>{detailsElement.information.street}</HeaderSubTitle>
                             
-                            <ParticipantsAmount>
-                                <ParticipantsText>Participants:</ParticipantsText>
-                                <Amount>69</Amount>
-                            </ParticipantsAmount>
+                            <HighlightedText>
+                                <LeftSide>Participants:</LeftSide>
+                                <RightSide>{detailsElement.information.paricipantAmount}</RightSide>
+                            </HighlightedText>
 
                             <HeaderDesc>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, repudiandae harum in architecto totam quam aspernatur exercitationem error sint velit cumque maiores reprehenderit animi tempore, fugiat laboriosam vero, impedit ab.
+                                {detailsElement.information.description}
                             </HeaderDesc>
+
+                            <HighlightedText>
+                                <LeftSide>Created by:</LeftSide>
+                                <RightSide>{detailsElement.information.creator}</RightSide>
+                            </HighlightedText>
 
                             <UserAction>
                                 <IntrestedField/>
                                 <ParticipateField>PARTICIPATE</ParticipateField>
                             </UserAction>
-
                         </DetailsHeader>
-                    </DetailsExpand>
+                    </DetailsExpand>}
                     
                     <AppContent>
                         {focusedElement === 0 && <Events detailToggleSet={detailToggleSet} detailsElement={detailsElement} detailsElementSet={detailsElementSet} applyClass={applyClass}/>}
+                        {/* {focusedElement === 1 && <Near />} */}
                         {focusedElement === 2 && <Profile />}
                     </AppContent>
 
                     <CategoryHolder ref={categoryRef}>
                         <Category name='events' id='0' focusedElementSet={focusedElementSet}/>
-                        <Category name='near' id='1' focusedElementSet={focusedElementSet}/>
+                        {/* <Category name='near' id='1' focusedElementSet={focusedElementSet}/> */}
+                        <Category name='add' id='1' focusedElementSet={focusedElementSet}/>
                         <Category name='profile' id='2' focusedElementSet={focusedElementSet}/>
-                        <Category name='add' id='3' focusedElementSet={focusedElementSet}/>
                     </CategoryHolder>
             </BoardHolder>
         </PageBlueprint>

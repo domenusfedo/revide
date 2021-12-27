@@ -15,13 +15,17 @@ import {
     FormDetailAction,
     FormAction,
     Spinner,
-    FormError
+    FormError,
+    DescriptionIcon,
+    TitleIcon
 } from './Form.elements';
 
 import {
     StructureData,
     Data,
-    ProvidedData
+    ProvidedData,
+    ConfigTypes,
+    IconTypes
 } from './types'
 
 interface IProps {
@@ -30,6 +34,9 @@ interface IProps {
     structureData: StructureData
 }
 
+enum ActionType {
+    action = 'action'
+}
 
 const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
     const [isValid, isValidSet] = useState<boolean>(false);
@@ -130,20 +137,19 @@ const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
         let validationValue = false;
         let isEqual = false
 
-
-        if(element.config.hasOwnProperty('lengthCheck')) {
+        if(element.config.hasOwnProperty(ConfigTypes.lengthCheck)) {
             error = error + checkLength(element, value.trim().toString().length)
         }
 
-        if(element.config.hasOwnProperty('isAlphaNumeric')) {
+        if(element.config.hasOwnProperty(ConfigTypes.isAlphaNumeric)) {
             error = error + checkAlphanumeric(value);
         }
 
-        if(element.config.hasOwnProperty('isMail')) {
+        if(element.config.hasOwnProperty(ConfigTypes.isMail)) {
             error = error + checkMail(value);
         }
 
-        if(element.config.hasOwnProperty('isEqual')) {
+        if(element.config.hasOwnProperty(ConfigTypes.isEqual)) {
             if(!elementPointer.mirror) return
             isEqual = checkEqual(elementPointer.mirror, value)
         }
@@ -167,7 +173,7 @@ const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
 
         updatedState[idx] = updatedObject;
 
-        dataSet((prev: any) => ([
+        dataSet((prev: Data[]) => ([
             ...prev
         ]))
     }
@@ -186,10 +192,10 @@ const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
         
         let dataObject: ProvidedData; //
 
-        Object.keys(data).map((idx: any) => {
+        Object.keys(data).map((idx: string) => {
             dataObject = {
                 ...dataObject,
-                [data[idx].name]: data[idx].value,
+                [data[parseInt(idx)].name]: data[parseInt(idx)].value, //This can cause the issue
             }
             structureData.submitAction(dataObject)
             return null;
@@ -221,9 +227,14 @@ const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
 
                     return (
                         <FormHolder key={element.name} onFocus={e => focusHanlder(element.ref)} onBlur={e => blurHanlder(data[idx].value, element.ref)} ref={element.ref}>
-                            {element.name === 'username' ? <UserIcon /> : null}
-                            {(element.name === 'password' || element.name === 'confirm') ? <LockIcon /> : null}
-                            {element.name === 'mail' ? <MailIcon /> : null}
+                            {/* Should be improved */}
+                            {element.name === IconTypes.username ? <UserIcon /> : null}
+                            {element.name === IconTypes.password ? <LockIcon /> : null}
+                            {element.name === IconTypes.confirm ? <LockIcon /> : null}
+                            {element.name === IconTypes.mail ? <MailIcon /> : null}
+                            {element.name === IconTypes.title ? <TitleIcon /> : null}
+                            {element.name === IconTypes.description ? <DescriptionIcon /> : null}
+
                             <FormInputHolder>
                                 {!element.mirror ? (
                                     <ShadowText>{(data[idx].error.length > 1 && data[idx].value !== '')  ? data[idx].error : element.name}</ShadowText>

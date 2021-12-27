@@ -62,7 +62,7 @@ const SignIn = () => {
             isValid: false,
             mirror: false,
             config: {
-                isMail: true
+                
             }
         },
         {

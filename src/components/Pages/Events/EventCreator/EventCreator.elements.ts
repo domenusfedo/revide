@@ -4,7 +4,8 @@ import { BsBookmarkHeart } from 'react-icons/bs';
 interface EventCreatorHolderType {
     bgTexture: string;
     toggle: boolean,
-    shouldBeBlack: boolean
+    shouldBeBlack: boolean,
+    type?: string
 }
 interface Position {
     toggle: boolean
@@ -35,7 +36,7 @@ export const EventCreatorHolder = styled.div<EventCreatorHolderType>`
     flex-direction: column;
 
     padding: 0;
-    background-color: ${({ theme }) => theme.colors.secondary};
+    background-color: ${({ theme }) => theme.colors.primary};
     color: ${({ theme, shouldBeBlack }) => (shouldBeBlack ? theme.colors.black : theme.colors.white)};
     border-radius: 25px;
     
@@ -43,7 +44,7 @@ export const EventCreatorHolder = styled.div<EventCreatorHolderType>`
 
     
     background-image: url("${({ bgTexture }) => bgTexture}");
-    
+    filter: ${({ type }) => (type !== 'high' ? 'grayscale(0.3)' : 'grayscale(0)')};
     background-size: cover;
     background-repeat: no-repeat;
     
@@ -58,12 +59,11 @@ export const EventCreatorHolder = styled.div<EventCreatorHolderType>`
 export const Header = styled.div<Type>`
     z-index: 500;
     font-weight: 900;
-    font-size: 1.2rem;
     padding: 1rem 1rem;
     padding-bottom: .7rem;
     pointer-events: none;
 
-    font-size: ${({ theme, type }) => (type === 'high' ? '3rem' : '1.5rem')};
+    font-size: ${({ theme, type }) => (type === 'high' ? '2rem' : '1.5rem')};
 
     @media screen and (max-width: 390px) {
         width: 90%;

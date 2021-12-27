@@ -5,15 +5,17 @@ import {
 } from './SearchBar.elements';
 
 interface IProps {
-    onFocusHandler: any
+    onFocusHandler: any,
+    value: string,
+    changeHandler: React.Dispatch<React.SetStateAction<string>>
 }
 
-const SearchBar: React.FC<IProps> = ({onFocusHandler}) => {
+const SearchBar: React.FC<IProps> = ({onFocusHandler, value, changeHandler}) => {
     return (
         <SearchBarHolder onFocus={() => onFocusHandler(true)} onBlur={() => onFocusHandler(false)}>
             <SearchBarInputHolder>
                 <SearchBarIcon/>
-                <SearchBarInput placeholder='Search...'/>
+                <SearchBarInput placeholder='Search...' value={value} onChange={(e) => changeHandler(e.target.value)}/>
             </SearchBarInputHolder>
         </SearchBarHolder>
     );

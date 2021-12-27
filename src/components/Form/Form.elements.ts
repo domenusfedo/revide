@@ -3,6 +3,8 @@ import { NavLink } from 'react-router-dom';
 import { FaUser, FaLock } from 'react-icons/fa'
 import { IoMdMailOpen } from 'react-icons/io'
 import { AiFillMail } from 'react-icons/ai'
+import { GrTextAlignLeft } from 'react-icons/gr'
+import { MdTitle } from 'react-icons/md'
 
 export const FormWrapper = styled.form`
     display: flex;
@@ -188,6 +190,31 @@ export const LockIcon = styled(FaLock)`
 `;
 export const MailIcon = styled(AiFillMail)`
     color: ${({ theme }) => theme.colors.blackVar};
+    height: 1rem;
+    width: 1rem;
+
+    &.active {
+        color: ${({ theme }) => theme.colors.primaryVar};
+    }
+    &.invalid {
+        color: ${({ theme }) => theme.colors.red};
+    }
+`;
+
+export const TitleIcon = styled(MdTitle)`
+ color: ${({ theme }) => theme.colors.blackVar};
+    height: 1rem;
+    width: 1rem;
+
+    &.active {
+        color: ${({ theme }) => theme.colors.primaryVar};
+    }
+    &.invalid {
+        color: ${({ theme }) => theme.colors.red};
+    }
+`;
+export const DescriptionIcon = styled(GrTextAlignLeft)`
+ color: ${({ theme }) => theme.colors.blackVar};
     height: 1rem;
     width: 1rem;
 

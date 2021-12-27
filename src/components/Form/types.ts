@@ -2,6 +2,22 @@ export interface ProvidedData {
     [key: string]: string
 }
 
+export enum ConfigTypes {
+    lengthCheck = 'lengthCheck',
+    isAlphaNumeric = 'isAlphaNumeric',
+    isMail = 'isMail',
+    isEqual = 'isEqual'
+}
+
+export enum IconTypes {
+    username = 'username',
+    password = 'password',
+    confirm = 'confirm',
+    mail = 'mail',
+    title = 'title',
+    description = 'description',
+}
+
 export interface StructureData {
     link: string,
     buttonLabel: string,
@@ -15,7 +31,7 @@ export interface StructureData {
 
 export interface Data {
     ref: React.RefObject<HTMLDivElement>,
-    name: string
+    name: 'username' | 'password' | 'mail' | 'title' | 'description' | 'confirm',
     value: string,
     error: string,
     type: string,

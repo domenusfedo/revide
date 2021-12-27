@@ -50,10 +50,6 @@ export const signInHandler = createAsyncThunk(
             const uid = user?.uid;
             const username = user?.displayName;
 
-            console.log(username)
-
-
-
             return {
                 isAuth: true,
                 token: token!.toString(),
@@ -83,7 +79,7 @@ export const signUpHandler = createAsyncThunk(
         if (!action.payload.username || !action.payload.password || !action.payload.mail) return
 
         try {
-            const res = await app.auth().createUserWithEmailAndPassword(action.payload.mail, action.payload.password)
+            await app.auth().createUserWithEmailAndPassword(action.payload.mail, action.payload.password)
                 .then(data => {
                     data.user?.updateProfile({
                         displayName: action.payload.username
