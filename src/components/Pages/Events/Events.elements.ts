@@ -1,6 +1,5 @@
 import styled, { keyframes } from "styled-components";
 import { BsFillArrowRightCircleFill } from 'react-icons/bs';
-import { Interface } from "readline";
 
 interface Toggle {
     toggle: boolean
@@ -27,7 +26,6 @@ export const SearchField = styled.div`
     flex-grow: 1;
     justify-content: center;
     align-items: center;
-    grid-area: search;
 `;
 
 export const EventsField = styled.div<Toggle>`
@@ -55,6 +53,10 @@ export const HighlightField = styled.div<Toggle>`
     & div div div{
         display: ${({ toggle }) => (toggle ? 'none' : 'block')};
         padding: ${({ toggle }) => (toggle && '0 0')};
+    }
+
+    @media screen and (max-width: 350px) {
+        height: ${({ toggle }) => (!toggle ? '40%' : '0%')};
     }
 `;
 
@@ -131,12 +133,10 @@ const RowField = styled.div<Toggle>`
 export const RowOne = styled(RowField) <Toggle>`
     height: ${({ toggle }) => (toggle ? '100%' : '0%')};
     flex-grow: 4;
-    min-height: 101%;
+    min-height: 100.5%;
     max-width:100vw;
-    //overflow: auto;
     padding: .2rem 0;
     overflow: ${({ toggle }) => (toggle ? 'auto' : 'hidden')};
-
     @media screen and (max-width: 370px) {
         flex-direction: ${({ toggle }) => (!toggle ? 'row' : 'column')}
     }
@@ -149,7 +149,6 @@ export const FakeRow = styled.div`
     transition: all .5s;
     min-height: 100%;
     width:100%;
-    max-width:100vw;
 `
 
 export const RowThree = styled(RowField) <Toggle>`

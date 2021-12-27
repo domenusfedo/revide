@@ -58,9 +58,7 @@ const EventCreator: React.FC<IProps> = ({showDetails, event, type = 'another', b
         <EventCreatorHolderSize id='main' ref={elementRef} toggle={toggle}>
             <EventCreatorHolder shouldBeBlack={shouldBeBlack} bgTexture={bgImage} toggle={toggle} type={type}>
                 <Header type={type}>{event.city}, {event.street}</Header>
-                <SubStatus status={status}>
-                    <StatusText>Details</StatusText>
-                </SubStatus>
+                
             </EventCreatorHolder>
         </EventCreatorHolderSize>
     )

@@ -22,7 +22,6 @@ export const EventCreatorHolderSize = styled.div<Position>`
     padding: 0.3rem;
     position: relative;
     opacity: ${({ toggle }) => (!toggle ? 0 : 1)};
-    //height: ${({ toggle }) => (!toggle ? '100%' : 0)};
     transition: all .5s;
 `;
 
@@ -42,7 +41,6 @@ export const EventCreatorHolder = styled.div<EventCreatorHolderType>`
     
     position: relative;
 
-    
     background-image: url("${({ bgTexture }) => bgTexture}");
     filter: ${({ type }) => (type !== 'high' ? 'grayscale(0.3)' : 'grayscale(0)')};
     background-size: cover;
@@ -63,14 +61,14 @@ export const Header = styled.div<Type>`
     padding-bottom: .7rem;
     pointer-events: none;
 
-    font-size: ${({ theme, type }) => (type === 'high' ? '2rem' : '1.5rem')};
+    font-size: ${({ theme, type }) => (type === 'high' ? '1.5rem' : '1.2rem')};
 
     @media screen and (max-width: 390px) {
         width: 90%;
     }
 
     @media screen and (max-width: 350px) {
-        font-size: ${({ theme, type }) => (type === 'high' ? '2rem' : '1.2rem')};
+        font-size: ${({ theme, type }) => (type === 'high' ? '1.6rem' : '1rem')};
     }
     transition: all .5s;
 `;

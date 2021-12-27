@@ -23,12 +23,17 @@ export const Holder = styled.div`
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 1rem 1rem;
+    padding: 1.2rem 1.2rem;
+    font-size: .8rem;
     grid-area: name;
+
+    @media screen and (min-width: 500px) {
+        font-size: 1rem;
+    }
 `
 export const LogoHolder = styled(LogoIcon)`
-    height: 10px;
-    width: 10px;
+    height: 5px;
+    width: 5px;
 `
 
 export const Header = styled.h1`
