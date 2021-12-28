@@ -13,6 +13,10 @@ export const CategoryName = styled.span`
     @media screen and (max-width: 360px) {
         font-size: .8rem;
     }
+
+    @media screen and (max-height: 640px) {
+        font-size: .7rem;
+    }
 `
 
 export const CategoryExtension = styled.div`
@@ -45,6 +49,10 @@ export const CategoryHolder = styled.div`
         opacity: 1;
     }
 
+    &.active ${CategoryName} {
+        font-weight: 900;
+    }
+
     @media screen and (max-width: 360px) {
         margin: 0 .5rem;
     }
@@ -53,24 +61,44 @@ export const CategoryHolder = styled.div`
 export const Icon = styled.div`
     color: ${({ theme }) => theme.colors.blackVar};
     font-size: 1rem;
+
+    @media screen and (max-height: 640px) {
+        font-size: 1.3rem;
+    }
 `;
 
 export const HomeIcon = styled(RiHomeLine)`
     color: ${({ theme }) => theme.colors.blackVar};
     font-size: 1.7rem;
+
+    @media screen and (max-height: 640px) {
+        font-size: 1.3rem;
+    }
 `;
 
 export const NearIcon = styled(MdOutlineNearMe)`
     color: ${({ theme }) => theme.colors.blackVar};
     font-size: 1.7rem;
+
+    @media screen and (max-height: 640px) {
+        font-size: 1.3rem;
+    }
 `;
 
 export const AddIcon = styled(BiMessageSquareAdd)`
     color: ${({ theme }) => theme.colors.blackVar};
     font-size: 1.7rem;
+
+    @media screen and (max-height: 640px) {
+        font-size: 1.3rem;
+    }
 `;
 
 export const ProfileIcon = styled(CgProfile)`
     color: ${({ theme }) => theme.colors.blackVar};
     font-size: 1.7rem;
+
+    @media screen and (max-height: 640px) {
+        font-size: 1.3rem;
+    }
 `;

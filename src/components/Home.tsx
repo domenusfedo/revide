@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Alerts, Holder, Header, Logo, NameHolder, BackText, Spinner, Terms, NavLinkElement} from './Home.elements';
+import {Alerts, Holder, Header, LogoHolder, LogoSVGHolder, NameHolder, BackText, Spinner, Terms, NavLinkElement} from './Home.elements';
 
 import { PageBlueprint } from '../theme/globalStyle';
 
@@ -37,7 +37,9 @@ const Home = () => {
         <PageBlueprint>
             <Holder>
             <NameHolder>
-                <Logo/>
+                <LogoHolder>
+                    <LogoSVGHolder />
+                </LogoHolder>
                 <Header>Revide.</Header>
                 {/* re.portage */}
             </NameHolder>

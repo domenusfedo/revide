@@ -20,8 +20,6 @@ export const EventsHolder = styled.div`
 export const SearchField = styled.div`
     width: 100%;
     max-width:100vw;
-    height: 10%;
-    padding: 0;
     display: flex;
     flex-grow: 1;
     justify-content: center;
@@ -201,6 +199,10 @@ export const Loading = styled.div`
     text-align: center;
     font-style: italic;
     color: ${({ theme }) => theme.colors.black};
+
+    @media screen and (max-height: 640px) {
+        min-height: 1.2rem;
+    }
 `;
 
 const spin = keyframes`

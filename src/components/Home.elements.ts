@@ -22,11 +22,19 @@ export const NameHolder = styled.div`
     margin-bottom: 2rem;
 `;
 
-export const Logo = styled(LogoIcon)`
-    color: ${({ theme }) => theme.colors.white};
-    width: 20px;
-    height: 20px;
-`;
+export const LogoSVGHolder = styled(LogoIcon)`
+   width: 100%;
+   height: 100%;
+`
+export const LogoHolder = styled.div`
+    height: 50px;
+    width: 50px;
+
+    @media screen and (max-height: 630px) {
+        height: 25px;
+        width: 25px;
+    }
+`
 
 export const Header = styled.h1`
     margin-left: 0.5rem;

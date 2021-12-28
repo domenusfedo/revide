@@ -20,7 +20,6 @@ interface EventsState {
     }
 }
 
-//Highlighted @FelsonInteligent
 const highlightedEvent: Event = {
     createdAt: new Date(),
     editedAt: new Date(),
@@ -33,7 +32,6 @@ const highlightedEvent: Event = {
     participants: 69,
 }
 
-//Pagination @FelsonInteligent Api should response with array of 5 elements: Event based on actual page 1:[1E, 2E, 3E, 4E, 5E] 2:[6E, 7E, 8E, 9E, 10E]
 const dashboardEvents: Event[] = [
     {
         createdAt: new Date(),
@@ -99,7 +97,6 @@ const dashboardEvents: Event[] = [
 ]
 //Pagination
 
-//Fetch 5 events based on actual page in payload
 export const fetchFiveEvents = createAsyncThunk(
     'fetch/allEvents',
     async () => {

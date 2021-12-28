@@ -8,7 +8,7 @@ interface AuthState {
     token: string | undefined,
     uid: string | undefined,
     error: string | undefined
-    user: string | undefined,
+    username: string | undefined,
     isLoading: boolean,
     shouldRedirect: boolean
 }
@@ -29,7 +29,7 @@ const initialState: AuthState = {
     token: undefined,
     uid: undefined,
     error: '',
-    user: undefined,
+    username: undefined,
     isLoading: false,
     shouldRedirect: false
 }
@@ -55,7 +55,7 @@ export const signInHandler = createAsyncThunk(
                 token: token!.toString(),
                 uid: uid,
                 error: undefined,
-                user: username,
+                username: username,
                 shouldRedirect: true
             }
         } catch (err) {
@@ -66,7 +66,7 @@ export const signInHandler = createAsyncThunk(
                 token: undefined,
                 uid: undefined,
                 error: error.message,
-                user: undefined,
+                username: undefined,
                 shouldRedirect: false
             }
         }
@@ -108,7 +108,7 @@ export const signUpHandler = createAsyncThunk(
                 token: undefined,
                 uid: undefined,
                 error: error.message,
-                user: undefined,
+                username: undefined,
                 shouldRedirect: false
             }
         }
@@ -138,7 +138,7 @@ const authSlice = createSlice({
             state.isAuth = action.payload?.isAuth;
             state.error = action.payload.error;
             state.token = action.payload.token;
-            state.user = action.payload.user as string;
+            state.username = action.payload.username as string;
             state.uid = action.payload.uid;
         })
 
@@ -154,7 +154,7 @@ const authSlice = createSlice({
             state.isAuth = action.payload?.isAuth;
             state.error = action.payload.error;
             state.token = action.payload.token;
-            state.user = action.payload.user;
+            state.username = action.payload.username;
             state.uid = action.payload.uid;
         })
     }
