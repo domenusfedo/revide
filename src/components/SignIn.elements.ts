@@ -12,7 +12,7 @@ export const Holder = styled.div`
     flex-direction: column;
     padding: 1rem 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;
 `;
 
 export const Header = styled.h1`

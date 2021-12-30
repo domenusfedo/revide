@@ -10,6 +10,8 @@ import { useLocation } from 'react-router-dom';
 import {TransitionGroup, CSSTransition} from 'react-transition-group';
 
 import {AppHolder} from './App.elements'
+import { useRive } from 'rive-react';
+
 
 const App = () => {
   let location = useLocation();
@@ -28,7 +30,6 @@ const App = () => {
             <Route path='signin' element={<SignIn />}/>
             <Route path='signup' element={<SignUp />}/>
             {isAuth && <Route path='/board' element={<Board/>}/>}
-            {/* <Route path='/*' element={<Navigate replace to='/'/>}/> */}
             <Route path='/*' element={<Home />}/>
           </Routes>
         </CSSTransition>

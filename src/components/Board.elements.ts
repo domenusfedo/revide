@@ -27,13 +27,9 @@ export const Holder = styled.div`
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 1.2rem 1.2rem;
+    padding: 1rem 1rem;
     font-size: .8rem;
     grid-area: name;
-
-    @media screen and (min-width: 500px) {
-        font-size: 1rem;
-    }
 `
 export const LogoSVGHolder = styled(LogoIcon)`
    width: 100%;
@@ -43,7 +39,7 @@ export const LogoHolder = styled.div`
     height: 50px;
     width: 50px;
 
-    @media screen and (max-height: 630px) {
+    @media screen and (max-height: 650px) {
         height: 25px;
         width: 25px;
     }
@@ -54,7 +50,7 @@ export const Header = styled.h1`
     font-weight: 900;
     margin-left: 0.5rem;
 
-    @media screen and (max-height: 630px) {
+    @media screen and (max-height: 650px) {
         font-size: 1rem;
     }
 `

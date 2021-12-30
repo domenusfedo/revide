@@ -59,8 +59,8 @@ export const EventCreatorHolder = styled.div<EventCreatorHolderType>`
 export const Header = styled.div<Type>`
     z-index: 500;
     font-weight: 900;
-    padding: 1rem 1rem;
-    padding-bottom: .7rem;
+    padding: 1rem 1rem; //TTO
+    padding-bottom: .3rem;
     pointer-events: none;
 
     font-size: ${({ theme, type }) => (type === 'high' ? '1.2rem' : '1.2rem')};
@@ -74,6 +74,35 @@ export const Header = styled.div<Type>`
     }
     transition: all .5s;
 `;
+
+export const Time = styled.div`
+    z-index: 500;
+    font-weight: 400;
+    padding: 0 1rem;
+    pointer-events: none;
+    font-style: italic;
+
+    font-size: .8rem;
+
+    @media screen and (max-width: 390px) {
+        width: 90%;
+    }
+
+    @media screen and (max-width: 350px) {
+        font-size: .8rem;
+    }
+    transition: all .5s;
+`;
+
+export const Redirect = styled.div`
+    z-index: 500;
+    padding: .5rem 1rem;
+
+    color: ${({ theme }) => theme.colors.white};
+
+
+    background-color: transparent;
+`
 
 export const SubHeader = styled.div<Type>`
     padding: .1rem 1rem;

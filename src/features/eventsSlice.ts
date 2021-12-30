@@ -1,133 +1,118 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { app } from "../firebase";
+
+import { deleteField } from "firebase/firestore";
 
 export interface Event {
-    createdAt: Date,
-    editedAt: Date,
-    location: any,
+    country: string,
+    city: string,
+    street: string,
+    paricipantAmount: number,
+    description: string,
+    background: string,
+    shouldBeBlack: boolean,
+    creator: string,
     title: string,
-    author: {
-        id: string,
-        username: string
-    },
-    participants: number,
+    id: string,
+    startAt: Date
 }
 
 interface EventsState {
-    saved: Event[],
-    dashboard: {
-        highlightedEvent: Event,
-        dashboardEvents: Event[]
-    }
+    followed: Event[],
+    dashboard: {}
 }
 
-const highlightedEvent: Event = {
-    createdAt: new Date(),
-    editedAt: new Date(),
-    location: 'Warsaw, Krakowskie przedmiescie',
-    title: 'Fruit Party',
-    author: {
-        id: '1231235672',
-        username: 'Testnazwy' //Can be anyone
-    },
-    participants: 69,
-}
+export const fetchFollowedEvents = createAsyncThunk(
+    'fetch/followedEvents',
+    async (args: string, { dispatch }) => {
+        await app.firestore().collection(args).doc('followedEvents').get()
+            .then(res => res.data())
+            .then(doc => {
+                //Need to learn how to convert firebase.firestore.DocumentData to typed object
+                //And order by date
 
-const dashboardEvents: Event[] = [
-    {
-        createdAt: new Date(),
-        editedAt: new Date(),
-        location: 'Warsaw, Sadowa',
-        title: 'Pac pac',
-        author: {
-            id: '312312312',
-            username: 'testNazwy'
-        },
-        participants: 69,
-    }, {
-        createdAt: new Date(),
-        editedAt: new Date(),
-        location: 'Warsaw, Sadowa',
-        title: "Kill 'em all",
-        author: {
-            id: '312312312',
-            username: 'testNazwy'
-        },
-        participants: 69,
-    }, {
-        createdAt: new Date(),
-        editedAt: new Date(),
-        location: 'Warsaw, Sadowa',
-        title: "Walky doggy",
-        author: {
-            id: '312312312',
-            username: 'testNazwy'
-        },
-        participants: 69,
-    }, {
-        createdAt: new Date(),
-        editedAt: new Date(),
-        location: 'Warsaw, Sadowa',
-        title: "Simple Walk",
-        author: {
-            id: '312312312',
-            username: 'testNazwy'
-        },
-        participants: 69,
-    }, {
-        createdAt: new Date(),
-        editedAt: new Date(),
-        location: 'Warsaw, Sadowa',
-        title: "No Walk",
-        author: {
-            id: '312312312',
-            username: 'testNazwy'
-        },
-        participants: 69,
-    }, {
-        createdAt: new Date(),
-        editedAt: new Date(),
-        location: 'Warsaw, Sadowa',
-        title: "TyTy Laura",
-        author: {
-            id: '312312312',
-            username: 'testNazwy'
-        },
-        participants: 69,
+                const obj: any = doc;
+                const array: Event[] = [];
+
+                Object.keys(obj).map(e =>
+                    array.push(
+                        obj[e] as Event
+                    )
+                )
+
+                // array.sort((a, b) => new Date(a.startAt).getMilliseconds() - new Date(b.startAt).getMilliseconds())
+
+                dispatch(fetchFollowed(array))
+                //array.sort((a, b) => new Date(a.startAt).getMilliseconds() - new Date(b.startAt).getMilliseconds())
+            })
+            .catch(err => {
+                console.log(err)
+            });
+
     }
-]
-//Pagination
+)
 
-export const fetchFiveEvents = createAsyncThunk(
-    'fetch/allEvents',
-    async () => {
-        //fetch 5 elements: Event based on actual page 1:[1E, 2E, 3E, 4E, 5E]
-        //replace in state / or add to chunks 1:[1E, 2E, 3E, 4E, 5E] 2:[6E, 7E, 8E, 9E, 10E]
-        //if fetched element === {}; fetched element = {title: 'It can be Your event' <- incentive to create an Event <- when clikced redirect to Add new Event}
-        //part of state.events
+export const addFollowedEvents = createAsyncThunk(
+    'fetch/followedEvents',
+    async (args: {
+        uid: string,
+        event: Event
+    }, { dispatch }) => {
+        await app.firestore().collection(args.uid).doc('followedEvents').update({
+            [args.event.id]: args.event
+        }).then(res => {
+            dispatch(addToFollowed(args.event))
+        }).catch(err => {
+            console.log(err)
+        });
+
+    }
+)
+
+export const removeFollowedEvents = createAsyncThunk(
+    'fetch/followedEvents',
+    async (args: {
+        uid: string,
+        event: Event
+    }, { dispatch }) => {
+        await app.firestore().doc(`${args.uid}/followedEvents`).update({
+            [args.event.id]: deleteField()
+        }).then(() => {
+            dispatch(deleteFromFollowed(args.event))
+        }).catch(err => {
+            console.log(err)
+        })
+
     }
 )
 
 const initialState: EventsState = {
-    saved: [], //User's created/saved events visible in Profile section
-    dashboard: {
-        highlightedEvent,
-        dashboardEvents //This should be always array of 5 elements
-    }
+    followed: [],
+    dashboard: {}
 }
 
 const eventsSlice = createSlice({
-    name: 'event',
+    name: 'events',
     initialState,
     reducers: {
+        addToFollowed: (state, action: PayloadAction<Event>) => {
+            state.followed = [...state.followed, action.payload]
+        },
 
-    },
-    extraReducers: {
-        //async actions
+        deleteFromFollowed: (state, action: PayloadAction<Event>) => {
+            state.followed = state.followed.filter(e => e.id !== action.payload.id)
+        },
+
+        fetchFollowed: (state, action: PayloadAction<Event[]>) => {
+            state.followed = [...action.payload]
+        }
     }
 })
 
 export const {
-
+    addToFollowed,
+    deleteFromFollowed,
+    fetchFollowed
 } = eventsSlice.actions;
 
 export default eventsSlice.reducer;

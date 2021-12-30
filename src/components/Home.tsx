@@ -12,7 +12,6 @@ const Home = () => {
     const navigate = useNavigate();
 
     const [loading, loadingSet] = useState<boolean>(false);
-    const [alerts, alertsSet] = useState<boolean>(true);
     const [locate, locateSet] = useState<boolean>(false);
 
     const fakeLocate = () => {
@@ -50,9 +49,6 @@ const Home = () => {
                     <Spinner/>
                 }
             </NavLinkElement>
-            <Alerts>{(locate) ? <>
-                <span style={{fontWeight: 400}}>or</span> <span style={{fontStyle: 'italic', cursor: 'pointer', fontWeight: 800}}>go to events</span>
-            </> : ''}</Alerts>
         </Holder>
         <Terms>Terms & Conditions</Terms>
         </PageBlueprint>

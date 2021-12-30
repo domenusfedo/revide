@@ -50,7 +50,7 @@ export const CategoryHolder = styled.div`
     }
 
     &.active ${CategoryName} {
-        font-weight: 900;
+        
     }
 
     @media screen and (max-width: 360px) {

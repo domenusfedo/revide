@@ -1,7 +1,6 @@
 import styled, { keyframes, css } from "styled-components";
 import { NavLink } from 'react-router-dom';
 import { FaUser, FaLock } from 'react-icons/fa'
-import { IoMdMailOpen } from 'react-icons/io'
 import { AiFillMail } from 'react-icons/ai'
 import { GrTextAlignLeft } from 'react-icons/gr'
 import { MdTitle } from 'react-icons/md'
@@ -11,7 +10,7 @@ export const FormWrapper = styled.form`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 2rem 0;
+    padding-top: 2rem;
     width: 100%;
     max-width: 400px;
 `;
@@ -20,6 +19,14 @@ export const FormHeader = styled.h1`
     font-weight: 900;
     font-size: 2rem;
     text-align: center;
+
+    @media screen and (max-height: 700px) {
+        font-size: 1.5rem;
+    }
+
+    @media screen and (max-width: 270px) {
+        font-size: 1.5rem;
+    }
 `;
 
 export const FormInput = styled.input`
@@ -56,6 +63,16 @@ export const FormHolder = styled.div`
     @media screen and (max-width: 430px) {
         width: 90%;
     }
+
+    @media screen and (max-height: 700px) {
+        padding: 1rem 1rem;
+        margin: .5rem 0rem;
+    }
+
+    @media screen and (max-width: 270px) {
+        padding: 1rem 1rem;
+        margin: .5rem 0rem;
+    }
 `;
 export const FormInputHolder = styled.div`
     display: flex;
@@ -81,6 +98,14 @@ export const ShadowText = styled.span`
 
     &.active {
         top: 16%;
+    }
+
+    @media screen and (max-height: 700px) {
+        font-size: .8rem;
+    }
+
+    @media screen and (max-width: 270px) {
+        font-size: .8rem;
     }
 `;
 
@@ -145,12 +170,11 @@ export const FormButton = styled.button<Valid>`
     font-family: inherit;
     font-weight: 600;
     border-radius: 25px;
-    padding: 1.5rem 4rem;
+    padding: 2rem 0;
     margin: 1rem 0;
     font-size: 1.1rem;
     cursor: pointer;
     translate: all 5s;
-    height: 5rem;
     background-color: ${({ theme, isValid }) => (isValid ? theme.colors.primaryVar : theme.colors.blackVar)};
 
     @media screen and (max-width: 430px) {
@@ -160,6 +184,18 @@ export const FormButton = styled.button<Valid>`
 
     &.shake {
         animation: ${shake} 8s;
+    }
+
+    @media screen and (max-height: 700px) {
+        font-size: .9rem;
+        padding: 1rem 0;
+        border-radius: 15px;
+    }
+
+    @media screen and (max-width: 270px) {
+        font-size: .9rem;
+        padding: 1rem 0;
+        border-radius: 15px;
     }
 `;
 

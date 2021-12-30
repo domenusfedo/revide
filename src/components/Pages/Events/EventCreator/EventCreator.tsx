@@ -5,10 +5,11 @@ import {
     EventCreatorHolder,
     Header,
     SubStatus,
-    StatusText
+    StatusText,
+    Time,
 } from './EventCreator.elements';
 
-import {Event} from '../../../../api/fetchEvents'
+import {Event} from '../../../../features/eventsSlice'
 
 interface IProps {
     event: Event,
@@ -48,7 +49,7 @@ const EventCreator: React.FC<IProps> = ({showDetails, event, type = 'another', b
     let element = type === 'another' ? (
         <EventCreatorHolderSize id='main' ref={elementRef} toggle={toggle} onClick={(e) => handleOn(e, pointer)} onMouseLeave={() => handleOff()}>
             <EventCreatorHolder shouldBeBlack={shouldBeBlack} bgTexture={bgImage} toggle={toggle} type={type}>
-                <Header type={type}>{event.city}, {event.street}</Header>
+                <Header type={type}>{event.title}</Header>
                 <SubStatus status={status}>
                     <StatusText>Details</StatusText>
                 </SubStatus>
@@ -57,8 +58,8 @@ const EventCreator: React.FC<IProps> = ({showDetails, event, type = 'another', b
     ) : (
         <EventCreatorHolderSize id='main' ref={elementRef} toggle={toggle}>
             <EventCreatorHolder shouldBeBlack={shouldBeBlack} bgTexture={bgImage} toggle={toggle} type={type}>
-                <Header type={type}>{event.city}, {event.street}</Header>
-                
+                <Header type={type}>{event ? event.title : "You don't any upcoming events!"}</Header>
+                <Time>{event ? 'Time left: 00:00:00:00' : ''}</Time>
             </EventCreatorHolder>
         </EventCreatorHolderSize>
     )

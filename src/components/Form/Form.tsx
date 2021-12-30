@@ -44,8 +44,6 @@ const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
 
     const buttonRef = useRef<HTMLButtonElement>(null);
 
-    console.log(structureData.loading)
-
     const modifyClass = (ref: React.RefObject<HTMLDivElement>, className: string, action: string) => {
         if(action === 'add') {
             ref.current!.classList.add(className);
@@ -238,7 +236,7 @@ const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
                             <FormInputHolder>
                                 {!element.mirror ? (
                                     <ShadowText>{(data[idx].error.length > 1 && data[idx].value !== '')  ? data[idx].error : element.name}</ShadowText>
-                                ) : <ShadowText>{data[idx].value !== '' ? `${data[idx].value === data[element.mirror].value ? 'password confimred' : 'password not confirmed'}` : element.name}</ShadowText>}
+                                ) : <ShadowText>{data[idx].value !== '' ? `${data[idx].value === data[element.mirror].value ? 'password confirmed' : 'password not confirmed'}` : element.name}</ShadowText>}
                             
                             <FormInput
                                 type={element.type}

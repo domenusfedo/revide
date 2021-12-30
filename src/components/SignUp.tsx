@@ -1,6 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 
-import {Holder, ConfirmationHolder} from './SignIn.elements';
+import {Holder} from './SignIn.elements';
 import  Form  from './Form/Form';
 
 import {PageBlueprint} from '../theme/globalStyle';
@@ -112,7 +112,7 @@ const SignUp = () => {
         if(shouldRedirect) {
             navigate('/signin')
         }
-    }, [shouldRedirect])
+    }, [shouldRedirect, navigate])
 
     useEffect(() => {
         return () => {

@@ -1,5 +1,4 @@
 import styled, { keyframes } from 'styled-components';
-import { BiEqualizer } from 'react-icons/bi'
 
 import LogoIcon from '../assets/svg/logo';
 
@@ -63,6 +62,10 @@ export const NavLinkElement = styled.div`
     overflow: hidden;
 
     cursor: pointer;
+
+    @media screen and (max-height: 600px) {
+        padding: 1rem 1rem;
+    }
 `;
 
 export const BackText = styled.span`

@@ -1,5 +1,4 @@
 import styled, { keyframes } from "styled-components";
-import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 
 interface Toggle {
     toggle: boolean
@@ -24,6 +23,10 @@ export const SearchField = styled.div`
     flex-grow: 1;
     justify-content: center;
     align-items: center;
+    
+    @media screen and (max-height: 650px) {
+       padding: .5rem 0;
+    }
 `;
 
 export const EventsField = styled.div<Toggle>`
@@ -39,22 +42,21 @@ export const EventsField = styled.div<Toggle>`
 
 export const HighlightField = styled.div<Toggle>`
     display: flex;
+    flex-direction: column;
     max-width:100vw;
-    flex-grow: 3;
-    height: ${({ toggle }) => (!toggle ? '70%' : '0%')};
+    //flex-grow: 3;
+    height: ${({ toggle }) => (!toggle ? '100%' : '0%')};
     opacity: ${({ toggle }) => (toggle ? 0 : 1)};
     cursor: ${({ toggle }) => (toggle ? 'pointer' : 'default')};
-    transition: all .5s linear;
-    margin-top: ${({ toggle }) => (!toggle ? '1rem' : 0)};
-
+    transition: all .4s ease-in-out;
 
     & div div div{
         display: ${({ toggle }) => (toggle ? 'none' : 'block')};
         padding: ${({ toggle }) => (toggle && '0 0')};
     }
 
-    @media screen and (max-width: 350px) {
-        height: ${({ toggle }) => (!toggle ? '40%' : '0%')};
+    @media screen and (max-width: 470px) {
+        height: ${({ toggle }) => (!toggle ? '50%' : '0%')};
     }
 `;
 
@@ -66,21 +68,39 @@ export const MarkField = styled.div<Toggle>`
     flex-grow: 1;
     color: ${({ theme }) => theme.colors.black};
     transition: all .5s linear;
+
+    @media screen and (max-height: 650px) {
+        padding: .5rem 0;
+    }
 `;
+export const HighLightMarkField = styled.div<Toggle>`
+    padding: 1rem 0;
+    z-index: 0;
+    color: ${({ theme }) => theme.colors.black};
+
+    @media screen and (max-height: 650px) {
+        padding: .5rem 0;
+    }
+`;
+
 export const Mark = styled.div`
     width: 100%;
-    height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     grid-area: mark;
-
+    z-index: 1000;
 `;
-export const MarkHeader = styled.div`
+
+export const MarkHeader = styled.div<Toggle>`
     font-weight: 600;
-    font-size: 1.5rem;
-    @media screen and (max-width: 350px) {
-        font-size: 1.2rem;
+    color: ${({ theme }) => theme.colors.black};
+    font-size: 1.2rem;
+
+    translate: all .4s ease-in-out;
+
+    @media screen and (max-height: 650px) {
+        font-size: 1rem;
     }
 `;
 export const MarkOption = styled.div`
@@ -88,6 +108,10 @@ export const MarkOption = styled.div`
     font-size: 1.2rem;
     cursor: pointer;
     @media screen and (max-width: 350px) {
+        font-size: 1rem;
+    }
+
+    @media screen and (max-height: 650px) {
         font-size: 1rem;
     }
 `;
@@ -112,19 +136,21 @@ const ColumnField = styled.div<Toggle>`
     display: flex;
     flex-grow: 1;
     flex-direction: column;
-    transition: all .5s;
     height: 100%;
+    //translate: all 1s ease-in-out;
+    translate: all .5s linear;
 `;
 const RowField = styled.div<Toggle>`
     display: flex;
     flex-grow: 2;
     flex-direction: row;
-    transition: all .5s;
+    //translate: all 1s ease-in-out;
+    translate: all .5s linear;
 `;
 
 export const RowOne = styled(RowField) <Toggle>`
     min-height: ${({ toggle }) => (toggle ? '101%' : '0%')};
-    width:100%;
+    width: 100%;
     padding: .2rem 0;
     @media screen and (max-width: 470px) {
         flex-direction: ${({ toggle }) => (!toggle ? 'row' : 'column')};
@@ -132,21 +158,27 @@ export const RowOne = styled(RowField) <Toggle>`
 `
 export const ColumnOne = styled(ColumnField) <Toggle>`
     flex-grow: 1;
-    order: 1;
     width: 100%;
 
     @media screen and (max-width: 470px) {
         height: ${({ toggle }) => (!toggle ? '33%' : '50%')}
     }
+
+    @media screen and (max-height: 550px) {
+        flex-grow: 1;
+    }
 `
+
 export const ColumnTwo = styled(ColumnField) <Toggle>`
     flex-grow: 1;
-    order: 2;
     width: 100%;
 
     @media screen and (max-width: 470px) {
-        flex-grow: 2;
         height: ${({ toggle }) => (!toggle ? '66%' : '50%')}
+    }
+
+    @media screen and (max-height: 550px) {
+        flex-grow: 3;
     }
 `
 //Rest Structure
@@ -163,10 +195,10 @@ export const RowFive = styled(RowField) <Toggle>`
         flex-grow: ${({ toggle }) => (toggle ? 1 : 0)};
         height: ${({ toggle }) => (toggle ? '100%' : '0%')};
 
-        //Must be Better solution (based on windows size we should decrease amount of fetching elements)
+        /* //Must be Better solution (based on windows size we should decrease amount of fetching elements) */
         @media screen and (max-width: 470px) {
             display: none;
-        }
+        } 
 `
 //Left Rest
 //Right Rest

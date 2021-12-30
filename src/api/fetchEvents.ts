@@ -1,15 +1,6 @@
 import axios from 'axios';
 
-export interface Event {
-    country: string,
-    city: string,
-    street: string,
-    paricipantAmount: number,
-    description: string,
-    background: string,
-    shouldBeBlack: boolean,
-    creator: string
-}
+import { Event } from '../features/eventsSlice';
 
 const infoPattern = [
     {
@@ -41,8 +32,6 @@ const infoPattern = [
 export const getEvents = async (page: number) => {
     const fakeUsers = await axios.get(`https://randomuser.me/api/?pages=${page}&results=6`);
 
-    console.log(fakeUsers)
-
     const fakeGeneratedData: Event[] = fakeUsers.data.results.map((e: any, idx: number) => {
         return {
             country: e.location.country,
@@ -53,7 +42,10 @@ export const getEvents = async (page: number) => {
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget nisi enim. Quisque vitae neque ullamcorper nibh rutrum vulputate vitae in eros. Nullam a nisi ac dolor viverra efficitur. Morbi ullamcorper eget felis vel pulvinar. Proin vel elit vehicula, vestibulum turpis ac, blandit urna.',
             background: infoPattern[idx].bg,
             shouldBeBlack: infoPattern[idx].shouldBeBlack,
-            creator: e.login.username
+            creator: e.login.username,
+            title: e.name.last + e.name.first + ' Title',
+            id: e.name.last + e.name.first + Math.floor(Math.random() * 100),
+            startAt: new Date()
         }
     })
 

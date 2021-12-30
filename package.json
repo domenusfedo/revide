@@ -1,6 +1,7 @@
 {
   "name": "simple-auth-firebase-rtk",
   "homepage": "http://domenusfedo.github.io/revide",
+  "proxy": "http://localhost:3000",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -28,6 +29,7 @@
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
     "react-transition-group": "^4.4.2",
+    "rive-react": "^0.0.26",
     "styled-components": "^5.3.3",
     "typescript": "^4.5.2",
     "web-vitals": "^1.1.2"

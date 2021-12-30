@@ -6,7 +6,7 @@ import { app } from '../firebase';
 interface AuthState {
     isAuth: boolean,
     token: string | undefined,
-    uid: string | undefined,
+    uid: string,
     error: string | undefined
     username: string | undefined,
     isLoading: boolean,
@@ -25,9 +25,9 @@ interface SignUpType {
 }
 
 const initialState: AuthState = {
-    isAuth: true,
+    isAuth: false,
     token: undefined,
-    uid: undefined,
+    uid: '',
     error: '',
     username: undefined,
     isLoading: false,
@@ -47,7 +47,7 @@ export const signInHandler = createAsyncThunk(
 
             const user = res.user;
             const token = await user?.getIdToken();
-            const uid = user?.uid;
+            const uid = user?.uid as string;
             const username = user?.displayName;
 
             return {
@@ -56,6 +56,7 @@ export const signInHandler = createAsyncThunk(
                 uid: uid,
                 error: undefined,
                 username: username,
+                isLoading: false,
                 shouldRedirect: true
             }
         } catch (err) {
@@ -64,9 +65,10 @@ export const signInHandler = createAsyncThunk(
             return {
                 isAuth: false,
                 token: undefined,
-                uid: undefined,
+                uid: '',
                 error: error.message,
                 username: undefined,
+                isLoading: false,
                 shouldRedirect: false
             }
         }
@@ -76,37 +78,44 @@ export const signInHandler = createAsyncThunk(
 export const signUpHandler = createAsyncThunk(
     'auth/signUp',
     async (action: PayloadAction<SignUpType>) => {
-        if (!action.payload.username || !action.payload.password || !action.payload.mail) return
+        if (!action.payload.username || !action.payload.password || !action.payload.mail) return;
 
         try {
-            await app.auth().createUserWithEmailAndPassword(action.payload.mail, action.payload.password)
+            const res = await app.auth().createUserWithEmailAndPassword(action.payload.mail, action.payload.password)
                 .then(data => {
-                    data.user?.updateProfile({
+                    app.auth().currentUser?.updateProfile({
                         displayName: action.payload.username
                     })
+                    return data;
+                })
+                .then((data) => {
+                    app.firestore().collection(data.user?.uid as string).doc('followedEvents').set({})
                     return data;
                 })
                 .catch((err: firebase.FirebaseError) => {
                     throw new Error(err.message)
                 })
 
+            const user = res.user;
+
+            const token = await user?.getIdToken();
+            const uid = user?.uid as string;
+
             return {
-                isAuth: false,
-                token: undefined,
-                uid: undefined,
+                isAuth: true,
+                token: token,
+                uid: uid,
                 error: undefined,
-                user: action.payload.username,
+                username: action.payload.username,
                 shouldRedirect: true
             }
         } catch (err) {
             const error = err as Error;
 
-            //console.log('ERROR')
-
             return {
                 isAuth: false,
                 token: undefined,
-                uid: undefined,
+                uid: '',
                 error: error.message,
                 username: undefined,
                 shouldRedirect: false
@@ -149,6 +158,8 @@ const authSlice = createSlice({
         builder.addCase(signUpHandler.fulfilled, (state, action) => {
             state.isLoading = false;
             if (action.payload === undefined) return;
+
+            console.log(action)
 
             state.shouldRedirect = action.payload?.shouldRedirect;
             state.isAuth = action.payload?.isAuth;

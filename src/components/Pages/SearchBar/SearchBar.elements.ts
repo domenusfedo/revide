@@ -16,11 +16,11 @@ export const SearchBarInputHolder = styled.div`
     align-items: center;
     background-color: ${({ theme }) => theme.colors.whiteVar};
     width: 100%;
-    padding: .6rem 1rem;
+    padding: 1.2rem 1rem;
     border-radius: 25px;
 
-    @media screen and (min-width: 1000px) {
-        padding: 1.2rem 1rem;
+    @media screen and (max-height: 650px) {
+        padding: .4rem 1rem;
     }
 `;
 
