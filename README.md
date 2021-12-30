@@ -22,10 +22,11 @@ Project is created with:
 ### In Progress (dummy version)
 ```  
 To do:
+- Improve RWD
 - Add component (to enable creating own events)
-- Profile component (to view own profile, to view own events)
+- Profile component (to view own profile, to view own events) +
 - Search component
-- add to fav/participate logic
+- add to fav/participate logic +
 - behance presentation
 - tests
 ```  
