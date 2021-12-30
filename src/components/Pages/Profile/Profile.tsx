@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../app/store';
 import { Event, removeFollowedEvents } from '../../../features/eventsSlice';
@@ -22,14 +22,19 @@ import {
     SubHeader,
     LocationHolder,
     ButtonsField,
-    Button
+    Button,
+    Desc
 } from './Profile.elements';
 
 const Profile = () => {
     const {username, uid} = useSelector((state: RootState) => state.auth)
     const {followed} = useSelector((state: RootState) => state.events);
 
+    const mainButtonRef = useRef<HTMLButtonElement>(null);
+    const cancelButtonRef = useRef<HTMLButtonElement>(null);
+
     const dispatch = useDispatch();
+    const [detailsToggle, detailsToggleSet] = useState<boolean>(false)
 
     const [upcomingEvent, upcomingEventSet] = useState<Event>({
         background: '',
@@ -46,11 +51,41 @@ const Profile = () => {
     })
 
     const confirmationHanlder = () => {
-        //check user localization
-        //if user's loc === event loc => participany amount increase
+        if(!detailsToggle) {
+            mainButtonRef.current!.innerText = 'On The Spot!';
+            cancelButtonRef.current!.innerText = 'Show less';
+            detailsToggleSet(true)
+            return;
+        }
+
+        mainButtonRef.current!.innerText = 'Connecting to live chat...';
+
+
+        
+        // if(e.currentTarget.innerText === 'Expand') {
+        //     //expand logic
+        //     //live chat
+        //     return;
+        // }
+
+        //check user localization if yes will expand elese return
+        //const fakedLoc = (Math.random() * 10) + 1
+        // if(fakedLoc > 5) {
+        //     onTheSpotSet(true)
+        //     e.currentTarget.innerText = 'Expand';
+        // } else {
+        //     onTheSpotSet(false)
+        //     e.currentTarget.innerText = 'Wrong spot! Locate again';
+        // }
     }
 
     const cancelHanlder = () => {
+        if(detailsToggle) {
+            detailsToggleSet(!detailsToggle)
+            mainButtonRef.current!.innerText = 'Details';
+            cancelButtonRef.current!.innerText = 'Dismiss.';
+            return;
+        }
         dispatch(removeFollowedEvents({
               uid: uid,
               event: upcomingEvent
@@ -67,14 +102,14 @@ const Profile = () => {
 
     return (
         <Holder>
-            <UserData>
-                <Row>
+            <UserData toggle={detailsToggle}>
+                 <Row toggle={detailsToggle}>
                     <UserPic>
                         <UserIcon/>
                     </UserPic>
                 </Row>
-                <Row>
-                    <UserPersonal>
+                <Row toggle={detailsToggle}>
+                    <UserPersonal toggle={detailsToggle}>
                         <Name>{username ? username : 'CleverTiger069'}</Name>
                         <SmallStatictics>
                             <DataField>
@@ -90,24 +125,25 @@ const Profile = () => {
                 </Row>
             </UserData>
 
-            <RecentEvent>
-                <Text>Current event</Text>
+            <Text>Current event</Text>
+
+            <RecentEvent toggle={detailsToggle}>
                 <EventHolder>
                     {upcomingEvent ? (
                         <LocationHolder>
                             <Header>{upcomingEvent.title}</Header>
                             <SubHeader>{upcomingEvent.city}, {upcomingEvent.street}</SubHeader>
+                            {/* <Desc toggle={detailsToggle}>{upcomingEvent.description}</Desc> */}
                         </LocationHolder>
                     ) : (
                         <LocationHolder>
                             <Header>None event to display!</Header>
                         </LocationHolder>
                     )}
-                    {/* <Desc>{upcomingEvent.description}</Desc> */}
 
                     <ButtonsField>
-                        {upcomingEvent ? <Button ButtonType='confirm' onClick={confirmationHanlder}>On the spot!</Button> : <Button ButtonType='confirm' onClick={findHanlder}>Find Event</Button>}
-                        {upcomingEvent && <Button ButtonType='cancel' onClick={cancelHanlder}>Disclaim.</Button>}
+                        {upcomingEvent ? <Button ButtonType='confirm' ref={mainButtonRef} onClick={confirmationHanlder}>Details</Button> : <Button ButtonType='confirm' onClick={findHanlder}>Find Event</Button>}
+                        {upcomingEvent && <Button ButtonType='cancel' ref={cancelButtonRef} onClick={cancelHanlder}>Dismiss.</Button>}
                     </ButtonsField>
                 </EventHolder>
             </RecentEvent>

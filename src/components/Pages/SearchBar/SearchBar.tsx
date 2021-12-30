@@ -10,9 +10,10 @@ interface IProps {
     changeHandler: React.Dispatch<React.SetStateAction<string>>
 }
 
+
 const SearchBar: React.FC<IProps> = ({onFocusHandler, value, changeHandler}) => {
     return (
-        <SearchBarHolder onFocus={() => onFocusHandler(true)} onBlur={() => onFocusHandler(false)}>
+        <SearchBarHolder onFocus={() => onFocusHandler(true)} onBlur={() => value === '' && onFocusHandler(false)}>
             <SearchBarInputHolder>
                 <SearchBarIcon/>
                 <SearchBarInput placeholder='Search...' value={value} onChange={(e) => changeHandler(e.target.value)}/>
