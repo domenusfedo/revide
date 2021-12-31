@@ -24,8 +24,8 @@ const Home = () => {
                 return;
             }
         }
-            loadingSet(true);
-            setTimeout(() => {
+        loadingSet(true);
+        setTimeout(() => {
             loadingSet(false);
             locateSet(true);
         }, 1000)

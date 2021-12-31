@@ -46,28 +46,24 @@ const EventCreator: React.FC<IProps> = ({showDetails, event, type = 'another', b
         statusSet(false)
     }
 
-    let element = type === 'another' ? (
-        <EventCreatorHolderSize id='main' ref={elementRef} toggle={toggle} onClick={(e) => handleOn(e, pointer)} onMouseLeave={() => handleOff()}>
-            <EventCreatorHolder shouldBeBlack={shouldBeBlack} bgTexture={bgImage} toggle={toggle} type={type}>
+    const element = type === 'another' ? (
+            <EventCreatorHolder shouldBeBlack={shouldBeBlack} bgTexture={bgImage} toggle={toggle} type={type} onClick={(e) => handleOn(e, pointer)} onMouseLeave={() => handleOff()}>
                 <Header type={type}>{event.title}</Header>
                 <SubStatus status={status}>
                     <StatusText>Details</StatusText>
                 </SubStatus>
             </EventCreatorHolder>
-        </EventCreatorHolderSize>
     ) : (
-        <EventCreatorHolderSize id='main' ref={elementRef} toggle={toggle}>
             <EventCreatorHolder shouldBeBlack={shouldBeBlack} bgTexture={bgImage} toggle={toggle} type={type}>
                 <Header type={type}>{event ? event.title : "You don't any upcoming events!"}</Header>
                 <Time>{event ? 'Time left: 00:00:00:00' : ''}</Time>
             </EventCreatorHolder>
-        </EventCreatorHolderSize>
     )
 
     return (
-        <>
+        <EventCreatorHolderSize id='main' ref={elementRef} toggle={toggle}>
             {element}
-        </>
+        </EventCreatorHolderSize>
     );
 };
 

@@ -76,15 +76,6 @@ export const HomeIcon = styled(RiHomeLine)`
     }
 `;
 
-export const NearIcon = styled(MdOutlineNearMe)`
-    color: ${({ theme }) => theme.colors.blackVar};
-    font-size: 1.7rem;
-
-    @media screen and (max-height: 640px) {
-        font-size: 1.3rem;
-    }
-`;
-
 export const AddIcon = styled(BiMessageSquareAdd)`
     color: ${({ theme }) => theme.colors.blackVar};
     font-size: 1.7rem;

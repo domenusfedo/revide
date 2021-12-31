@@ -25,16 +25,14 @@ import {
     LogoSVGHolder
 } from './Board.elements'
 
-import Category from './Category/Category';
-
-import Follow from './Follow/Follow';
+import Category from './UI/Category/Category';
 
 import {    
     Events,
+    Profile
 } from './index'
-import Profile from './Pages/Profile/Profile';
 
-import { Event, addToFollowed, fetchFollowedEvents, addFollowedEvents, removeFollowedEvents } from '../features/eventsSlice';
+import { Event, fetchFollowedEvents, addFollowedEvents, removeFollowedEvents } from '../features/eventsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../app/store';
 
@@ -89,7 +87,6 @@ const Board = () => {
             categoryRef.current!.children[0].classList.remove('active');
             categoryRef.current!.children[1].classList.remove('active');
             categoryRef.current!.children[2].classList.remove('active');
-           // categoryRef.current!.children[3].classList.remove('active');
 
             categoryRef.current!.children[focusedElement].classList.add('active');
         }
@@ -105,13 +102,10 @@ const Board = () => {
     }
 
     const followHandler = () => {
-        //dispatch(addToFollowed(detailsElement.information))
         dispatch(addFollowedEvents({
             event: detailsElement.information,
             uid: uid
         }))
-        //disptach redux action
-        //save to store "followed"
     }
 
     const unFollowHandler = () => {
@@ -119,8 +113,6 @@ const Board = () => {
             event: detailsElement.information,
             uid: uid
         }))
-        //disptach redux action
-        //save to store "followed"
     }
 
     const [isFollowed, isFollowedSet] = useState(false);
@@ -157,7 +149,6 @@ const Board = () => {
                             <HeaderHeader>{detailsElement.information.title}</HeaderHeader>
                             <HeaderSubTitle>{detailsElement.information.city}, {detailsElement.information.street}</HeaderSubTitle>
                             
-                            {/* ADD active={detailToggle} && opacity*/}
                             <HighlightedText> 
                                 <LeftSide>Participants:</LeftSide>
                                 <RightSide>{detailsElement.information.paricipantAmount}</RightSide>

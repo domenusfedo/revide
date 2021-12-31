@@ -23,7 +23,7 @@ import {
     LocationHolder,
     ButtonsField,
     Button,
-    Desc
+    Desc,
 } from './Profile.elements';
 
 const Profile = () => {
@@ -35,6 +35,7 @@ const Profile = () => {
 
     const dispatch = useDispatch();
     const [detailsToggle, detailsToggleSet] = useState<boolean>(false)
+    const [livechatToggle, livechatToggleSet] = useState<boolean>(false)
 
     const [upcomingEvent, upcomingEventSet] = useState<Event>({
         background: '',
@@ -61,7 +62,11 @@ const Profile = () => {
         mainButtonRef.current!.innerText = 'Connecting to live chat...';
 
 
-        
+        setTimeout(() => {
+            livechatToggleSet(true);
+            mainButtonRef.current!.innerText = 'Connected!';
+            cancelButtonRef.current!.innerText = 'disconnect.';
+        }, 500)
         // if(e.currentTarget.innerText === 'Expand') {
         //     //expand logic
         //     //live chat
@@ -84,6 +89,7 @@ const Profile = () => {
             detailsToggleSet(!detailsToggle)
             mainButtonRef.current!.innerText = 'Details';
             cancelButtonRef.current!.innerText = 'Dismiss.';
+            livechatToggleSet(false);
             return;
         }
         dispatch(removeFollowedEvents({
@@ -103,7 +109,7 @@ const Profile = () => {
     return (
         <Holder>
             <UserData toggle={detailsToggle}>
-                 <Row toggle={detailsToggle}>
+                 {/* <Row toggle={detailsToggle}>
                     <UserPic>
                         <UserIcon/>
                     </UserPic>
@@ -122,7 +128,7 @@ const Profile = () => {
                             </DataField>
                         </SmallStatictics>
                     </UserPersonal>
-                </Row>
+                </Row> */}
             </UserData>
 
             <Text>Current event</Text>
@@ -133,7 +139,7 @@ const Profile = () => {
                         <LocationHolder>
                             <Header>{upcomingEvent.title}</Header>
                             <SubHeader>{upcomingEvent.city}, {upcomingEvent.street}</SubHeader>
-                            {/* <Desc toggle={detailsToggle}>{upcomingEvent.description}</Desc> */}
+                            <Desc toggle={detailsToggle}>{upcomingEvent.description}</Desc>
                         </LocationHolder>
                     ) : (
                         <LocationHolder>
@@ -144,7 +150,7 @@ const Profile = () => {
                     <ButtonsField>
                         {upcomingEvent ? <Button ButtonType='confirm' ref={mainButtonRef} onClick={confirmationHanlder}>Details</Button> : <Button ButtonType='confirm' onClick={findHanlder}>Find Event</Button>}
                         {upcomingEvent && <Button ButtonType='cancel' ref={cancelButtonRef} onClick={cancelHanlder}>Dismiss.</Button>}
-                    </ButtonsField>
+                    </ButtonsField> 
                 </EventHolder>
             </RecentEvent>
         </Holder>

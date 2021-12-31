@@ -13,10 +13,6 @@ const Follow = () => {
         // animations: 'follow',
         artboard: 'WhiteVer',
         autoplay: true,
-        layout: new Layout({
-            fit: Fit.ScaleDown,
-            maxY: 10
-        })
     })
 
     const onClickRiveHandler = useStateMachineInput(

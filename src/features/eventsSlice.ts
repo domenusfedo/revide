@@ -17,6 +17,23 @@ export interface Event {
     startAt: Date
 }
 
+interface FetchedFromFireBaseEvent {
+    country: string,
+    city: string,
+    street: string,
+    paricipantAmount: number,
+    description: string,
+    background: string,
+    shouldBeBlack: boolean,
+    creator: string,
+    title: string,
+    id: string,
+    startAt: {
+        seconds: number,
+        nanoseconds: number
+    }
+}
+
 interface EventsState {
     followed: Event[],
     dashboard: {}
@@ -28,22 +45,20 @@ export const fetchFollowedEvents = createAsyncThunk(
         await app.firestore().collection(args).doc('followedEvents').get()
             .then(res => res.data())
             .then(doc => {
-                //Need to learn how to convert firebase.firestore.DocumentData to typed object
-                //And order by date
+                const obj: any = doc; //IDK WHY Firebase returning object instead of array //NOT my fault //In real backend connecting this will not appear
+                const array: FetchedFromFireBaseEvent[] = Object.keys(obj).map(e => obj[e]) //basicaly same object(cos we are sending to firebase with Event Interface structure) however firebase create timestamp
 
-                const obj: any = doc;
-                const array: Event[] = [];
+                const newArray: Event[] = array.map(e => {
+                    const convertedObj = {
+                        ...e,
+                        startAt: new Date(e.startAt.seconds) //Here we are converting it to App Event Interface
+                    }
+                    return convertedObj;
+                })
 
-                Object.keys(obj).map(e =>
-                    array.push(
-                        obj[e] as Event
-                    )
-                )
+                newArray.sort((a, b) => a.startAt.getTime() - b.startAt.getTime()) //and now we have sorted array of Events
 
-                // array.sort((a, b) => new Date(a.startAt).getMilliseconds() - new Date(b.startAt).getMilliseconds())
-
-                dispatch(fetchFollowed(array))
-                //array.sort((a, b) => new Date(a.startAt).getMilliseconds() - new Date(b.startAt).getMilliseconds())
+                dispatch(fetchFollowed(newArray))
             })
             .catch(err => {
                 console.log(err)
@@ -97,6 +112,7 @@ const eventsSlice = createSlice({
     reducers: {
         addToFollowed: (state, action: PayloadAction<Event>) => {
             state.followed = [...state.followed, action.payload]
+            state.followed.sort((a, b) => a.startAt.getTime() - b.startAt.getTime())
         },
 
         deleteFromFollowed: (state, action: PayloadAction<Event>) => {

@@ -1,4 +1,4 @@
-import styled, { keyframes, css } from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { NavLink } from 'react-router-dom';
 import { FaUser, FaLock } from 'react-icons/fa'
 import { AiFillMail } from 'react-icons/ai'
@@ -14,6 +14,7 @@ export const FormWrapper = styled.form`
     width: 100%;
     max-width: 400px;
 `;
+
 export const FormHeader = styled.h1`
     color: ${({ theme }) => theme.colors.black};
     font-weight: 900;

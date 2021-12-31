@@ -5,7 +5,6 @@ import {
     CategoryHolder, 
     CategoryExtension,
     HomeIcon,
-    NearIcon,
     AddIcon,
     ProfileIcon
 } from './Category.elements'
@@ -20,7 +19,6 @@ const Category: React.FC<CategoryType> = ({name, focusedElementSet, id}) => {
     return (
         <CategoryHolder id={id} onClick={() => focusedElementSet(parseInt(id))}>
             {name === 'events' && <HomeIcon/>}
-            {name === 'near' && <NearIcon/>}
             {name === 'add' && <AddIcon/>}
             {name === 'profile' && <ProfileIcon/>}
             <CategoryName>{name}</CategoryName>

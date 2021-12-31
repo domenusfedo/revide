@@ -34,10 +34,6 @@ interface IProps {
     structureData: StructureData
 }
 
-enum ActionType {
-    action = 'action'
-}
-
 const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
     const [isValid, isValidSet] = useState<boolean>(false);
     const [data, dataSet] = useState<Data[]>(initialData);
@@ -193,7 +189,7 @@ const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
         Object.keys(data).map((idx: string) => {
             dataObject = {
                 ...dataObject,
-                [data[parseInt(idx)].name]: data[parseInt(idx)].value, //This can cause the issue
+                [data[parseInt(idx)].name]: data[parseInt(idx)].value, 
             }
             structureData.submitAction(dataObject)
             return null;
