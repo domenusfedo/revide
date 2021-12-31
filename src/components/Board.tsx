@@ -49,7 +49,7 @@ export interface Details {
  
 
 const Board = () => {
-    const {uid} = useSelector((state: RootState) => state.auth)
+    const {user} = useSelector((state: RootState) => state.auth)
     const {followed} = useSelector((state: RootState) => state.events)
     const dispatch = useDispatch();
     
@@ -104,14 +104,14 @@ const Board = () => {
     const followHandler = () => {
         dispatch(addFollowedEvents({
             event: detailsElement.information,
-            uid: uid
+            uid: user.uid
         }))
     }
 
     const unFollowHandler = () => {
         dispatch(removeFollowedEvents({
             event: detailsElement.information,
-            uid: uid
+            uid: user.uid
         }))
     }
 
@@ -128,7 +128,7 @@ const Board = () => {
     }, [detailsElement, followed])
 
     useEffect(() => {
-        dispatch(fetchFollowedEvents(uid))
+        dispatch(fetchFollowedEvents(user.uid))
     }, [])
 
     return (

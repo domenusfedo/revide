@@ -5,10 +5,12 @@ import { app } from '../firebase';
 
 interface AuthState {
     isAuth: boolean,
-    token: string | undefined,
-    uid: string,
+    user: {
+        token: string | undefined,
+        uid: string,
+        username: string | undefined,
+    }
     error: string | undefined
-    username: string | undefined,
     isLoading: boolean,
     shouldRedirect: boolean
 }
@@ -26,21 +28,25 @@ interface SignUpType {
 
 const initialState: AuthState = {
     isAuth: false,
-    token: undefined,
-    uid: '',
-    error: '',
-    username: undefined,
+    user: {
+        token: undefined,
+        uid: '',
+        username: undefined,
+    },
+    error: undefined,
     isLoading: false,
     shouldRedirect: false
 }
 
 export const signInHandler = createAsyncThunk(
     'auth/signIn',
-    async (action: PayloadAction<SignInType>) => {
+    async (action: PayloadAction<SignInType>, { dispatch }) => {
         if (!action.payload.password || !action.payload.mail) return;
+        dispatch(setLoading(true))
 
         try {
-            const res = await app.auth().signInWithEmailAndPassword(action.payload.mail, action.payload.password)
+            const res = await app
+                .auth().signInWithEmailAndPassword(action.payload.mail, action.payload.password)
                 .catch((err: firebase.FirebaseError) => {
                     throw new Error(err.message)
                 })
@@ -50,38 +56,45 @@ export const signInHandler = createAsyncThunk(
             const uid = user?.uid as string;
             const username = user?.displayName;
 
-            return {
+            dispatch(setUser({
                 isAuth: true,
-                token: token!.toString(),
-                uid: uid,
                 error: undefined,
-                username: username,
                 isLoading: false,
-                shouldRedirect: true
-            }
+                shouldRedirect: true,
+                user: {
+                    token: token!.toString(),
+                    uid: uid,
+                    username: username?.toString()
+                }
+            }))
         } catch (err) {
             const error = err as Error;
+            console.log('wtf3')
 
-            return {
+            dispatch(setUser({
                 isAuth: false,
-                token: undefined,
-                uid: '',
                 error: error.message,
-                username: undefined,
                 isLoading: false,
-                shouldRedirect: false
-            }
+                shouldRedirect: false,
+                user: {
+                    token: undefined,
+                    uid: '',
+                    username: undefined
+                }
+            }))
         }
     }
 )
 
 export const signUpHandler = createAsyncThunk(
     'auth/signUp',
-    async (action: PayloadAction<SignUpType>) => {
+    async (action: PayloadAction<SignUpType>, { dispatch }) => {
         if (!action.payload.username || !action.payload.password || !action.payload.mail) return;
+        dispatch(setLoading(true))
 
         try {
-            const res = await app.auth().createUserWithEmailAndPassword(action.payload.mail, action.payload.password)
+            const res = await app
+                .auth().createUserWithEmailAndPassword(action.payload.mail, action.payload.password)
                 .then(data => {
                     app.auth().currentUser?.updateProfile({
                         displayName: action.payload.username
@@ -101,25 +114,31 @@ export const signUpHandler = createAsyncThunk(
             const token = await user?.getIdToken();
             const uid = user?.uid as string;
 
-            return {
+            dispatch(setUser({
                 isAuth: true,
-                token: token,
-                uid: uid,
                 error: undefined,
-                username: action.payload.username,
-                shouldRedirect: true
-            }
+                isLoading: false,
+                shouldRedirect: true,
+                user: {
+                    token: token!.toString(),
+                    uid: uid,
+                    username: action.payload.username
+                }
+            }))
         } catch (err) {
             const error = err as Error;
 
-            return {
+            dispatch(setUser({
                 isAuth: false,
-                token: undefined,
-                uid: '',
                 error: error.message,
-                username: undefined,
-                shouldRedirect: false
-            }
+                isLoading: false,
+                shouldRedirect: false,
+                user: {
+                    token: undefined,
+                    uid: '',
+                    username: undefined
+                }
+            }))
         }
     }
 )
@@ -128,50 +147,34 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
+        setUser: (state, action: PayloadAction<AuthState>) => {
+            state.error = action.payload.error;
+            state.isAuth = action.payload.isAuth;
+            state.isLoading = action.payload.isLoading;
+            state.shouldRedirect = action.payload.shouldRedirect;
+            state.user = action.payload.user;
+
+            // state = { //Why this is not working?
+            //     isAuth: action.payload.isAuth,
+            //     error: action.payload.error,
+            //     isLoading: action.payload.isLoading,
+            //     shouldRedirect: action.payload.shouldRedirect,
+            //     user: action.payload.user
+            // }
+        },
+        setLoading: (state, action: PayloadAction<boolean>) => {
+            state.isLoading = action.payload
+        },
         clearError: (state) => {
             state.error = undefined;
             state.shouldRedirect = false;
         }
-    },
-    extraReducers: builder => {
-        //Sin In
-        builder.addCase(signInHandler.pending, (state) => {
-            state.isLoading = true;
-        });
-        builder.addCase(signInHandler.fulfilled, (state, action) => {
-            state.isLoading = false;
-            if (action.payload === undefined) return;
-
-            state.isLoading = false;
-            state.shouldRedirect = action.payload?.shouldRedirect;
-            state.isAuth = action.payload?.isAuth;
-            state.error = action.payload.error;
-            state.token = action.payload.token;
-            state.username = action.payload.username as string;
-            state.uid = action.payload.uid;
-        })
-
-        //Sign Up
-        builder.addCase(signUpHandler.pending, (state) => {
-            state.isLoading = true;
-        });
-        builder.addCase(signUpHandler.fulfilled, (state, action) => {
-            state.isLoading = false;
-            if (action.payload === undefined) return;
-
-            console.log(action)
-
-            state.shouldRedirect = action.payload?.shouldRedirect;
-            state.isAuth = action.payload?.isAuth;
-            state.error = action.payload.error;
-            state.token = action.payload.token;
-            state.username = action.payload.username;
-            state.uid = action.payload.uid;
-        })
     }
 });
 
 export const {
-    clearError
+    clearError,
+    setLoading,
+    setUser,
 } = authSlice.actions
 export default authSlice.reducer

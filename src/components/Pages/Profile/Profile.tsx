@@ -27,7 +27,7 @@ import {
 } from './Profile.elements';
 
 const Profile = () => {
-    const {username, uid} = useSelector((state: RootState) => state.auth)
+    const {user} = useSelector((state: RootState) => state.auth)
     const {followed} = useSelector((state: RootState) => state.events);
 
     const mainButtonRef = useRef<HTMLButtonElement>(null);
@@ -93,7 +93,7 @@ const Profile = () => {
             return;
         }
         dispatch(removeFollowedEvents({
-              uid: uid,
+              uid: user.uid,
               event: upcomingEvent
         }))
     }
