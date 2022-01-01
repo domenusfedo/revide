@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/revide/static/js/main.b4adc04d.chunk.js",
-    "main.js.map": "/revide/static/js/main.b4adc04d.chunk.js.map",
+    "main.js": "/revide/static/js/main.28531eb9.chunk.js",
+    "main.js.map": "/revide/static/js/main.28531eb9.chunk.js.map",
     "runtime-main.js": "/revide/static/js/runtime-main.d2b7ea1e.js",
     "runtime-main.js.map": "/revide/static/js/runtime-main.d2b7ea1e.js.map",
     "static/js/2.c8b56652.chunk.js": "/revide/static/js/2.c8b56652.chunk.js",
@@ -12,6 +12,6 @@
   "entrypoints": [
     "static/js/runtime-main.d2b7ea1e.js",
     "static/js/2.c8b56652.chunk.js",
-    "static/js/main.b4adc04d.chunk.js"
+    "static/js/main.28531eb9.chunk.js"
   ]
 }
