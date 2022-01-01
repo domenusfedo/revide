@@ -15,7 +15,6 @@ export const EventsHolder = styled.div`
     flex-direction: column;
     transition: all .5s linear;
     &::-webkit-scrollbar {display:none;}
-    background-color: violet;
 `;
 export const SearchField = styled.div`
     width: 100%;
@@ -23,25 +22,24 @@ export const SearchField = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: red;
 `;
 
 export const EventsField = styled.div<Toggle>`
     width: 100%;
     max-width:100vw;
     display: flex;
-    height: fit-content;
+    height: 100%;
     flex-direction: column;
     transition: all .5s linear;
     overflow: hidden;
     &::-webkit-scrollbar {display:none;}
-    background-color: green;
 `;
 
 export const HighlightField = styled.div<Toggle>`
     display: flex;
     flex-direction: column;
     max-width:100vw;
+    overflow: hidden;
     //flex-grow: 3;
     height: ${({ toggle }) => (!toggle ? '100%' : '0%')};
     opacity: ${({ toggle }) => (toggle ? 0 : 1)};
@@ -49,8 +47,7 @@ export const HighlightField = styled.div<Toggle>`
     transition: all .4s ease-in-out;
 
     & div div div{
-        display: ${({ toggle }) => (toggle ? 'none' : 'block')};
-        padding: ${({ toggle }) => (toggle && '0 0')};
+        //padding: ${({ toggle }) => (toggle && '0 0')};
     }
 
     @media screen and (max-width: 470px) {
@@ -60,20 +57,16 @@ export const HighlightField = styled.div<Toggle>`
 
 //Mark
 export const MarkField = styled.div<Toggle>`
-    height: 10%;
     padding: 1rem 0;
     display: flex;
     flex-grow: 1;
     color: ${({ theme }) => theme.colors.black};
     transition: all .5s linear;
-
-    
 `;
 export const HighLightMarkField = styled.div<Toggle>`
     padding: 1rem 0;
     z-index: 0;
     color: ${({ theme }) => theme.colors.black};
-
 `;
 
 export const Mark = styled.div`

@@ -8,12 +8,8 @@ export const BoardHolder = styled.div`
     height: 100vh;
     max-width: 600px;
     position: relative;
-    display: grid;
-    grid-template-rows: 10% 80% 15%;
-    grid-template-areas: 
-                        "name"
-                        "content"
-                        "category";
+    display: flex;
+    flex-direction: column;
     position: relative;
 
     @media screen and (max-height: 630px) {
@@ -29,7 +25,7 @@ export const Holder = styled.div`
     align-items: center;
     padding: 1rem 1rem;
     font-size: .8rem;
-    grid-area: name;
+    height: 10%;
 `
 export const LogoSVGHolder = styled(LogoIcon)`
     width: auto;
@@ -39,6 +35,8 @@ export const LogoHolder = styled.div`
     width: auto;
     max-width: 65px;
     height: 100%;
+    min-height: 25px;
+    min-width: 25px;
 `
 
 export const Header = styled.h1`
@@ -64,12 +62,8 @@ export const CategoryHolder = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    padding: 2rem 1rem;
-    grid-area: category;
-
-    @media screen and (max-width: 360px) {
-        padding: 0 .5rem;
-    }
+    padding: 1rem 1rem;
+    height: fit-content;
 `;
 
 export const DetailsHeader = styled.div<HeaderType>`

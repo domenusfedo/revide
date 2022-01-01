@@ -60,14 +60,15 @@ export const EventCreatorHolder = styled.div<EventCreatorHolderType>`
 export const Header = styled.div<Type>`
     z-index: 500;
     font-weight: 900;
+    width: 100%;
     padding: 1rem 1rem; //TTO
     padding-bottom: .3rem;
     pointer-events: none;
 
     font-size: ${({ theme, type }) => (type === 'high' ? '1.2rem' : '1.2rem')};
 
-    @media screen and (max-width: 390px) {
-        width: 90%;
+    @media screen and (max-height: 650px) {
+        padding: .5rem 1rem;
     }
 
     @media screen and (max-width: 350px) {
@@ -139,7 +140,7 @@ export const SubStatus = styled.div<Status>`
 
     color: ${({ theme }) => theme.colors.white};
 
-    transition: all 1s;
+    transition: all .5s;
     background-color: ${({ theme }) => theme.colors.black};
     width: 100%;
     z-index: 90000;
