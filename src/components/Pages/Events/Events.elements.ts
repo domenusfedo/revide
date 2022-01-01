@@ -23,10 +23,6 @@ export const SearchField = styled.div`
     flex-grow: 1;
     justify-content: center;
     align-items: center;
-    
-    @media screen and (max-height: 650px) {
-       padding: .5rem 0;
-    }
 `;
 
 export const EventsField = styled.div<Toggle>`
@@ -69,18 +65,13 @@ export const MarkField = styled.div<Toggle>`
     color: ${({ theme }) => theme.colors.black};
     transition: all .5s linear;
 
-    @media screen and (max-height: 650px) {
-        padding: .5rem 0;
-    }
+    
 `;
 export const HighLightMarkField = styled.div<Toggle>`
     padding: 1rem 0;
     z-index: 0;
     color: ${({ theme }) => theme.colors.black};
 
-    @media screen and (max-height: 650px) {
-        padding: .5rem 0;
-    }
 `;
 
 export const Mark = styled.div`

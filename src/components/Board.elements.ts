@@ -17,7 +17,7 @@ export const BoardHolder = styled.div`
     position: relative;
 
     @media screen and (max-height: 630px) {
-        grid-template-rows: 7% 83% 10%;
+        //grid-template-rows: 7% 83% 10%;
     }
 `
 
@@ -32,17 +32,11 @@ export const Holder = styled.div`
     grid-area: name;
 `
 export const LogoSVGHolder = styled(LogoIcon)`
-   width: 100%;
-   height: 100%;
+    width: auto;
+    height: 100%;
 `
 export const LogoHolder = styled.div`
-    height: 50px;
-    width: 50px;
-
-    @media screen and (max-height: 650px) {
-        height: 25px;
-        width: 25px;
-    }
+    height: 100%;
 `
 
 export const Header = styled.h1`
@@ -51,7 +45,7 @@ export const Header = styled.h1`
     margin-left: 0.5rem;
 
     @media screen and (max-height: 650px) {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
 `
 

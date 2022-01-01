@@ -22,7 +22,7 @@ export const UserData = styled.div<Toggle>`
 
     height: ${({ toggle }) => (!toggle ? '100%' : '0%')};
 
-    transition: all .5s ease;
+    transition: all .5s ease-in-out;
 `
 
 export const Text = styled.span`
@@ -48,7 +48,7 @@ export const RecentEvent = styled.div<Toggle>`
     display: flex;
     height: 100%;
     padding: 1rem;
-    transition: all .5s ease;
+    transition: all .5s ease-in-out;
 `;
 export const EventHolder = styled.div`
     width: 100%;
@@ -64,7 +64,7 @@ export const EventHolder = styled.div`
     align-items: center;
     justify-content: space-between;
 
-    transition: all .2s ease;
+    transition: all .2s ease-in-out;
     
     @media screen and (min-height: 500px) {
         padding: 1rem 1rem;
@@ -76,7 +76,7 @@ export const Row = styled.div<Toggle>`
     opacity: ${({ toggle }) => (!toggle ? '1' : '0')};
     height: 50%;
     overflow: hidden;
-    transition: all .2s ease;
+    transition: all .2s ease-in-out;
 
     display: flex;
     justify-content: center;
@@ -97,7 +97,7 @@ export const UserPic = styled.div`
         height: 70px;
     }
 
-    transition: all .2 ease;
+    transition: all .2 ease-in-out;
 `
 
 export const UserIcon = styled(FaUserAlt)`
@@ -108,7 +108,7 @@ export const UserIcon = styled(FaUserAlt)`
     bottom: 0;
     transform: translate(-50%, 0);
     color: ${({ theme }) => theme.colors.black};
-    transition: all .2 ease;
+    transition: all .2 ease-in-out;
 `
 
 export const UserPersonal = styled.div<Toggle>`
@@ -189,6 +189,7 @@ export const SubHeader = styled.span`
     font-weight: 400;
     margin-top: .5rem;
     font-style: italic;
+    text-align: center;
 
     @media screen and (min-height: 850px) {
         font-size: 1.2rem;
@@ -210,22 +211,24 @@ export const Desc = styled.div<Toggle>`
     position: absolute;
     bottom: 0;
     transform: ${({ toggle }) => (toggle ? 'translateY(0)' : 'translateY(-500px)')};
-    transition: all .5 ease; */
+    transition: all .5 ease-in-out; */
     overflow: hidden;
     position: relative;
-    transition: all .2 ease;
+    transition: all .2 ease-in-out;
 `
 
 export const DescText = styled.span<Toggle>`
     position: absolute;
     top: 0;
-    left: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
     width: 100%;
+    max-width: 400px;
     height: 100%;
     opacity: ${({ toggle }) => (toggle ? '1' : '0')};
     padding: 1rem;
     text-align: center;
-    transition: all .2 ease;
+    transition: all .2 ease-in-out;
 `
 
 // export const Desc = styled.span<Toggle>`
@@ -239,7 +242,7 @@ export const DescText = styled.span<Toggle>`
 //     margin: ${({ toggle }) => (toggle ? '2rem 0' : '0 0')};
 //     z-index: ${({ toggle }) => (toggle ? '1' : '-3')};
 
-//     transition: all .2s ease;
+//     transition: all .2s ease-in-out;
 
 //     @media screen and (max-height: 590px) {
 //         font-size: .8rem;
