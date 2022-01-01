@@ -23,10 +23,11 @@ Project is created with:
 ```  
 To do:
 - Improve RWD
+- Improve main toggle aniamtion
+- Not toggled elements should not let us show details! 
+- Infinity scroll improve (RWD, better rendering)
 - Add component (to enable creating own events)
-- Profile component (to view own profile, to view own events) +
 - Search component
-- add to fav/participate logic +
 - behance presentation
 - tests
 ```  
