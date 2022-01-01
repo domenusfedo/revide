@@ -23,7 +23,6 @@ Project is created with:
 ```  
 To do:
 - Improve RWD
-- Not toggled elements should not let us show details! 
 - Add component (to enable creating own events)
 - Better UX when noEvents/errors
 - Search component
