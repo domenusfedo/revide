@@ -32,11 +32,12 @@ import {
 
 import EventCreator from './EventCreator/EventCreator';
 
-import {getEvents} from '../../../api/fetchEvents'
+import {getEvents, getTestEvents} from '../../../api/fetchEvents'
 import {Event} from '../../../features/eventsSlice'
 import { Details } from '../../Board';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../app/store';
+import Dashboard from './Dashboard/Dashboard';
 
 
 interface IProps {
@@ -54,6 +55,10 @@ const Events:React.FC<IProps> = ({detailsElementSet, applyClass}) => {
 
     const [page, pageSet] = useState(1);
     const [events, eventsSet] = useState<Event[][]>([]);
+
+    const [eventsTest, eventsTestSet] = useState<Event[]>([]);//TEST
+    const [chunkTest, chunkTestSet] = useState<any>([]);//TEST
+
     const [loading, loadingSet] = useState(false);
 
     const [scrollPos, scrollPosSet] = useState(0);
@@ -66,9 +71,13 @@ const Events:React.FC<IProps> = ({detailsElementSet, applyClass}) => {
         const {scrollTop, clientHeight, scrollHeight} = e?.currentTarget;
         scrollPosSet(scrollTop)
 
-        if(loading) return;
+        if(loading || !toggleEvents) return;
 
-        if((scrollHeight - scrollTop).toFixed() <= clientHeight) {
+        console.log('First:', (scrollHeight - scrollTop).toFixed())
+        console.log('Second:', clientHeight)
+
+        if(((scrollHeight - scrollTop) - 10).toFixed() <= clientHeight) {
+            console.log('NMEXT PAGE')
             pageSet(page + 1);
         }
     }
@@ -113,14 +122,51 @@ const Events:React.FC<IProps> = ({detailsElementSet, applyClass}) => {
         const loadEvents = async () => {
                 loadingSet(true);
                 const newEvents = await getEvents(page);
+                //const newTestEvents = await getTestEvents(page);
+
                 eventsSet((state: Event[][]) => ([
-                    ...state,
+                    ...events,
                     newEvents
                 ]));
+
+                // eventsTestSet((state: Event[]) => ([
+                //     ...eventsTest,
+                //     ...newTestEvents
+                // ]))
+
                 loadingSet(false);
         }
         loadEvents();
     }, [page])
+
+
+    useEffect(() => {
+    
+    }, [events])
+
+    // useEffect(() => {
+    //     const listToMatrix = () => {
+    //         let matrix: any = []
+    //         let i;
+    //         let k;
+
+    //         for(i=0, k=-1; i < eventsTest.length; i++) {
+    //             if(i % 6 === 0) {
+    //                 k++;
+    //                 matrix[k] = []
+    //             }
+
+    //             matrix[k].push(eventsTest[i])
+    //         }
+
+    //         chunkTestSet((state: any) => [
+    //             ...state,
+    //             matrix
+    //         ])
+    //         return matrix;
+    //     }
+    //     listToMatrix();
+    // }, [eventsTest])
 
     return (
         <EventsHolder>
@@ -140,13 +186,26 @@ const Events:React.FC<IProps> = ({detailsElementSet, applyClass}) => {
 
                 <MarkField toggle={toggleEvents}>
                     <Mark>
-                        <MarkHeader toggle={false} >Explore</MarkHeader>
+                        <MarkHeader toggle={false}>Explore</MarkHeader>
                         <MarkOption onClick={(e) => hideEvents()}>{toggleEvents ? 'Hide all' : 'See all'}</MarkOption>
                     </Mark>
                 </MarkField>
 
                 <RestField toggle={toggleEvents} onScroll={e => scrollHandler(e)} ref={begRef}>
-                    {/* {events && events.map((e, idx: number) => {
+                {events && events.map((e: Event[], page: number) => {
+
+                    if(page === 0) {
+                        return (
+                            <Dashboard toggle={true} page={page} chunk={e}/>
+                        )
+                    } else {
+                        return (
+                            <Dashboard toggle={toggleEvents} page={page} chunk={e}/>
+                        )
+                    }
+
+                })
+                    /* {events && events.map((e, idx: number) => {
                         let shouldToggle = toggleEvents
                         let extraElements = true
                         if(idx === 0) {

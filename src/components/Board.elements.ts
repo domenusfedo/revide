@@ -54,6 +54,7 @@ export const AppContent = styled.div`
     max-width: 100vw;
     height: 100%;
     max-width: 600px;
+    overflow: hidden;
 `;
 
 export const CategoryHolder = styled.div`

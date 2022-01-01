@@ -14,7 +14,10 @@ export const EventsHolder = styled.div`
     align-items: flex-start;
     flex-direction: column;
     transition: all .5s linear;
-    &::-webkit-scrollbar {display:none;}
+    &::-webkit-scrollbar {
+        display:none;
+    }
+    overflow: hidden;
 `;
 export const SearchField = styled.div`
     width: 100%;
@@ -105,8 +108,8 @@ export const MarkOption = styled.div`
 
 //Rest
 export const RestField = styled.div<Toggle>`
-    height: 100%;
     width:100%;
+    height: 100%;
     display: flex;
     flex-grow: ${({ toggle }) => (toggle ? 4 : 3)};
     flex-direction: column;
@@ -140,6 +143,7 @@ export const RowOne = styled(RowField) <Toggle>`
     @media screen and (max-width: 470px) {
         flex-direction: ${({ toggle }) => (!toggle ? 'row' : 'column')};
     }
+    background-color: red;
 `
 export const ColumnOne = styled(ColumnField) <Toggle>`
     flex-grow: 1;
@@ -152,6 +156,9 @@ export const ColumnOne = styled(ColumnField) <Toggle>`
     @media screen and (max-height: 550px) {
         flex-grow: 1;
     }
+
+    
+    background-color: red;
 `
 
 export const ColumnTwo = styled(ColumnField) <Toggle>`
@@ -165,6 +172,8 @@ export const ColumnTwo = styled(ColumnField) <Toggle>`
     @media screen and (max-height: 550px) {
         flex-grow: 3;
     }
+
+    background-color: green;
 `
 //Rest Structure
 //Left Rest
