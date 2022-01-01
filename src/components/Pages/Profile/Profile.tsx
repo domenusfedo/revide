@@ -24,6 +24,7 @@ import {
     ButtonsField,
     Button,
     Desc,
+    DescText
 } from './Profile.elements';
 
 const Profile = () => {
@@ -119,26 +120,37 @@ const Profile = () => {
     return (
         <Holder>
             <UserData toggle={detailsToggle}>
-                 {/* <Row toggle={detailsToggle}>
-                    <UserPic>
-                        <UserIcon/>
-                    </UserPic>
-                </Row>
-                <Row toggle={detailsToggle}>
+            <Row toggle={detailsToggle}>
+                <UserPic>
+                    <UserIcon/>
+                </UserPic>
+            </Row >
+            <Row toggle={detailsToggle}>
                     <UserPersonal toggle={detailsToggle}>
-                        <Name>{username ? username : 'CleverTiger069'}</Name>
+                        <Name>{user.username ? user.username : 'CleverTiger069'}</Name>
                         <SmallStatictics>
-                            <DataField>
-                                <DataHihglight>2</DataHihglight>
-                                <DataNormal>created</DataNormal>
-                            </DataField>
-                            <DataField>
-                                <DataHihglight>100</DataHihglight>
-                                <DataNormal>participated</DataNormal>
-                            </DataField>
+                        <DataField>
+                            <DataHihglight>2</DataHihglight>
+                            <DataNormal>created</DataNormal>
+                        </DataField>
+                        <DataField>
+                            <DataHihglight>100</DataHihglight>
+                            <DataNormal>participated</DataNormal>
+                        </DataField>      
                         </SmallStatictics>
                     </UserPersonal>
-                </Row> */}
+                    {/* 
+                    <SmallStatictics>
+                        <DataField>
+                            <DataHihglight>2</DataHihglight>
+                            <DataNormal>created</DataNormal>
+                        </DataField>
+                        <DataField>
+                            <DataHihglight>100</DataHihglight>
+                            <DataNormal>participated</DataNormal>
+                        </DataField>      
+                    </SmallStatictics> */}
+            </Row>
             </UserData>
 
             <Text>Current event</Text>
@@ -149,7 +161,9 @@ const Profile = () => {
                         <LocationHolder>
                             <Header>{upcomingEvent.title}</Header>
                             <SubHeader>{upcomingEvent.city}, {upcomingEvent.street}</SubHeader>
-                            <Desc toggle={detailsToggle}>{upcomingEvent.description}</Desc>
+                            <Desc toggle={detailsToggle}>
+                                <DescText toggle={detailsToggle}>{upcomingEvent.description}</DescText>
+                            </Desc>
                         </LocationHolder>
                     ) : (
                         <LocationHolder>

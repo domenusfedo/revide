@@ -16,7 +16,7 @@ const SignUp = () => {
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
-    const {isLoading, isAuth, error, shouldRedirect} = useSelector((state: RootState) => state.auth);
+    const {isLoading, error, shouldRedirect} = useSelector((state: RootState) => state.auth);
 
     const usernameRef = useRef<HTMLDivElement>(null);
     const passwordRef = useRef<HTMLDivElement>(null);
@@ -118,7 +118,7 @@ const SignUp = () => {
         return () => {
             dispatch(clearError())
         }
-    }, [])
+    }, [dispatch])
 
     return (
         <PageBlueprint>
