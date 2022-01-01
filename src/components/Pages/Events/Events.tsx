@@ -15,15 +15,6 @@ import {
     MarkOption,
 
     RestField,
-    RowOne,
-    RowThree,
-    ColumnOne,
-    ColumnTwo,
-    RowFour,
-    RowFive,
-    RowSix,
-    RowSeven,
-    RowEight,
 
     Loading,
     Spinner,
@@ -32,7 +23,7 @@ import {
 
 import EventCreator from './EventCreator/EventCreator';
 
-import {getEvents, getTestEvents} from '../../../api/fetchEvents'
+import {getEvents} from '../../../api/fetchEvents'
 import {Event} from '../../../features/eventsSlice'
 import { Details } from '../../Board';
 import { useSelector } from 'react-redux';
@@ -56,9 +47,6 @@ const Events:React.FC<IProps> = ({detailsElementSet, applyClass}) => {
     const [page, pageSet] = useState(1);
     const [events, eventsSet] = useState<Event[][]>([]);
 
-    const [eventsTest, eventsTestSet] = useState<Event[]>([]);//TEST
-    const [chunkTest, chunkTestSet] = useState<any>([]);//TEST
-
     const [loading, loadingSet] = useState(false);
 
     const [scrollPos, scrollPosSet] = useState(0);
@@ -73,11 +61,7 @@ const Events:React.FC<IProps> = ({detailsElementSet, applyClass}) => {
 
         if(loading || !toggleEvents) return;
 
-        console.log('First:', (scrollHeight - scrollTop).toFixed())
-        console.log('Second:', clientHeight)
-
         if(((scrollHeight - scrollTop) - 10).toFixed() <= clientHeight) {
-            console.log('NMEXT PAGE')
             pageSet(page + 1);
         }
     }
@@ -122,17 +106,11 @@ const Events:React.FC<IProps> = ({detailsElementSet, applyClass}) => {
         const loadEvents = async () => {
                 loadingSet(true);
                 const newEvents = await getEvents(page);
-                //const newTestEvents = await getTestEvents(page);
 
                 eventsSet((state: Event[][]) => ([
                     ...events,
                     newEvents
                 ]));
-
-                // eventsTestSet((state: Event[]) => ([
-                //     ...eventsTest,
-                //     ...newTestEvents
-                // ]))
 
                 loadingSet(false);
         }
@@ -143,30 +121,6 @@ const Events:React.FC<IProps> = ({detailsElementSet, applyClass}) => {
     useEffect(() => {
     
     }, [events])
-
-    // useEffect(() => {
-    //     const listToMatrix = () => {
-    //         let matrix: any = []
-    //         let i;
-    //         let k;
-
-    //         for(i=0, k=-1; i < eventsTest.length; i++) {
-    //             if(i % 6 === 0) {
-    //                 k++;
-    //                 matrix[k] = []
-    //             }
-
-    //             matrix[k].push(eventsTest[i])
-    //         }
-
-    //         chunkTestSet((state: any) => [
-    //             ...state,
-    //             matrix
-    //         ])
-    //         return matrix;
-    //     }
-    //     listToMatrix();
-    // }, [eventsTest])
 
     return (
         <EventsHolder>
@@ -196,53 +150,15 @@ const Events:React.FC<IProps> = ({detailsElementSet, applyClass}) => {
 
                     if(page === 0) {
                         return (
-                            <Dashboard toggle={true} page={page} chunk={e}/>
+                            <Dashboard toggle={toggleEvents} page={page} chunk={e} main={true} showDetails={showDetails} applyClass={applyClass}/>
                         )
                     } else {
                         return (
-                            <Dashboard toggle={toggleEvents} page={page} chunk={e}/>
+                            <Dashboard toggle={toggleEvents} page={page} chunk={e} main={false} showDetails={showDetails} applyClass={applyClass}/>
                         )
                     }
 
-                })
-                    /* {events && events.map((e, idx: number) => {
-                        let shouldToggle = toggleEvents
-                        let extraElements = true
-                        if(idx === 0) {
-                            shouldToggle = true
-                            extraElements = toggleEvents
-                        }
-                        
-                        return (
-                            <RowOne toggle={shouldToggle} key={idx}>
-                                 <ColumnOne toggle={shouldToggle}>
-                                    <RowThree toggle={shouldToggle}>
-                                        {e[0] && <EventCreator pointer={{page: idx, element: 0}} shouldBeBlack={e[0].shouldBeBlack} applyClass={applyClass} showDetails={showDetails} toggle={shouldToggle} event={e[0]} bgImage={e[0].background}/>}
-                                    </RowThree>
-
-                                    <RowFour toggle={extraElements}>
-                                    {e[1] && <EventCreator pointer={{page: idx, element: 1}} shouldBeBlack={e[1].shouldBeBlack} applyClass={applyClass} showDetails={showDetails} toggle={shouldToggle} event={e[1]} bgImage={e[1].background}/>}
-                                    </RowFour>
-
-                                    <RowFive toggle={extraElements}>
-                                        {e[4] && <EventCreator pointer={{page: idx, element: 4}} shouldBeBlack={e[4].shouldBeBlack} applyClass={applyClass} showDetails={showDetails} toggle={shouldToggle} event={e[4]}  bgImage={e[4].background}/>}
-                                    </RowFive>
-                                 </ColumnOne>
-   
-                                 <ColumnTwo toggle={shouldToggle}>
-                                    <RowSix toggle={extraElements}>
-                                    {e[3] && <EventCreator pointer={{page: idx, element: 3}} shouldBeBlack={e[3].shouldBeBlack} applyClass={applyClass} showDetails={showDetails} toggle={shouldToggle} event={e[3]} bgImage={e[3].background}/>}
-                                    </RowSix>
-                                    <RowSeven toggle={extraElements}>
-                                        {e[2] && <EventCreator pointer={{page: idx, element: 2}} shouldBeBlack={e[2].shouldBeBlack} applyClass={applyClass} showDetails={showDetails} toggle={shouldToggle} event={e[2]}  bgImage={e[2].background}/>}
-                                    </RowSeven>
-                                    <RowEight toggle={extraElements}>
-                                        {e[5] && <EventCreator pointer={{page: idx, element: 5}} shouldBeBlack={e[5].shouldBeBlack} applyClass={applyClass} showDetails={showDetails} toggle={shouldToggle} event={e[5]} bgImage={e[5].background}/>}
-                                    </RowEight>
-                                 </ColumnTwo>
-                             </RowOne>
-                       )
-                    })} */}
+                })}
                 </RestField>
                 <Loading>
                     <Spinner loading={loading}/>

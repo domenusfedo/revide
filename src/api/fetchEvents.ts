@@ -51,28 +51,3 @@ export const getEvents = async (page: number) => {
 
     return fakeGeneratedData;
 };
-
-export const getTestEvents = async (page: number) => {
-    const fakeUsers = await axios.get(`https://randomuser.me/api/?pages=${page}&results=6`); //@fels query to events APIs endpoint => /events
-
-    const fakeGeneratedData = fakeUsers.data.results.map((e: any, idx: number) => {
-        return {
-            country: e.location.country,
-            city: e.location.city,
-            street: e.location.street.name,
-            streetNumber: e.location.street.number,
-            paricipantAmount: Math.floor(Math.random() * 60),
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget nisi enim. Quisque vitae neque ullamcorper nibh rutrum vulputate vitae in eros. Nullam a nisi ac dolor viverra efficitur. Morbi ullamcorper eget felis vel pulvinar. Proin vel elit vehicula, vestibulum turpis ac, blandit urna.',
-            background: infoPattern[idx].bg,
-            shouldBeBlack: infoPattern[idx].shouldBeBlack,
-            creator: e.login.username,
-            title: e.name.last + e.name.first + ' Title',
-            id: e.name.last + e.name.first + Math.floor(Math.random() * 100),
-            startAt: new Date()
-        }
-    })
-
-    console.log(fakeGeneratedData)
-
-    return fakeGeneratedData;
-};
