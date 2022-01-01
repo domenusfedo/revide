@@ -27,6 +27,7 @@ To do:
 - Not toggled elements should not let us show details! 
 - Infinity scroll improve (RWD, better rendering)
 - Add component (to enable creating own events)
+- Better UX when no vents/errors
 - Search component
 - behance presentation
 - tests
