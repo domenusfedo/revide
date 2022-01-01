@@ -15,25 +15,27 @@ export const EventsHolder = styled.div`
     flex-direction: column;
     transition: all .5s linear;
     &::-webkit-scrollbar {display:none;}
+    background-color: violet;
 `;
 export const SearchField = styled.div`
     width: 100%;
     max-width:100vw;
     display: flex;
-    flex-grow: 1;
     justify-content: center;
     align-items: center;
+    background-color: red;
 `;
 
 export const EventsField = styled.div<Toggle>`
     width: 100%;
     max-width:100vw;
-    height: 100%;
     display: flex;
+    height: fit-content;
     flex-direction: column;
     transition: all .5s linear;
     overflow: hidden;
     &::-webkit-scrollbar {display:none;}
+    background-color: green;
 `;
 
 export const HighlightField = styled.div<Toggle>`
@@ -142,7 +144,6 @@ const RowField = styled.div<Toggle>`
 export const RowOne = styled(RowField) <Toggle>`
     min-height: ${({ toggle }) => (toggle ? '101%' : '0%')};
     width: 100%;
-    padding: .2rem 0;
     @media screen and (max-width: 470px) {
         flex-direction: ${({ toggle }) => (!toggle ? 'row' : 'column')};
     }

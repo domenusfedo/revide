@@ -20,7 +20,7 @@ const Category: React.FC<CategoryType> = ({name, focusedElementSet, id}) => {
         <CategoryHolder id={id} onClick={() => focusedElementSet(parseInt(id))}>
             {name === 'events' && <HomeIcon/>}
             {name === 'add' && <AddIcon/>}
-            {name === 'profile' && <ProfileIcon/>}
+            {name === 'me' && <ProfileIcon/>}
             <CategoryName>{name}</CategoryName>
             <CategoryExtension/>
         </CategoryHolder>

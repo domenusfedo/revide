@@ -184,7 +184,7 @@ const Board = () => {
                     <CategoryHolder ref={categoryRef}>
                         <Category name='events' id='0' focusedElementSet={focusedElementSet}/>
                         <Category name='add' id='1' focusedElementSet={focusedElementSet}/>
-                        <Category name='profile' id='2' focusedElementSet={focusedElementSet}/>
+                        <Category name='me' id='2' focusedElementSet={focusedElementSet}/>
                     </CategoryHolder>
             </BoardHolder>
         </PageBlueprint>

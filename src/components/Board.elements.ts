@@ -9,7 +9,7 @@ export const BoardHolder = styled.div`
     max-width: 600px;
     position: relative;
     display: grid;
-    grid-template-rows: 10% 80% 10%;
+    grid-template-rows: 10% 80% 15%;
     grid-template-areas: 
                         "name"
                         "content"
@@ -36,6 +36,8 @@ export const LogoSVGHolder = styled(LogoIcon)`
     height: 100%;
 `
 export const LogoHolder = styled.div`
+    width: auto;
+    max-width: 65px;
     height: 100%;
 `
 

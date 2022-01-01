@@ -77,7 +77,7 @@ const EventCreator: React.FC<IProps> = ({showDetails, event, type = 'another', b
     )
 
     return (
-        <EventCreatorHolderSize id='main' ref={elementRef} toggle={toggle}>
+        <EventCreatorHolderSize id='main' ref={elementRef} toggle={toggle} type={type}>
             {element}
         </EventCreatorHolderSize>
     );

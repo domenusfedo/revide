@@ -9,6 +9,7 @@ interface EventCreatorHolderType {
 }
 interface Position {
     toggle: boolean
+    type: string
 }
 
 interface Type {
@@ -19,7 +20,7 @@ export const EventCreatorHolderSize = styled.div<Position>`
     position: absolute;
     height: 100%;
     width: 100%;
-    padding: 0.3rem;
+    padding: ${({ type }) => (type === 'high' ? '0rem' : '0.3rem')};
     position: relative;
 `;
 
