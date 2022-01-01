@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { app } from "../firebase";
 
+import firebase from 'firebase/app';
+
 import { deleteField } from "firebase/firestore";
 
 export interface Event {
@@ -36,7 +38,11 @@ interface FetchedFromFireBaseEvent {
 
 interface EventsState {
     followed: Event[],
-    dashboard: {}
+    issues: {
+        followedError: string | undefined,
+        addError: string | undefined,
+        removeError: string | undefined
+    }
 }
 
 export const fetchFollowedEvents = createAsyncThunk(
@@ -61,7 +67,12 @@ export const fetchFollowedEvents = createAsyncThunk(
                 dispatch(fetchFollowed(newArray))
             })
             .catch(err => {
-                console.log(err)
+                const error = err as Error;
+
+                dispatch(setError({
+                    where: 'removeError',
+                    message: error.message
+                })) //Sorry we couldn't fetch Your events
             });
 
     }
@@ -78,7 +89,12 @@ export const addFollowedEvents = createAsyncThunk(
         }).then(res => {
             dispatch(addToFollowed(args.event))
         }).catch(err => {
-            console.log(err)
+            const error = err as Error;
+
+            dispatch(setError({
+                where: 'addError',
+                message: error.message
+            })) //Sorry we couldn't add to follow
         });
 
     }
@@ -90,20 +106,33 @@ export const removeFollowedEvents = createAsyncThunk(
         uid: string,
         event: Event
     }, { dispatch }) => {
-        await app.firestore().doc(`${args.uid}/followedEvents`).update({
-            [args.event.id]: deleteField()
-        }).then(() => {
-            dispatch(deleteFromFollowed(args.event))
-        }).catch(err => {
-            console.log(err)
-        })
+        try {
+            await app.firestore().doc(`${args.uid}/followedEvents`).update({
+                [args.event.id]: deleteField()
+            }).then(() => {
+                dispatch(deleteFromFollowed(args.event))
+            }).catch((err: firebase.FirebaseError) => {
+                throw new Error(err.message)
+            })
 
+        } catch (err) {
+            const error = err as Error;
+
+            dispatch(setError({
+                where: 'removeError',
+                message: error.message
+            })) //Sorry we couldn't delete
+        }
     }
 )
 
 const initialState: EventsState = {
     followed: [],
-    dashboard: {}
+    issues: {
+        followedError: undefined,
+        addError: undefined,
+        removeError: undefined
+    }
 }
 
 const eventsSlice = createSlice({
@@ -111,16 +140,47 @@ const eventsSlice = createSlice({
     initialState,
     reducers: {
         addToFollowed: (state, action: PayloadAction<Event>) => {
+            if (state.issues.removeError) {
+                clearError({
+                    where: 'addError'
+                })
+            }
+
             state.followed = [...state.followed, action.payload]
             state.followed.sort((a, b) => a.startAt.getTime() - b.startAt.getTime())
         },
 
         deleteFromFollowed: (state, action: PayloadAction<Event>) => {
+            if (state.issues.removeError) {
+                clearError({
+                    where: 'removeError'
+                })
+            }
+
             state.followed = state.followed.filter(e => e.id !== action.payload.id)
         },
 
         fetchFollowed: (state, action: PayloadAction<Event[]>) => {
+            if (state.issues.removeError) {
+                clearError({
+                    where: 'followedError'
+                })
+            }
+
             state.followed = [...action.payload]
+        },
+        setError: (state, action: PayloadAction<{ where: keyof EventsState['issues'], message: string }>) => {
+            state.issues[action.payload.where] = action.payload.message
+        },
+        clearError: (state, action: PayloadAction<{ where: keyof EventsState['issues'], clearAll?: boolean }>) => {
+            if (action.payload.clearAll) {
+                state.issues = {
+                    addError: undefined,
+                    followedError: undefined,
+                    removeError: undefined
+                }
+            }
+            state.issues[action.payload.where] = undefined;
         }
     }
 })
@@ -128,7 +188,9 @@ const eventsSlice = createSlice({
 export const {
     addToFollowed,
     deleteFromFollowed,
-    fetchFollowed
+    fetchFollowed,
+    setError,
+    clearError
 } = eventsSlice.actions;
 
 export default eventsSlice.reducer;

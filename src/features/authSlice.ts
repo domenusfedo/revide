@@ -69,7 +69,6 @@ export const signInHandler = createAsyncThunk(
             }))
         } catch (err) {
             const error = err as Error;
-            console.log('wtf3')
 
             dispatch(setUser({
                 isAuth: false,

@@ -28,7 +28,7 @@ import {
 
 const Profile = () => {
     const {user} = useSelector((state: RootState) => state.auth)
-    const {followed} = useSelector((state: RootState) => state.events);
+    const {followed, issues} = useSelector((state: RootState) => state.events);
 
     const mainButtonRef = useRef<HTMLButtonElement>(null);
     const cancelButtonRef = useRef<HTMLButtonElement>(null);
@@ -102,6 +102,16 @@ const Profile = () => {
         
     }
 
+    const [headerText, headerTextSet] = useState('')
+
+    useEffect(() => { //should be moved to UI Folder as a EventHeader or something
+        if(issues.followedError) {
+            headerTextSet(issues.followedError);
+        } else {
+            headerTextSet("You don't any upcoming events!");
+        }
+    }, [issues.followedError])
+
     useEffect(() => {
         upcomingEventSet(followed[0])
     }, [followed])
@@ -143,7 +153,7 @@ const Profile = () => {
                         </LocationHolder>
                     ) : (
                         <LocationHolder>
-                            <Header>None event to display!</Header>
+                            <Header>{headerText}</Header>
                         </LocationHolder>
                     )}
 

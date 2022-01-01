@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import {
     EventCreatorHolderSize,
@@ -10,6 +10,8 @@ import {
 } from './EventCreator.elements';
 
 import {Event} from '../../../../features/eventsSlice'
+import { RootState } from '../../../../app/store';
+import { useSelector } from 'react-redux';
 
 interface IProps {
     event: Event,
@@ -30,6 +32,8 @@ const EventCreator: React.FC<IProps> = ({showDetails, event, type = 'another', b
     const elementRef = useRef<HTMLDivElement>(null);
     const [status, statusSet] = useState<boolean>(false);
 
+    const {issues} = useSelector((state: RootState ) => state.events)
+
     const detailRevealHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, pointer: {page: number, element: number}) => {
         showDetails(e, pointer);
     }
@@ -46,6 +50,16 @@ const EventCreator: React.FC<IProps> = ({showDetails, event, type = 'another', b
         statusSet(false)
     }
 
+    const [headerText, headerTextSet] = useState('')
+
+    useEffect(() => {
+        if(issues.followedError) {
+            headerTextSet(issues.followedError);
+        } else {
+            headerTextSet("You don't any upcoming events!");
+        }
+    }, [issues.followedError])
+
     const element = type === 'another' ? (
             <EventCreatorHolder shouldBeBlack={shouldBeBlack} bgTexture={bgImage} toggle={toggle} type={type} onClick={(e) => handleOn(e, pointer)} onMouseLeave={() => handleOff()}>
                 <Header type={type}>{event.title}</Header>
@@ -55,7 +69,9 @@ const EventCreator: React.FC<IProps> = ({showDetails, event, type = 'another', b
             </EventCreatorHolder>
     ) : (
             <EventCreatorHolder shouldBeBlack={shouldBeBlack} bgTexture={bgImage} toggle={toggle} type={type}>
-                <Header type={type}>{event ? event.title : "You don't any upcoming events!"}</Header>
+                {/* {issues.followedError && <Header type={type}>Sorry, we couldn't load followed events!</Header>} */}
+                <Header type={type}>{event ? event.title : headerText}</Header>
+                {/* <Header type={type}>{event ? event.title : "You don't any upcoming events!"}</Header> */}
                 <Time>{event ? 'Time left: 00:00:00:00' : ''}</Time>
             </EventCreatorHolder>
     )

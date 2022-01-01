@@ -30,7 +30,7 @@ const infoPattern = [
 ]
 
 export const getEvents = async (page: number) => {
-    const fakeUsers = await axios.get(`https://randomuser.me/api/?pages=${page}&results=6`);
+    const fakeUsers = await axios.get(`https://randomuser.me/api/?pages=${page}&results=6`); //@fels query to events APIs endpoint => /events
 
     const fakeGeneratedData: Event[] = fakeUsers.data.results.map((e: any, idx: number) => {
         return {
