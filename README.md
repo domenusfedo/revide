@@ -6,8 +6,8 @@
 * [Presentation](#presentation)
 
 ## General info
-Meeting App.
-```revide.``` will help You go outside. 
+Event manager App.
+```revide.``` will help You go outside. Grab your device and find event. Wait for it and run across with other participants, face-to-face or via live chat. Be a part of community.
   
 ## Technologies
 Project is created with:
