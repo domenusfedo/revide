@@ -10,7 +10,6 @@ import { useLocation } from 'react-router-dom';
 import {TransitionGroup, CSSTransition} from 'react-transition-group';
 
 import {AppHolder} from './App.elements'
-import { useRive } from 'rive-react';
 
 
 const App = () => {

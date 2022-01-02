@@ -18,7 +18,8 @@ import {
 
     Loading,
     Spinner,
-    
+
+    NoFoundText
 } from './Events.elements'
 
 import EventCreator from './EventCreator/EventCreator';
@@ -102,25 +103,34 @@ const Events:React.FC<IProps> = ({detailsElementSet, applyClass}) => {
         toggleEventsSet(!toggleEvents)
     }
 
+
+    const loadSearchedEvents = async (terms: string) => {
+        console.log(terms)
+        //API call withe extra parameter
+    }
+
     useEffect(() => {
         const loadEvents = async () => {
-                loadingSet(true);
-                const newEvents = await getEvents(page);
-
-                eventsSet((state: Event[][]) => ([
-                    ...events,
-                    newEvents
-                ]));
-
-                loadingSet(false);
+            loadingSet(true);
+            const newEvents = await getEvents(page);
+    
+            console.log('fetching')
+    
+            eventsSet((state: Event[][]) => ([
+                ...events,
+                newEvents
+            ]));
+    
+            loadingSet(false);
         }
+
         loadEvents();
     }, [page])
 
 
     useEffect(() => {
-    
-    }, [events])
+        //silent requests
+    }, [terms])
 
     return (
         <EventsHolder>
@@ -146,19 +156,19 @@ const Events:React.FC<IProps> = ({detailsElementSet, applyClass}) => {
                 </MarkField>
 
                 <RestField toggle={toggleEvents} onScroll={e => scrollHandler(e)} ref={begRef}>
-                {events && events.map((e: Event[], page: number) => {
-
+                {events.length !== 0 && events.map((e: Event[], page: number) => {
                     if(page === 0) {
                         return (
-                            <Dashboard toggle={toggleEvents} page={page} chunk={e} main={true} showDetails={showDetails} applyClass={applyClass}/>
+                            <Dashboard key={page} toggle={toggleEvents} page={page} chunk={e} main={true} showDetails={showDetails} applyClass={applyClass}/>
                         )
                     } else {
                         return (
-                            <Dashboard toggle={toggleEvents} page={page} chunk={e} main={false} showDetails={showDetails} applyClass={applyClass}/>
+                            <Dashboard key={page} toggle={toggleEvents} page={page} chunk={e} main={false} showDetails={showDetails} applyClass={applyClass}/>
                         )
                     }
 
                 })}
+                {loading && <Dashboard key={page} toggle={toggleEvents} page={page} chunk={null} main={true} showDetails={showDetails} applyClass={applyClass}/>}
                 </RestField>
                 <Loading>
                     <Spinner loading={loading}/>

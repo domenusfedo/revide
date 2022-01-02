@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { Event } from '../features/eventsSlice';
 
-const infoPattern = [
+export const infoPattern = [
     {
         shouldBeBlack: true,
         bg: "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1007%26quot%3b)' fill='none'%3e%3crect width='1440' height='560' x='0' y='0' fill='rgba(242%2c 200%2c 73%2c 1)'%3e%3c/rect%3e%3cpath d='M0%2c451.159C83.214%2c454.444%2c122.656%2c344.818%2c194.096%2c302.02C268.972%2c257.163%2c373.149%2c263.587%2c427.33%2c195.155C484.877%2c122.472%2c515.272%2c18.579%2c488.875%2c-70.29C462.878%2c-157.815%2c355.601%2c-187.373%2c293.756%2c-254.541C234.506%2c-318.89%2c212.537%2c-417.652%2c133.854%2c-455.866C51.227%2c-495.995%2c-54.383%2c-505.364%2c-136.03%2c-463.277C-215.709%2c-422.204%2c-234.423%2c-319.795%2c-279.937%2c-242.567C-316.547%2c-180.447%2c-365.57%2c-125.395%2c-377.104%2c-54.219C-388.757%2c17.693%2c-380.564%2c94.002%2c-344.759%2c157.446C-310.291%2c218.521%2c-237.876%2c241.596%2c-184.492%2c287.076C-120.549%2c341.552%2c-83.937%2c447.846%2c0%2c451.159' fill='%23ebb511'%3e%3c/path%3e%3cpath d='M1440 962.899C1516.901 956.54 1598.571 948.2139999999999 1657.402 898.284 1713.796 850.423 1712.509 765.492 1748.646 700.954 1789.276 628.393 1879.226 579.487 1882.438 496.387 1885.692 412.20500000000004 1824.7640000000001 337.75800000000004 1764.978 278.405 1707.848 221.68900000000002 1633.118 187.144 1554.324 170.64999999999998 1479.618 155.012 1404.373 167.839 1330.618 187.48000000000002 1255.191 207.56599999999997 1171.031 223.80399999999997 1123.171 285.466 1075.848 346.43600000000004 1081.78 431.275 1081.489 508.454 1081.231 576.8389999999999 1103.591 639.439 1121.589 705.413 1143.368 785.246 1133.8519999999999 884.222 1198.196 936.255 1262.5529999999999 988.298 1357.516 969.719 1440 962.899' fill='%23f6da84'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1007'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e"
@@ -31,6 +31,7 @@ const infoPattern = [
 
 export const getEvents = async (page: number) => {
     const fakeUsers = await axios.get(`https://randomuser.me/api/?pages=${page}&results=6`); //@fels query to events APIs endpoint => /events
+
 
     const fakeGeneratedData: Event[] = fakeUsers.data.results.map((e: any, idx: number) => {
         return {

@@ -140,7 +140,13 @@ const Board = () => {
                         </LogoHolder>
                         <Header>Revide.</Header>
                     </Holder>
-                   {focusedElement === 0 && <DetailsExpand active={detailToggle} bgImage={detailsElement.information.background} top={detailsElement.position.top} left={detailsElement.position.left} width={detailsElement.position.width} height={detailsElement.position.height} ref={detailsRef}>
+                    
+                    <AppContent>
+                        {focusedElement === 0 && <Events detailToggleSet={detailToggleSet} detailsElement={detailsElement} detailsElementSet={detailsElementSet} applyClass={applyClass}/>}
+                        {focusedElement === 2 && <Profile />}
+                    </AppContent>
+
+                    {focusedElement === 0 && <DetailsExpand active={detailToggle} bgImage={detailsElement.information.background} top={detailsElement.position.top} left={detailsElement.position.left} width={detailsElement.position.width} height={detailsElement.position.height} ref={detailsRef}>
                         <DetailsHeader shouldBeBlack={detailsElement.information.shouldBeBlack} active={detailToggle}>
                             <HeaderOptions onClick={() => hideDetails()}>
                                 <OptionsIcon></OptionsIcon>
@@ -175,11 +181,6 @@ const Board = () => {
                             )}
                         </DetailsHeader>
                     </DetailsExpand>}
-                    
-                    <AppContent>
-                        {focusedElement === 0 && <Events detailToggleSet={detailToggleSet} detailsElement={detailsElement} detailsElementSet={detailsElementSet} applyClass={applyClass}/>}
-                        {focusedElement === 2 && <Profile />}
-                    </AppContent>
 
                     <CategoryHolder ref={categoryRef}>
                         <Category name='events' id='0' focusedElementSet={focusedElementSet}/>

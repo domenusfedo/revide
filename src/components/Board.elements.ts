@@ -191,11 +191,11 @@ export const DetailsExpand = styled.div<ExpandType>`
     //border-radius: ${({ active }) => (active ? '25px' : '0')};
     border-radius: 25px;
     cursor: default;
-    transition: all .1s, color 0s;
+    transition: all .1s ease-in-out, color 0s;
     opacity: 1;
     padding: 0.3rem;
 
-    z-index: -3;
+    z-index: -1;
 
     background-size: cover;
     background-repeat: no-repeat;
@@ -204,9 +204,9 @@ export const DetailsExpand = styled.div<ExpandType>`
     background-color: black;
     
     &.active {
-        z-index:9999999;
         top: 0;
         left:0;
+        z-index: 5000;
         width: 100%;
         height: 100%;
         opacity: 1;

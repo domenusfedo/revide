@@ -189,3 +189,6 @@ export const Test = styled.div<TestType>`
         height: 100%;
     }
 `
+export const NoFoundText = styled.span`
+    color: ${({ theme }) => theme.colors.black};
+`
