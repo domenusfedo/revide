@@ -24,7 +24,7 @@ Project is created with:
 To do:
 - Improve RWD
 - Add component (to enable creating own events)
-- Better UX when noEvents/errors
+- Optimize Skeleton loading
 - Search component
 - behance presentation
 - tests
