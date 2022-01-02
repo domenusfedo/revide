@@ -84,14 +84,19 @@ export const Row = styled.div<Toggle>`
 
 export const UserPic = styled.div`
     background-color: ${({ theme }) => theme.colors.blackVar};
-    width: 100px;
-    height: 100px;
+    width: 125px;
+    height: 125px;
     border-radius: 50%;
 
     overflow: auto;
     position: relative;
 
-    @media screen and (max-height: 716px){
+    @media screen and (max-height: 780px){
+        width: 90px;
+        height: 90px;
+    }
+
+    @media screen and (max-height: 670px){
         width: 60px;
         height: 60px;
     }
