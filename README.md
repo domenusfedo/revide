@@ -26,6 +26,7 @@ To do:
 - Add component (to enable creating own events)
 - Optimize Skeleton loading
 - Search component
+- LiveChat component
 - behance presentation
 - tests
 ```  
