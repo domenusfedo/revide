@@ -36,6 +36,7 @@ export const EventsField = styled.div<Toggle>`
     transition: all .5s linear;
     overflow: hidden;
     &::-webkit-scrollbar {display:none;}
+    padding-bottom: 1rem;
 `;
 
 export const HighlightField = styled.div<Toggle>`

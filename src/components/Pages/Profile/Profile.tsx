@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../app/store';
 import { Event, removeFollowedEvents } from '../../../features/eventsSlice';
 
+
 import {
     Holder,
     UserData,
@@ -27,7 +28,13 @@ import {
     DescText
 } from './Profile.elements';
 
-const Profile = () => {
+interface IProps {
+    focusedElementSet: React.Dispatch<React.SetStateAction<number>>,
+    shouldExpand: boolean,
+    shouldExpandSet: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const Profile:React.FC<IProps> = ({focusedElementSet, shouldExpand = false, shouldExpandSet}) => {
     const {user} = useSelector((state: RootState) => state.auth)
     const {followed, issues} = useSelector((state: RootState) => state.events);
 
@@ -100,7 +107,7 @@ const Profile = () => {
     }
 
     const findHanlder = () => {
-        
+        focusedElementSet(0)
     }
 
     const [headerText, headerTextSet] = useState('')
@@ -112,6 +119,14 @@ const Profile = () => {
             headerTextSet("You don't any upcoming events!");
         }
     }, [issues.followedError])
+
+    useEffect(() => {
+        detailsToggleSet(shouldExpand);
+
+        return () => {
+            shouldExpandSet(false)
+        }
+    }, [])
 
     useEffect(() => {
         upcomingEventSet(followed[0])
@@ -153,7 +168,8 @@ const Profile = () => {
             </Row>
             </UserData>
 
-            <Text>Current event</Text>
+            <Text>Upcoming event</Text> 
+            {/* if now set current Event */}
 
             <RecentEvent toggle={detailsToggle}>
                 <EventHolder>

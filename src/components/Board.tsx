@@ -56,6 +56,8 @@ const Board = () => {
     const [focusedElement, focusedElementSet] = useState(0);
     const [detailToggle, detailToggleSet] = useState(false);
 
+    const [shouldExpand, shouldExpandSet] = useState(false);
+
     const categoryRef = useRef<HTMLDivElement>(null);
     const detailsRef = useRef<HTMLDivElement>(null);
 
@@ -115,6 +117,11 @@ const Board = () => {
         }))
     }
 
+    const redirectAndExpand = (element: number) => {
+        shouldExpandSet(true);
+        focusedElementSet(element)
+    }
+
     const [isFollowed, isFollowedSet] = useState(false);
 
     useEffect(() => {
@@ -142,8 +149,8 @@ const Board = () => {
                     </Holder>
                     
                     <AppContent>
-                        {focusedElement === 0 && <Events detailToggleSet={detailToggleSet} detailsElement={detailsElement} detailsElementSet={detailsElementSet} applyClass={applyClass}/>}
-                        {focusedElement === 2 && <Profile />}
+                        {focusedElement === 0 && <Events redirectAndExpand={redirectAndExpand} detailToggleSet={detailToggleSet} detailsElement={detailsElement} detailsElementSet={detailsElementSet} applyClass={applyClass}/>}
+                        {focusedElement === 2 && <Profile focusedElementSet={focusedElementSet} shouldExpand={shouldExpand} shouldExpandSet={shouldExpandSet}/>}
                     </AppContent>
 
                     {focusedElement === 0 && <DetailsExpand active={detailToggle} bgImage={detailsElement.information.background} top={detailsElement.position.top} left={detailsElement.position.left} width={detailsElement.position.width} height={detailsElement.position.height} ref={detailsRef}>

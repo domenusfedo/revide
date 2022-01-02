@@ -67,9 +67,8 @@ export const EventHolder = styled.div`
     transition: all .2s ease-in-out;
     
     @media screen and (min-height: 500px) {
-        padding: 1rem 1rem;
+        /* padding: 1rem 1rem; */
     }
-
 `;
 
 export const Row = styled.div<Toggle>`
@@ -128,10 +127,10 @@ export const UserPersonal = styled.div<Toggle>`
 export const Name = styled.span`
     height: 50%;
     font-weight: 900;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
 
     @media screen and (max-height: 640px) {
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
 `
 
@@ -177,7 +176,7 @@ export const Header = styled.span`
     text-align: center;
 
     @media screen and (min-height: 850px) {
-        font-size: 1.8rem;
+        font-size: 1.4rem;
     }
 
     @media screen and (max-height: 590px) {
@@ -229,6 +228,10 @@ export const DescText = styled.span<Toggle>`
     padding: 1rem;
     text-align: center;
     transition: all .2 ease-in-out;
+
+    @media screen and (max-height: 620px) {
+        font-size: .8rem;
+    }
 `
 
 // export const Desc = styled.span<Toggle>`
@@ -269,6 +272,8 @@ export const Button = styled.button<Type>`
     border-radius: 10px;
     padding: .8rem 0;
 
+    font-size: .8rem;
+
     outline: none;
 
     cursor: pointer;
@@ -280,7 +285,7 @@ export const Button = styled.button<Type>`
 
     @media screen and (min-height: 812px) {
         padding: 1rem 0;
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
 
     @media screen and (max-height: 590px) {
