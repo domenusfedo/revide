@@ -1,13 +1,13 @@
-# revide.
+# Revide.
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Status](#status)
 * [Presentation](#presentation)
 
-## General info
-Meeting App.
-```revide.``` will help You go outside. 
+
+Event manager App.
+```Revide.``` will help You go outside. Grab your device and find event. Wait for it and run across with other participants, face-to-face or via live chat. Be a part of community.
   
 ## Technologies
 Project is created with:
@@ -24,12 +24,13 @@ Project is created with:
 To do:
 - Improve RWD
 - Add component (to enable creating own events)
-- Better UX when noEvents/errors
+- Optimize Skeleton loading
 - Search component
+- LiveChat component
 - behance presentation
 - tests
 ```  
 
 ## Presentation
-You can visit my behance profile to take a look on this application.
+You can visit my behance profile to take a look on this application. [not available yet]
 https://www.behance.net/domenusfedo/projects
