@@ -23,11 +23,8 @@ Project is created with:
 ```  
 To do:
 - Improve RWD
-- Improve main toggle aniamtion
-- Not toggled elements should not let us show details! 
-- Infinity scroll improve (RWD, better rendering)
 - Add component (to enable creating own events)
-- Better UX when no vents/errors
+- Better UX when noEvents/errors
 - Search component
 - behance presentation
 - tests
