@@ -1,13 +1,13 @@
-# revide.
+# Revide.
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Status](#status)
 * [Presentation](#presentation)
 
-## General info
+
 Event manager App.
-```revide.``` will help You go outside. Grab your device and find event. Wait for it and run across with other participants, face-to-face or via live chat. Be a part of community.
+```Revide.``` will help You go outside. Grab your device and find event. Wait for it and run across with other participants, face-to-face or via live chat. Be a part of community.
   
 ## Technologies
 Project is created with:
