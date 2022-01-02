@@ -149,8 +149,8 @@ const Board = () => {
                     </Holder>
                     
                     <AppContent>
-                        {focusedElement === 0 && <Events redirectAndExpand={redirectAndExpand} detailToggleSet={detailToggleSet} detailsElement={detailsElement} detailsElementSet={detailsElementSet} applyClass={applyClass}/>}
-                        {focusedElement === 2 && <Profile focusedElementSet={focusedElementSet} shouldExpand={shouldExpand} shouldExpandSet={shouldExpandSet}/>}
+                        {focusedElement === 0 && <Events redirectAndExpand={redirectAndExpand} shouldExpand={shouldExpand} shouldExpandSet={shouldExpandSet} detailToggleSet={detailToggleSet} detailsElement={detailsElement} detailsElementSet={detailsElementSet} applyClass={applyClass}/>}
+                        {focusedElement === 2 && <Profile redirectAndExpand={redirectAndExpand} shouldExpand={shouldExpand} shouldExpandSet={shouldExpandSet}/>}
                     </AppContent>
 
                     {focusedElement === 0 && <DetailsExpand active={detailToggle} bgImage={detailsElement.information.background} top={detailsElement.position.top} left={detailsElement.position.left} width={detailsElement.position.width} height={detailsElement.position.height} ref={detailsRef}>

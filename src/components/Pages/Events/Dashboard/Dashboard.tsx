@@ -104,7 +104,7 @@ const Dashboard: React.FC<IProps> = ({toggle, page, chunk, main, showDetails, ap
                     </EventField>
                     <EventField toggle={toggle}>
                         <EventCreatorHolderSize id='main' toggle={toggle} type={'another'}>
-                            <EventCreatorHolder shouldBeBlack={infoPattern[5].shouldBeBlack} bgTexture={infoPattern[1].bg} toggle={toggle}>
+                            <EventCreatorHolder shouldBeBlack={infoPattern[5].shouldBeBlack} bgTexture={infoPattern[5].bg} toggle={toggle}>
                                 <LoadingBar shouldBeBlack={infoPattern[5].shouldBeBlack}>loading</LoadingBar>
                                 {/* <LoadingBarSmall shouldBeBlack={infoPattern[5].shouldBeBlack}>loading</LoadingBarSmall> */}
                             </EventCreatorHolder>

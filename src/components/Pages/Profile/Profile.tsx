@@ -29,12 +29,12 @@ import {
 } from './Profile.elements';
 
 interface IProps {
-    focusedElementSet: React.Dispatch<React.SetStateAction<number>>,
     shouldExpand: boolean,
-    shouldExpandSet: React.Dispatch<React.SetStateAction<boolean>>
+    shouldExpandSet: React.Dispatch<React.SetStateAction<boolean>>,
+    redirectAndExpand: (element: number) => void
 }
 
-const Profile:React.FC<IProps> = ({focusedElementSet, shouldExpand = false, shouldExpandSet}) => {
+const Profile:React.FC<IProps> = ({shouldExpand = false, shouldExpandSet, redirectAndExpand}) => {
     const {user} = useSelector((state: RootState) => state.auth)
     const {followed, issues} = useSelector((state: RootState) => state.events);
 
@@ -75,21 +75,6 @@ const Profile:React.FC<IProps> = ({focusedElementSet, shouldExpand = false, shou
             mainButtonRef.current!.innerText = 'Connected!';
             cancelButtonRef.current!.innerText = 'disconnect.';
         }, 500)
-        // if(e.currentTarget.innerText === 'Expand') {
-        //     //expand logic
-        //     //live chat
-        //     return;
-        // }
-
-        //check user localization if yes will expand elese return
-        //const fakedLoc = (Math.random() * 10) + 1
-        // if(fakedLoc > 5) {
-        //     onTheSpotSet(true)
-        //     e.currentTarget.innerText = 'Expand';
-        // } else {
-        //     onTheSpotSet(false)
-        //     e.currentTarget.innerText = 'Wrong spot! Locate again';
-        // }
     }
 
     const cancelHanlder = () => {
@@ -107,7 +92,7 @@ const Profile:React.FC<IProps> = ({focusedElementSet, shouldExpand = false, shou
     }
 
     const findHanlder = () => {
-        focusedElementSet(0)
+        redirectAndExpand(0)
     }
 
     const [headerText, headerTextSet] = useState('')
@@ -121,7 +106,12 @@ const Profile:React.FC<IProps> = ({focusedElementSet, shouldExpand = false, shou
     }, [issues.followedError])
 
     useEffect(() => {
-        detailsToggleSet(shouldExpand);
+        setTimeout(() => {
+            detailsToggleSet(shouldExpand);
+            if(shouldExpand) {
+                confirmationHanlder()
+            }
+        }, 250)
 
         return () => {
             shouldExpandSet(false)

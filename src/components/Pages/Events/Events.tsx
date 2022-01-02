@@ -39,9 +39,11 @@ interface IProps {
     detailsElementSet: React.Dispatch<React.SetStateAction<Details>>,
 
     redirectAndExpand: (element: number) => void
+    shouldExpand: boolean,
+    shouldExpandSet: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-const Events:React.FC<IProps> = ({detailsElementSet, applyClass, redirectAndExpand}) => {
+const Events:React.FC<IProps> = ({detailsElementSet, applyClass, redirectAndExpand, shouldExpand, shouldExpandSet}) => {
     const [toggleEvents, toggleEventsSet] = useState<boolean>(false);
 
     const {followed} = useSelector((state: RootState) => state.events)
@@ -148,7 +150,15 @@ const Events:React.FC<IProps> = ({detailsElementSet, applyClass, redirectAndExpa
         }
     }, [terms])
 
+    useEffect(() => {
+        setTimeout(() => {
+            toggleEventsSet(shouldExpand);
+        }, 500)
 
+        return () => {
+            shouldExpandSet(false)
+        }
+    }, [])
 
     return (
         <EventsHolder>
