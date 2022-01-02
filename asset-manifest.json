@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "/revide/static/js/main.1d6078b4.chunk.js",
-    "main.js.map": "/revide/static/js/main.1d6078b4.chunk.js.map",
+    "main.js": "/revide/static/js/main.3949450b.chunk.js",
+    "main.js.map": "/revide/static/js/main.3949450b.chunk.js.map",
     "runtime-main.js": "/revide/static/js/runtime-main.d2b7ea1e.js",
     "runtime-main.js.map": "/revide/static/js/runtime-main.d2b7ea1e.js.map",
-    "static/js/2.dd1d9277.chunk.js": "/revide/static/js/2.dd1d9277.chunk.js",
-    "static/js/2.dd1d9277.chunk.js.map": "/revide/static/js/2.dd1d9277.chunk.js.map",
+    "static/js/2.0f9cea5d.chunk.js": "/revide/static/js/2.0f9cea5d.chunk.js",
+    "static/js/2.0f9cea5d.chunk.js.map": "/revide/static/js/2.0f9cea5d.chunk.js.map",
     "index.html": "/revide/index.html",
-    "static/js/2.dd1d9277.chunk.js.LICENSE.txt": "/revide/static/js/2.dd1d9277.chunk.js.LICENSE.txt"
+    "static/js/2.0f9cea5d.chunk.js.LICENSE.txt": "/revide/static/js/2.0f9cea5d.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.d2b7ea1e.js",
-    "static/js/2.dd1d9277.chunk.js",
-    "static/js/main.1d6078b4.chunk.js"
+    "static/js/2.0f9cea5d.chunk.js",
+    "static/js/main.3949450b.chunk.js"
   ]
 }
