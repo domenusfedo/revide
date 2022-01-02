@@ -151,11 +151,19 @@ const Events:React.FC<IProps> = ({detailsElementSet, applyClass, redirectAndExpa
     }, [terms])
 
     useEffect(() => {
-        setTimeout(() => {
-            toggleEventsSet(shouldExpand);
-        }, 500)
+        if(!shouldExpand) return;
+
+        let timer = setInterval(() => {
+            if(!loading) {
+                setTimeout(() => {
+                    toggleEventsSet(shouldExpand);
+                }, 300)
+                clearInterval(timer)
+            }
+        }, 50)
 
         return () => {
+            clearInterval(timer)
             shouldExpandSet(false)
         }
     }, [])

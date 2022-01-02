@@ -43,11 +43,13 @@ interface EventsState {
         addError: string | undefined,
         removeError: string | undefined
     }
+    asyncLoading: boolean
 }
 
 export const fetchFollowedEvents = createAsyncThunk(
     'fetch/followedEvents',
     async (args: string, { dispatch }) => {
+        dispatch(toggleLoading(true))
         await app.firestore().collection(args).doc('followedEvents').get()
             .then(res => res.data())
             .then(doc => {
@@ -84,6 +86,7 @@ export const addFollowedEvents = createAsyncThunk(
         uid: string,
         event: Event
     }, { dispatch }) => {
+        dispatch(toggleLoading(true))
         await app.firestore().collection(args.uid).doc('followedEvents').update({
             [args.event.id]: args.event
         }).then(res => {
@@ -106,6 +109,7 @@ export const removeFollowedEvents = createAsyncThunk(
         uid: string,
         event: Event
     }, { dispatch }) => {
+        dispatch(toggleLoading(true))
         try {
             await app.firestore().doc(`${args.uid}/followedEvents`).update({
                 [args.event.id]: deleteField()
@@ -117,6 +121,7 @@ export const removeFollowedEvents = createAsyncThunk(
 
         } catch (err) {
             const error = err as Error;
+
 
             dispatch(setError({
                 where: 'removeError',
@@ -132,7 +137,8 @@ const initialState: EventsState = {
         followedError: undefined,
         addError: undefined,
         removeError: undefined
-    }
+    },
+    asyncLoading: false
 }
 
 const eventsSlice = createSlice({
@@ -146,6 +152,8 @@ const eventsSlice = createSlice({
                 })
             }
 
+            state.asyncLoading = false;
+
             state.followed = [...state.followed, action.payload]
             state.followed.sort((a, b) => a.startAt.getTime() - b.startAt.getTime())
         },
@@ -157,6 +165,8 @@ const eventsSlice = createSlice({
                 })
             }
 
+            state.asyncLoading = false;
+
             state.followed = state.followed.filter(e => e.id !== action.payload.id)
         },
 
@@ -167,7 +177,12 @@ const eventsSlice = createSlice({
                 })
             }
 
+            state.asyncLoading = false;
+
             state.followed = [...action.payload]
+        },
+        toggleLoading: (state, action: PayloadAction<boolean>) => {
+            state.asyncLoading = action.payload
         },
         setError: (state, action: PayloadAction<{ where: keyof EventsState['issues'], message: string }>) => {
             state.issues[action.payload.where] = action.payload.message
@@ -190,7 +205,8 @@ export const {
     deleteFromFollowed,
     fetchFollowed,
     setError,
-    clearError
+    clearError,
+    toggleLoading
 } = eventsSlice.actions;
 
 export default eventsSlice.reducer;

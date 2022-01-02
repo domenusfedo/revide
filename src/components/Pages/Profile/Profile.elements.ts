@@ -92,8 +92,8 @@ export const UserPic = styled.div`
     position: relative;
 
     @media screen and (max-height: 716px){
-        width: 70px;
-        height: 70px;
+        width: 60px;
+        height: 60px;
     }
 
     transition: all .2 ease-in-out;
@@ -160,11 +160,13 @@ export const DataHihglight = styled.span`
     color: ${({ theme }) => theme.colors.primary};
 
     @media screen and (max-height: 640px) {
-        font-size: 1rem;
+        font-size: .8rem;
     }
 `
 export const DataNormal = styled.span`
-
+    @media screen and (max-height: 640px) {
+        font-size: .8rem;
+    }
 `
 
 export const Header = styled.span`

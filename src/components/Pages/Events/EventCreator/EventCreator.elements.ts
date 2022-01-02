@@ -40,6 +40,8 @@ export const EventCreatorHolder = styled.div<EventCreatorHolderType>`
     
     position: relative;
 
+    overflow: hidden;
+
     background-image: url("${({ bgTexture }) => bgTexture}");
     filter: ${({ type }) => (type !== 'high' ? 'grayscale(0.3)' : 'grayscale(0)')};
     background-size: cover;

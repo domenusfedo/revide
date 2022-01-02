@@ -73,7 +73,7 @@ const Profile:React.FC<IProps> = ({shouldExpand = false, shouldExpandSet, redire
         setTimeout(() => {
             livechatToggleSet(true);
             mainButtonRef.current!.innerText = 'Connected!';
-            cancelButtonRef.current!.innerText = 'disconnect.';
+            cancelButtonRef.current!.innerText = 'Disconnect';
         }, 500)
     }
 
@@ -81,7 +81,7 @@ const Profile:React.FC<IProps> = ({shouldExpand = false, shouldExpandSet, redire
         if(detailsToggle) {
             detailsToggleSet(!detailsToggle)
             mainButtonRef.current!.innerText = 'Details';
-            cancelButtonRef.current!.innerText = 'Dismiss.';
+            cancelButtonRef.current!.innerText = 'Dismiss';
             livechatToggleSet(false);
             return;
         }
@@ -101,7 +101,7 @@ const Profile:React.FC<IProps> = ({shouldExpand = false, shouldExpandSet, redire
         if(issues.followedError) {
             headerTextSet(issues.followedError);
         } else {
-            headerTextSet("You don't any upcoming events!");
+            headerTextSet("Oops, You don't have any followed event.");
         }
     }, [issues.followedError])
 
@@ -111,7 +111,7 @@ const Profile:React.FC<IProps> = ({shouldExpand = false, shouldExpandSet, redire
             if(shouldExpand) {
                 confirmationHanlder()
             }
-        }, 250)
+        }, 200)
 
         return () => {
             shouldExpandSet(false)

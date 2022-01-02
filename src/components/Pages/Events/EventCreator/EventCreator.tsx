@@ -56,7 +56,7 @@ const EventCreator: React.FC<IProps> = ({showDetails, event, type = 'another', b
         if(issues.followedError) {
             headerTextSet(issues.followedError);
         } else {
-            headerTextSet("You don't any upcoming events!");
+            headerTextSet("Oops, You don't have any followed event.");
         }
     }, [issues.followedError])
 

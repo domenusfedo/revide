@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import LogoIcon from '../assets/svg/logo';
 import { BsArrowLeftShort } from 'react-icons/bs'
-import { MdOutlineFavoriteBorder } from 'react-icons/md';
+import { MdOutlineFavorite, MdOutlineFavoriteBorder } from 'react-icons/md';
 
 export const BoardHolder = styled.div`
     width: 100%;
@@ -170,6 +170,10 @@ export const ParticipateField = styled.button`
     cursor: pointer;
 `
 export const IntrestedField = styled(MdOutlineFavoriteBorder)`
+   font-size: 2rem;
+`
+
+export const IntrestedFieldFull = styled(MdOutlineFavorite)`
    font-size: 2rem;
 `
 interface ExpandType {

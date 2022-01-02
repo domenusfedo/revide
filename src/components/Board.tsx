@@ -22,7 +22,8 @@ import {
     UserAction,
     ParticipateField,
     IntrestedField,
-    LogoSVGHolder
+    LogoSVGHolder,
+    IntrestedFieldFull
 } from './Board.elements'
 
 import Category from './UI/Category/Category';
@@ -50,7 +51,7 @@ export interface Details {
 
 const Board = () => {
     const {user} = useSelector((state: RootState) => state.auth)
-    const {followed} = useSelector((state: RootState) => state.events)
+    const {followed, asyncLoading} = useSelector((state: RootState) => state.events)
     const dispatch = useDispatch();
     
     const [focusedElement, focusedElementSet] = useState(0);
@@ -178,12 +179,12 @@ const Board = () => {
                             {!isFollowed ? ( 
                                 <UserAction onClick={followHandler}>
                                     <IntrestedField/>
-                                    <ParticipateField>FOLLOW</ParticipateField>
+                                    <ParticipateField>{asyncLoading ? 'FOLLOWING' : 'FOLLOW'}</ParticipateField>
                                 </UserAction>
                             ) : (
                                 <UserAction onClick={unFollowHandler}>
-                                    <IntrestedField/>
-                                    <ParticipateField>UNFOLLOW</ParticipateField>
+                                    <IntrestedFieldFull/>
+                                    <ParticipateField>{asyncLoading ? 'UNFOLLOWING' : 'UNFOLLOW'}</ParticipateField>
                                 </UserAction>
                             )}
                         </DetailsHeader>
