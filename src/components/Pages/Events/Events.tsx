@@ -105,32 +105,42 @@ const Events:React.FC<IProps> = ({detailsElementSet, applyClass}) => {
 
 
     const loadSearchedEvents = async (terms: string) => {
-        console.log(terms)
+        if(terms === '') {
+            pageSet(1)
+            loadingSet(false);
+            return;
+        }
+        loadingSet(true);
+        eventsSet([])
         //API call withe extra parameter
+        console.log('search')
     }
 
     useEffect(() => {
         const loadEvents = async () => {
             loadingSet(true);
-            const newEvents = await getEvents(page);
-    
-            console.log('fetching')
-    
+            const newEvents = await getEvents(page, terms);
+
             eventsSet((state: Event[][]) => ([
                 ...events,
                 newEvents
             ]));
-    
+            
             loadingSet(false);
         }
-
         loadEvents();
-    }, [page])
+    }, [page, terms])
 
 
     useEffect(() => {
-        //silent requests
+        let timer1 = setTimeout(() => loadSearchedEvents(terms), 1 * 1000);
+            
+        return () => {
+            clearTimeout(timer1);
+        }
     }, [terms])
+
+
 
     return (
         <EventsHolder>
@@ -169,6 +179,7 @@ const Events:React.FC<IProps> = ({detailsElementSet, applyClass}) => {
 
                 })}
                 {loading && <Dashboard key={page} toggle={toggleEvents} page={page} chunk={null} main={true} showDetails={showDetails} applyClass={applyClass}/>}
+                {(events.length === 0 && !loading) && <span>Nothing Found!</span>}
                 </RestField>
                 <Loading>
                     <Spinner loading={loading}/>
