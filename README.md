@@ -31,5 +31,5 @@ To do:
 ```  
 
 ## Presentation
-You can visit my behance profile to take a look on this application.
+You can visit my behance profile to take a look on this application. [not available yet]
 https://www.behance.net/domenusfedo/projects
