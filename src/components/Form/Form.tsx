@@ -17,7 +17,9 @@ import {
     Spinner,
     FormError,
     DescriptionIcon,
-    TitleIcon
+    TitleIcon,
+    UserActionField,
+    Column
 } from './Form.elements';
 
 import {
@@ -245,18 +247,25 @@ const Form: React.FC<IProps> = ({header, initialData, structureData}) => {
                         </FormHolder>
                     )
                 })}
-
-                {structureData.extra && <FormAction>Forgot Password?</FormAction>}
+                <UserActionField>
+                    <Column isRight={false}>
+                    {structureData.error&& <FormAction isBlack={true} isSensitive={false} isError>Custom API error needed</FormAction>}
+                    </Column>
+                    <Column isRight={true}>
+                        <FormAction isBlack={true} isSensitive={true}>{structureData.extra ? 'Forgot Password?' : '.'}</FormAction>
+                    </Column>
+                </UserActionField>
+                
                 <FormButton ref={buttonRef} isValid={isValid} onClick={e => submitHanlder(e)} >
                     {!structureData.loading ? 
-                    structureData.buttonLabel 
+                        <FormAction isBlack={false} isSensitive={true}>{structureData.buttonLabel}</FormAction>
                     : <Spinner/>}
                 </FormButton>
+
                 <FormDirect to={structureData.link}>
                     {structureData.directLabel}
                     <FormDetailAction>{structureData.directLink}</FormDetailAction> 
                 </FormDirect>
-                <FormError>{structureData.error}</FormError>
             </FormWrapper>
         </>
     );

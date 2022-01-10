@@ -153,10 +153,11 @@ export const DataField = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin: 0 1rem;
 
-    &:nth-child(1) {
+    /* &:nth-child(1) {
         margin-right: 1rem;
-    }
+    } */
 `
 
 export const DataHihglight = styled.span`

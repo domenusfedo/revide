@@ -13,6 +13,10 @@ export const FormWrapper = styled.form`
     padding-top: 2rem;
     width: 100%;
     max-width: 400px;
+
+    @media screen and (max-height: 670px) {
+        padding-top: 1rem;
+    }
 `;
 
 export const FormHeader = styled.h1`
@@ -130,20 +134,36 @@ export const FormDetailAction = styled.span`
     }
 `
 
-export const FormAction = styled.span`
+interface FormActionProps {
+    isBlack: boolean,
+    isSensitive: boolean,
+    isError?: boolean
+}
+
+export const FormAction = styled.span<FormActionProps>`
     text-decoration: none;
     color: ${({ theme }) => theme.colors.black};
-    margin: 1rem 0;
+    height: 25px;
     font-style: italic;
     font-size: 0.9rem;
     transition: all .2s;
     width: 100%;
-    text-align: right;
-    cursor: pointer;
-    padding: 0 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: auto;
+
+    color: ${({ theme, isBlack }) => (isBlack ? theme.colors.black : theme.colors.white)};
+    color: ${({ theme, isError }) => (isError && theme.colors.red)};
+
+    &:empty:before {
+        content: "\200b"
+    }
 
     &:hover {
-        color: ${({ theme }) => theme.colors.primaryVar};
+        color: ${({ theme, isSensitive, isBlack }) => ((isSensitive && isBlack) && theme.colors.primaryVar)};
+        cursor: ${({ theme, isSensitive }) => (isSensitive && 'pointer')};
     }
 `;
 type Valid = {
@@ -188,15 +208,19 @@ export const FormButton = styled.button<Valid>`
     }
 
     @media screen and (max-height: 700px) {
-        font-size: .9rem;
+        font-size: .5rem;
         padding: 1rem 0;
         border-radius: 15px;
     }
 
     @media screen and (max-width: 270px) {
-        font-size: .9rem;
+        font-size: .5rem;
         padding: 1rem 0;
         border-radius: 15px;
+    }
+
+    @media screen and (max-height: 670px) {
+        padding: .5rem;
     }
 `;
 
@@ -287,3 +311,23 @@ export const FormError = styled.h3`
 `;
 
 //Dynamic styled icons
+
+export const UserActionField = styled.div`
+    height: fit-content;
+    display: flex;
+    width: 100%;
+    padding: 1rem;
+
+    @media screen and (max-height: 670px) {
+        padding: 0rem;
+    }
+`
+
+interface IsRight {
+    isRight: boolean
+}
+
+export const Column = styled.div<IsRight>`
+    width: 50%;
+    text-align: ${({ isRight }) => (isRight ? 'right' : 'left')};
+`

@@ -157,7 +157,7 @@ const Profile:React.FC<IProps> = ({shouldExpand = false, shouldExpandSet, redire
                     </SmallStatictics> */}
             </Row>
             </UserData>
-
+            {console.log(upcomingEvent)}
             <Text>Upcoming event</Text> 
             {/* if now set current Event */}
 
