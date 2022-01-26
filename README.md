@@ -1,6 +1,7 @@
 # Revide.
 ## Table of contents
 * [General info](#general-info)
+* [How to use?](#how-to-use)
 * [Technologies](#technologies)
 * [Status](#status)
 * [Presentation](#presentation)
@@ -8,6 +9,11 @@
 
 Event manager App.
 ```Revide.``` will help You go outside. Grab your device and find event. Wait for it and run across with other participants, face-to-face or via live chat. Be a part of community.
+
+## How to use?
+Default credentials:
+Login: a@a.com
+Password: aaaaaa
   
 ## Technologies
 Project is created with:
